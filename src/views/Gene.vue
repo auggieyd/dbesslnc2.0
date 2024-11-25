@@ -6,7 +6,7 @@
           class="img_style"
           @click="toUrl()"
          />
-            <p> Summary </p>
+            <p> Detail information of  {{ dataList.UID }}</p>
 
         </el-row>
        
@@ -15,7 +15,7 @@
           <div class="content" style="height:40%">
             <el-form label-position="left" inline class="demo-table-expand" >
               <el-form-item label="Gene UID:">
-                <span>{{ dataList.UID }}</span>
+                <span>{{dataList.UID }}</span>
               </el-form-item>
               <el-form-item label="Symbol:">
                 <span>{{ dataList.gene_name }}</span>
@@ -27,10 +27,11 @@
                 <span>{{ dataList.Organism }}</span>
               </el-form-item>
               <el-form-item label="Position:">
-                <span>{{ chr }}:{{ start }}-{{ end }},{{ strand }}(hg38)</span>
+                <span v-if="dataList.Organism === 'Human'">{{ chr ? chr + ": " + start + "-" + end + "," + strand + "(hg38)" : "N.A."}} </span>
+                <span v-else>{{ chr ? chr + ": " + start + "-" + end + "," + strand + "(mm10)" : "N.A."}}</span>
               </el-form-item>
               <el-form-item label="Lncbook Gene ID:">
-                <span @click="toUrl_NONCODE(dataList.Lncbook_id)" class="hand">{{ dataList.Lncbook_id }}</span>
+                <span @click="toUrl_Lncbook(dataList.Lncbook_id)" class="hand">{{ dataList.Lncbook_id }}</span>
               </el-form-item> 
               <el-form-item label="NONCODE Gene ID:">
                 <span @click="toUrl_NONCODE(dataList.Noncode_id)" class="hand">{{ dataList.Noncode_id }}</span>
@@ -38,31 +39,36 @@
               
               <el-form-item label="NCBI Gene ID:">
                 
-                <span @click="toUrl_NCBI(dataList.NCBI_gene_Id)" class="hand">{{dataList.NCBI_id}}</span>
+                <span @click="toUrl_NCBI(dataList.NCBI_id)" class="hand">{{dataList.NCBI_id}}</span>
                 
               </el-form-item>
 
               <el-form-item label="Alias:">
                 <span>{{ dataList.Alias}}</span>
               </el-form-item>
+              <el-form-item label="Validity:" style="width:70%">
+                <el-tag v-if="dataList.vitro === 1" size="small" type="info" effect="plain" style="margin-right: 8px;" >CRISPR</el-tag>
+                <el-tag v-if="dataList.vivo === 1 ||dataList.cancer_related > 0" size="small" type="info" effect="light" style="margin-right: 8px;">Literature</el-tag>
+                <el-tag v-if="dataList.disease_related === 1" size="small" type="info" effect="dark" style="margin-right: 8px;">Predicted</el-tag>
+              </el-form-item>
               <el-form-item label="Literature Reason:" style="width:70%">
-                <span>{{ dataList.Reason }}</span>
+                <span>{{ dataList.reason }}</span>
               </el-form-item>
 
               <el-form-item label="Gene Ontology Annotations:" style="width:70%">
-                <span>{{ dataList.Gene_Ontology_Annotations }}</span>
+                <span>{{ dataList.Go_annotation }}</span>
               </el-form-item>
               <!-- <el-form-item label="Sequence:">
                 <span>{{ dataList.Sequence }}</span>
               </el-form-item> -->
-              <el-form-item label="Experiment:"></el-form-item>
+              <el-form-item label="CRISPR Experimental Records:"></el-form-item>
               <el-table :data="expData" border style="width: 80%;">
-                <el-table-column label = "Target" prop="gene_id" ></el-table-column>
+                <el-table-column label = "Target" prop="gene_id" width="150"></el-table-column>
                 <el-table-column label = "CRISPR Type" prop="exp_type" width="150"></el-table-column>
                 <el-table-column label = "Exp Score" prop="exp_score" width="150"></el-table-column>
                 <el-table-column label = "Role" prop="role" width="150"></el-table-column>
                 <el-table-column label = "Cell Line" prop="cell_line" width="150"></el-table-column>
-                <el-table-column label = "PubMed ID" prop="PMID" width="150"></el-table-column>
+                <el-table-column label = "PubMed ID" prop="PMID" ></el-table-column>
               </el-table>
             </el-form>
           </div>
@@ -111,8 +117,8 @@
             :header-cell-style="{background:'#eef1f6',color:'#606266'}"
             empty-text="N.A."
             border>
-              <el-table-column label = "Gene UID" width="150">{{ UID }}</el-table-column>
-              <el-table-column label = "Variant ID" prop="variation_id" width="150"></el-table-column>
+              <el-table-column label = "Gene UID" width="120">{{ UID }}</el-table-column>
+              <el-table-column label = "Variant ID" prop="variation_id" width="120"></el-table-column>
               <el-table-column label = "chr" prop="chr" width="60"></el-table-column>
               <el-table-column label = "start site" prop="variant_start" width="100"></el-table-column>
               <el-table-column label = "end site" prop="variant_end" width="100"></el-table-column>
@@ -126,7 +132,7 @@
                     <el-form-item label="Reference allele: ">
                       <span>{{ props.row.reference_allele}}</span>
                     </el-form-item>
-                    <el-form-item label="Alternate_allele: ">
+                    <el-form-item label="Alternate allele: ">
                       <span>{{ props.row.alternate_allele}}</span>
                     </el-form-item>
                     <el-form-item label="Phenotype">
@@ -151,7 +157,7 @@ export default{
             diseaseData:[],
             expData:[],
             DNAid:"NONHSAG000195.3",
-            detailData:[],
+            detailData:{},
             chr:"",
             start:"",
             end:"",
@@ -164,34 +170,40 @@ export default{
     },
     mounted(){
         this.tempPage = this.$route.query.page
-        //console.log("标记Gene页面上个页面从哪里来",this.tempPage)
+        // console.log("标记Gene页面上个页面从哪里来",this.$route.params)
         if(this.tempPage == "Browse"){          
           this.dataList = JSON.parse(sessionStorage.getItem("dataBrowse"));
+          console.log(this.dataList,"browse")
         }
         if(this.tempPage == "Search"){          
           this.dataList = JSON.parse(sessionStorage.getItem("dataSearch"));
+          console.log(this.dataList,"search")
+        }
+        if(this.tempPage == "Blast"){          
+          this.dataList.UID = JSON.parse(sessionStorage.getItem("dataBlast")).UID;
+          console.log(this.dataList,"blast")
         }
         // console.log(this.dataList,'test');
-        
-        this.DNAid = this.dataList.NONCODEId;
         this.UID = this.dataList.UID;
+        // this.DNAid = this.dataList.NONCODEId;
+        
 
 
         axios.post("api/property/transcript",{    
             UID:this.UID
         }).then(respond =>{
-            // console.log(respond.data);
+            console.log(respond.data);
             this.itemData=respond.data;
         });
         axios.post("api/property/gene",{
             UID:this.UID
         }).then(respond =>{
-            // console.log(respond.data)
-            this.detailData=respond.data;
-            const data = this.detailData;
+            console.log(respond.data,"detail")
+            this.dataList=respond.data[0];
+            const data = respond.data;
             // console.log(data)
-            this.chr = this.detailData[0].chr;
-            const strand = this.detailData[0].strand;
+            this.chr = this.dataList.chr;
+            const strand = this.dataList.strand;
             this.strand = strand == '+' ? "forward" : "reverse";
             this.start = Math.min(...data.map(item => item.start));
             this.end = Math.max(...data.map(item => item.end));
@@ -222,7 +234,7 @@ export default{
       },
 //    这是传的什么参数
       toVisual(data){
-        console.log(JSON.stringify(data))
+        // console.log(JSON.stringify(data))
         sessionStorage.setItem('dataGene', JSON.stringify(data));
         this.$router.push({
           name:'Visual',
@@ -237,6 +249,9 @@ export default{
       },
       toUrl_NONCODE(data){
          window.location.href = "http://www.noncode.org/show_gene.php?id="+data.split(".")[0]+"&version="+data.split(".")[1]+"&utd=1#"
+      },
+      toUrl_Lncbook(data){
+         window.location.href = "https://ngdc.cncb.ac.cn/lncbook/gene?geneid="+data
       }
     }
 

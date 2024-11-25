@@ -5,8 +5,8 @@
         <li >
           <img
             alt="dbEssLnc"
-            src="../../public/assets/img/title.png"
-            style="height: 65px; width: auto; vertical-align: middle; margin-right: 30px;margin-left: 30px;"
+            src="../../public/assets/img/title.svg"
+            style="height: 65px; width: auto; vertical-align: bottom; margin-right: 10px;margin-left: 10px;margin-top: 5px;"
           />
         </li>
         <li

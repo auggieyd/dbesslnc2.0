@@ -6,6 +6,7 @@ var $sql = require("../sqlMap");
 var exec = require('child_process').exec;
 let randomStr = require('string-random'); 
 var fs = require("fs");
+var path = require("path");
 // import cookies from "vue-cookies";
 // var cookies = require("vue-cookies")
 
@@ -17,9 +18,10 @@ const BLASTDB = ""
 // const tempPath_result= "/home/yyzhang/dbesslnc/blast/temp/" 
 // const db_path = "/home/yyzhang/dbesslnc/blast/lncrna/lncrna.fasta"
 //本地的路径
-const tempPath_query = "/Users/zyy/Desktop/code/dbEssLnc-main/blast/temp/"
-const tempPath_result= "/Users/zyy/Desktop/code/dbEssLnc-main/blast/temp/" 
-const db_path = "/Users/zyy/Desktop/code/dbEssLnc-main/blast/lncrna/lncrna.fasta"
+const tempPath_query = path.join(__dirname, '../../blast/temp/');
+const tempPath_result = path.join(__dirname, '../../blast/temp/');
+const db_path = path.join(__dirname, '../../blast/lncrna/lncRNA2.fasta');
+
 
 const {MYSQL_CONFIG} = require('../db.js');
 // var blast = require("../blast.js")
@@ -72,7 +74,7 @@ router.post("/vital", (req, res) => {
   var sql = $sql.property.selectVital;
   connection.query(sql, function(err, result) {
     if (err) {
-      console.log("[SELECT FROM vital table ERROR]:", err.msg);
+      console.log("[SELECT FROM esslnc table general ERROR]:", err.msg);
     }
     if (result) {
       //console.log(result)
@@ -183,65 +185,80 @@ router.post("/diseaseMap", (req, res) => {
 //organism is human
 router.post("/selectHuman", (req, res) => {
   var sql = $sql.property.selectHuman;
-  connection.query(sql, function(err, result) {
+  const {page,pageSize} = req.body;
+  // console.log(req.body) 
+  const offset = (page-1)*pageSize;
+  connection.query(sql, [offset, pageSize], function(err, result) {
     if (err) {
       console.log("[SELECT FROM final table where organism is human ERROR]:", err.msg);
     }
     if (result) {
      // console.log(result)
-      jsonWrite(res, result);
+      jsonWrite(res, {items: result, total: 6271});
     }
   });
 });
 //organism is mouse
 router.post("/selectMouse", (req, res) => {
   var sql = $sql.property.selectMouse;
-  connection.query(sql, function(err, result) {
+  const {page,pageSize} = req.body;
+  // console.log(req.body) 
+  const offset = (page-1)*pageSize;
+  connection.query(sql, [offset,pageSize], function(err, result) {
     if (err) {
       console.log("[SELECT FROM final table where organism is mouse ERROR]:", err.msg);
     }
     if (result) {
       //console.log(result)
-      jsonWrite(res, result);
+      jsonWrite(res, {items: result, total: 34});
     }
   });
 });
 //reason is vital
 router.post("/select_reason_vital", (req, res) => {
   var sql = $sql.property.select_reason_vital;
-  connection.query(sql, function(err, result) {
+  const {page,pageSize} = req.body;
+  // console.log(req.body) 
+  const offset = (page-1)*pageSize;
+  connection.query(sql, [offset,pageSize], function(err, result) {
     if (err) {
       console.log("[SELECT FROM final table  where reason is vital ERROR]:", err.msg);
     }
     if (result) {
       //console.log(result)
-      jsonWrite(res, result);
+      jsonWrite(res, {items: result, total: 40});
     }
   });
 });
 //reason is tumor
 router.post("/select_reason_tumor", (req, res) => {
   var sql = $sql.property.select_reason_tumor;
-  connection.query(sql, function(err, result) {
+  const {page,pageSize} = req.body;
+  // console.log(req.body) 
+  const offset = (page-1)*pageSize;
+  connection.query(sql,[offset, pageSize], function(err, result) {
     if (err) {
       console.log("[SELECT FROM final table where reason is tumor ERROR]:", err.msg);
     }
     if (result) {
       //console.log(result)
-      jsonWrite(res, result);
+      jsonWrite(res, {items: result, total: 100});
     }
   });
 });
 //reason is cancer
 router.post("/select_reason_cancer", (req, res) => {
   var sql = $sql.property.select_reason_cancer;
-  connection.query(sql, function(err, result) {
+  const {page,pageSize} = req.body;
+  // console.log(req.body) 
+  const offset = (page-1)*pageSize;
+  connection.query(sql,[offset, pageSize], function(err, result) {
     if (err) {
       console.log("[SELECT FROM final table where reason is cancer ERROR]:", err.msg);
     }
     if (result) {
       //console.log(result)
-      jsonWrite(res, result);
+      jsonWrite(res, {items: result, total: 73});
     }
   });
 });
@@ -345,7 +362,7 @@ router.post("/fuzzyHuman",(req,res)=> {
   var sql=$sql.property.fuzzyHuman;
   connection.query(sql,(err,result)=>{
     if(err) {
-      console.log("select Name from `final` where Organism ='human' error:",err.msg)
+      console.log("select gene_name from `esslnc` where Organism ='human' error:",err.msg)
     }
     if(result){
       jsonWrite(res,result);
@@ -357,7 +374,7 @@ router.post("/fuzzyMouse",(req,res)=> {
   var sql=$sql.property.fuzzyMouse;
   connection.query(sql,(err,result)=>{
     if(err) {
-      console.log("select Name from `final` where Organism ='mouse' error:",err.msg)
+      console.log("select gene_name from `final` where Organism ='mouse' error:",err.msg)
     }
     if(result){
       jsonWrite(res,result);
@@ -379,7 +396,6 @@ router.post("/fuzzyVital",(req,res)=> {
 
 router.post("/fuzzyTumor",(req,res)=> {
   var sql=$sql.property.fuzzyTumor;
-  console.log(sql)
   connection.query(sql,(err,result)=>{
     if(err) {
       console.log("select Name from `final` where role is tumor error:",err.msg)
@@ -496,7 +512,7 @@ router.post("/fuzzySeq",(req,res)=> {
   //var sql=$sql.property.fuzzySeq;  
   var alignId = req.body.alignId;
   
-  var sql = "select * from `trans` where NONCODE_TRANSCRIPT_ID in ("+alignId+")";
+  var sql = "select * from `trans` where transcript_id in ("+alignId+")";
   connection.query(sql,(err,result)=>{
     
     if(err) {
@@ -512,13 +528,17 @@ router.post("/fuzzySeq",(req,res)=> {
 
 router.post("/profiles",(req,res)=> {
 
-  var id=req.body.RNAid;
-  console.log("profile req",req.body);
-  var sql=$sql.property.profile;
-  connection.query(sql,[id],(err,result)=>{
+  var RNAid=req.body.RNAid;
+  var UID = req.body.UID;
+  var Organism = req.body.Organism;
+  // console.log("profile req",req.body);
+  if(Organism === "Human"){
+    var sql=$sql.property.profileHuman;
+  }else var sql=$sql.property.profileMouse;
+  connection.query(sql,[RNAid, UID],(err,result)=>{
     // console.log("zhixingle!");
     if(err) {
-      console.log("select * from `exp_profile` where Lncbook_trans_id = ?",err.msg)
+      console.log("select * from `exp_profile` where transcript_id = ? AND UID = ?",err.msg)
     }
     if(result){
       // console.log(result);

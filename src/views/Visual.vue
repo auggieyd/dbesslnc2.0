@@ -21,9 +21,8 @@
                 <span>{{ dataList.Organism }}</span>
               </el-form-item>
               <el-form-item label="LncBook:" >
-
                   <span>
-                    {{ dataList.Lncbook_trans_id ? 'transcript:&nbsp':'' }} 
+                    {{ dataList.Lncbook_trans_id ? 'transcript:&nbsp':'N.A.' }} 
                     {{  dataList.Lncbook_trans_id }}
                     {{ dataList.Lncbook_id ? ',&nbspgene:&nbsp ':'' }}
                     <text
@@ -35,14 +34,22 @@
                   </span>  
               </el-form-item>
               <el-form-item label="NONCODE:">
-                <div style="display: flex; align-items: center;width: 20vw">
-                  {{ dataList.NONCODE_TRANSCRIPT_ID ? 'transcript: ':'' }} 
-                  <span @click="toUrl_DNA(dataList.NONCODE_TRANSCRIPT_ID)" class="hand"> {{ dataList.NONCODE_TRANSCRIPT_ID }}</span>
-                  {{ dataList.NONCODE_Gene_ID ? 'gene: ':'' }}   
-                  <span @click="toUrl_DNA(dataList.NONCODE_Gene_ID)" class="hand">{{ dataList.NONCODE_Gene_ID }}</span>
-                </div>
-                    
-                    
+                <span>
+                    {{ dataList.NONCODE_TRANSCRIPT_ID ? 'transcript:&nbsp':'N.A.' }} 
+                    <text
+                      v-if="dataList.NONCODE_TRANSCRIPT_ID"
+                      @click="toUrl_RNA(dataList.NONCODE_TRANSCRIPT_ID)"
+                      class="hand">
+                      {{ dataList.NONCODE_TRANSCRIPT_ID }}
+                    </text>
+                    {{ dataList.NONCODE_Gene_ID ? ',&nbspgene:&nbsp ':'' }}
+                    <text
+                      v-if="dataList.NONCODE_Gene_ID"
+                      @click="toUrl_DNA(dataList.NONCODE_Gene_ID)"
+                      class="hand">
+                      {{ dataList.NONCODE_Gene_ID }}
+                    </text>   
+                  </span>  
               </el-form-item>
 
               <el-form-item label="Chromosome:">
@@ -77,6 +84,9 @@
         <div class="files">
           <h3 class="top">Expression Profile</h3>
           <!-- human -->
+          <div v-show="isShow" class="content" style="height:40%">
+            <span>N.A.</span>
+          </div> 
           <div v-show="isShow1" class="content" style="height:40%" id="outerDiv1">
             <!-- 第一个表 -->
             <el-table :data="profile" :header-cell-style="{background:'rgb(115, 200, 200)',color:'#fff'}" style="width: 100%">
@@ -159,6 +169,8 @@ export default{
         profile:[],
         formatedData:[],
         RNAid:"NONHSAT000530.2",
+        UID:"",
+        Organism:"Human",
         item_data_human: [
           'brain', 'lung', 'urinarybladder', 'kidney', 'adrenal', 'thyroid', 'heart', 
           'lymphnode', 'spleen', 'bonemarrow', 'tonsil', 'appendix', 'colon', 
@@ -176,7 +188,7 @@ export default{
     mounted(){
 
       let sessionData = JSON.parse(sessionStorage.getItem("dataGene"));
-      console.log(sessionData)
+      // console.log(sessionData,"sessionData")
       
       if(location.href.indexOf('#reloaded')==-1){
       location.href=location.href+"#reloaded";
@@ -196,32 +208,44 @@ export default{
                     />
                     `
     
-      this.RNAid=sessionData.Lncbook_trans_id;
-
+      this.RNAid=sessionData.transcript_id;
+      this.UID=sessionData.UID;
+      this.Organism = sessionData.Organism;
 
       axios.post("api/property/profiles",{    
-        RNAid:this.RNAid
+        RNAid:this.RNAid,
+        UID:this.UID,
+        Organism:this.Organism
       }).then(respond =>{
         // console.log(respond.data);
-        this.profile=respond.data;
+        const temp_value =respond.data;
         // console.log(respond.data,"profile")
-        this.profile.map(row => {
+        temp_value.map(row => {
           this.item_data_human.forEach(item => {
-            row[item] = parseFloat(row[item]).toFixed(6);
+            row[item] = parseFloat(row[item]).toExponential(6);
           });
         })
-        if(this.profile[0].Organism == "Human"){
+        this.profile = temp_value;
+        if(this.profile.length == 0){
+          this.isShow=true;
+        }
+        else if( this.profile.length != 0 && this.profile[0].Organism == "Human"){
           
           this.isShow1=true;
-          this.drawLine1();
+          this.isShow=false;
+          this.$nextTick(()=>{
+            this.drawLine1();
+          })
+          // this.drawLine1();
         }
         else{
 
           this.isShow2=true;
+          this.isShow=false;
           this.drawLine2();
         }      
       });
-
+      
 
     },
     methods:{
@@ -248,7 +272,7 @@ export default{
 
       },
       drawLine1(){
-        // console.log("调用dramLine1");
+        console.log("调用dramLine1");
                 // 解决数据初始渲染不出来的问题
         // setTimeout(()=>{
         //     this.initChart()
@@ -290,13 +314,16 @@ export default{
         };
         option.series[0].data=[];
         option.title.text="Expression profile of "+ this.dataList.transcript_id+" in "+this.profile[0].Organism+" tissues";
-        console.log(_this.item_data_human,"item_data_human")
+        // console.log(_this.item_data_human,"item_data_human")
         _this.item_data_human.forEach(item=>{
-          const formattedValue = parseFloat(_this.profile[0][item]).toFixed(6);
-          console.log(formattedValue,"formattedValue")
+          const value = parseFloat(_this.profile[0][item]);
+          const formattedValue = value.toExponential(6);
+          // console.log(formattedValue,"formattedValue")
           option.series[0].data.push(formattedValue);
         })
         myChart1.setOption(option);
+        window.addEventListener('resize', myChart1.resize);
+        
       },
       drawLine2(){
         // console.log("调用dramLine2");
@@ -434,12 +461,11 @@ span {
   font-family:monospace;
 }
 #figure1{
-  width: 1000px; 
+  width: 100%; 
   height:500px;
   display: inline-block;
   text-align: center;
-  margin:0 auto;
-  
+  margin:20px auto;
 
 }
 #figure2{

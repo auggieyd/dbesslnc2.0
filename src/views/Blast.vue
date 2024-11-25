@@ -47,11 +47,14 @@
             <template #default="props">
               <el-form label-position="left" inline class="demo-table-expand" >
 
-                <el-form-item label="NONCODE Gene ID:">
-                  <span @click="toUrl_DNA(props.row.NONCODE_Gene_ID)" class="hand">{{ props.row.NONCODE_Gene_ID }}</span>
+                <el-form-item label="Gene UID:">
+                  <span @click="toUrl_DNA(props.row)" class="hand">{{ props.row.UID }}</span>
                 </el-form-item>
-                <el-form-item label="NONCODE Transcript ID:">
-                  <span @click="toUrl_RNA(props.row.NONCODE_TRANSCRIPT_ID)" class="hand">{{ props.row.NONCODE_TRANSCRIPT_ID }}</span>
+                <el-form-item label="transcript_id:">
+                  <span @click="toUrl_RNA(props.row.transcript_id)" class="hand">{{ props.row.transcript_id }}</span>
+                </el-form-item>
+                <el-form-item label="Position:" >
+                  <span>{{props.row.position}}</span>
                 </el-form-item>
                 <el-form-item label="LncRNA Sequence Length:" >
                   <span>{{props.row.Seqlength}}</span>
@@ -65,9 +68,9 @@
           </el-table-column>
 
           <el-table-column
-            label="Name"
-            prop="Name"
-            width="100">
+            label="Gene UID"
+            prop="UID"
+            width="120">
           </el-table-column>
           <el-table-column
             label="Organism"
@@ -87,7 +90,7 @@
           <el-table-column
             label="Alignment length"
             prop="length"
-            width="200">
+            width="180">
           </el-table-column>
 
           <el-table-column
@@ -116,8 +119,8 @@ import { ElLoading } from 'element-plus'
 export default {
   data() {
     return {
-      example: `>NONMMUT015694.2
-AGCACAGAAGACGAAGAGCTGGAATAGAGCTCGCCTCGGCTCTGCTGGCCTTGGCTGCAGCTCTTCCAGAAACCCGGGGCGCCCACAGAAGAATCTCTTACCTGGCTCTCTCTTCAGGGATGACATCATCGGCTCACACCAGTCTTCCAGGACCACCTTCTGGATGCCAAGGCTGCTGCTCGAGTACCTGCTGTGCACCTCTACCTCCTGAGCCAAGGAGCACGGATTCCAGGAACCCACTACCATACAGAGCAACTCCTTGTGGACCCCCCTGGGATCAGGACAGCGAGGGACAAGCGACAAAGAGGATCATCAGTGGCCAGCTAGTTTCTCTGGGGTTCAAACCTTGAACCAGTGCCCTAGTGAGGGGGCACTGGCCATGGCCCTTGACCTTTGCTCTGCTTGTGTCTTGAGTCTGAGCCCTTTCCTGTACATCTGTGCTCGTGTTCATCTGCTAGTGAACTGGAGTGCTGCCCTCCCCGAGGAGGGTCGTCCCTTGTGACTGATCATGCTGTCCTAACAATGTCCTGAGCAAAAGGGTCCCTTTGGGAACCTCTCAGGAGGGGGACCCGGGTCAGGGGCGACCAGCATCTTGCTGGCAACTCCGTgggtggggtggggtggggtgCTTCCTTCTGGAATGAGCACGTGGCTGACCCCCCAAGGCATGTCCCCTCCCCCTCCTCCACCCACCTTCTCGGAGATGTCCCTTTTGGGGTagtggggacattaggagcaacctcctagggttgttgtgagaattaaatgaactGCAGCAGCCTGAGGCAGGGCTGGGCAGAGACCTCAGCACATGTTTGTTGAAAGGTTTGCAGGTGGATCTAGTCCTCCCGTTCATGGCTCATGTGTCTCAACCATTCTCTCGCAGACTCCTGCAGCCCCTATGCCCAGGGCTCTCCTTGCGCCAGAGGTAGGTGGGAAAGAGAACTGGGAGAGCCCGGACTCACTCATGAGATTGAACTTAAATTCACACGGAGGACACTTGGACTCTTGCCACATTAGCCCCGGCTTCTCGAGGCCTGTCTACACTCGCTGCTTTCCTTCCTCACCTCCAATTTCCCCTCCAACCCACTGCTTCCTGACTCGCTCTTCTCCATCGAACGGCTCTCGCTCAGGCCTGTCGCGTCTTCCTGTGCCATTTGCTGTTGTGCTCAGGTTCCACGAGCTGCCCATCTCCACAGAAGAGCAGCTGGCATTGCCCACCGGCCATGCCGGCTGAAGAAAAGAAGACTGAGGACCCCAGGATGCCCAGCGCGAGGACCCCAGGAAGCCCAGCGCGAGGACTCCACCCACGACGCCCAGCGCGAGGACTTCACGCACAACACGTTGCAACCCTCCTGGATTAGGCCAAAGCCATCATCTGGAATCCTGCGTGGGACCCTGGACACACGGACACAGACACCTGCCCCCAGGACCCTCCAACTGTAAATCgtgtgcgtcactggcaagcctacctcacagggttgttgtgagggctaaGGGCTGATCGGCTGTAACAGTGTGATGTCCATGCTGGCTGTCACCAGGGATGGTGCCATGATGGGGTTGGCTTGAAATCACAACCTATACCGTTATTAGTGGTCACTGAATAAAGAGTCTCACTGTGGACACTGAGCCTCTACAGCCACGGGGACGCCTTGCACATTTCCTGTGGGACATGCTGGACCCAAGACTCTGGACCCTGGCCTCCCCTTGAGTAGAGAGACCCACCTACTGACTGATGAACTGCGCTGACCCTGGGGTCAGGCATGTGGCCTTGATCCCTACCCATGGACCCTGAGACTTGGGGGGGTGGGAGAAAGGCTGTTGTGTCTTCACTGTTGAGtctacatctgtgaaatgggctcaggttcctacctcacagggctgttgtgaggcagccgcaatgtgcttagaagcatggggcctagtggctcatggtgctttcaataaatTTCTTGTTTTAACTAAAGCA`,
+      example: `>TCONS_00106247
+CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAAGAGCTCCTCAGCAGAAGCTCCTCGCATCAGATCCTCTGTGCTGGGAATCCTCCCCTCTTGAGCACACTCTGTGCTCCTCTTCCAGTTACGGTGCATGTGAAGCAATGGTATGGGAAAATTGTTTGCAGAAGGATGAAAAGGCTTTATTGCCAAACTGAACACAGGACTCACCGCTGTAGATACTTGCAGAAGCACTGAAGCTCCTGGAGGGTCTCCTTTGCAGTCTGGAAGATTTCCTCCACGAGAAACAAGTCCACTAAGTGGGCACAGACATCCTCACAGCAACGGGCCACACGGACCCTCTGGTCTGTCTCTACTGCATTCCTAGAAACAGGGCAATCAGCATGGAAGACACTGCACTTGGGGCCCACAGACACTGAGGGCTTGCTTGAAAAGTGCAAGAGTCAGTCAGGCGCGGTGGCTCACGCCTGTAATCCCAGCACTTTGGAAGGCCGAAGCGGGTGGATCATGAGGTCAAGAGATCCAGACCATCCTGGCTAACATGGTGAAACCCTGTCTCTACTAAAAATACAAAAAAATTAGCCTGGTGTGGTGGCGGGCGCCTGTAGTCCCAGCTACTCGGGAGGCTGAAGCAGGAGAATGACGTGAAGCCGGGAGGCAGA`,
       textarea: '',
       
       word_size:'11',
@@ -186,10 +189,12 @@ AGCACAGAAGACGAAGAGCTGGAATAGAGCTCGCCTCGGCTCTGCTGGCCTTGGCTGCAGCTCTTCCAGAAACCCGGGGC
       }).then(respond =>{
         
         _this.resData=respond.data.message.data
+        // console.log(_this.resData)
         _this.length=respond.data.message.data.length
-        console.log(_this.length)
+        // console.log(_this.length)
         if(_this.length == 1){
           window.alert("Blast query is Empty or FASTA sequence format error!")
+          loadingInstance.close() 
         }
         else{
          
@@ -197,13 +202,13 @@ AGCACAGAAGACGAAGAGCTGGAATAGAGCTCGCCTCGGCTCTGCTGGCCTTGGCTGCAGCTCTTCCAGAAACCCGGGGC
           let stuID = []
           for(let i = 0;i < _this.length-1;i++){            
             if(_this.resData != ""){
-              stuID.push(_this.resData[i].split("\t")[1])                                                     
+              stuID.push(_this.resData[i].split("\t")[1].split("|")[0])                                                     
             }           
           }
           _this.RNAID = "'"+stuID.join("','")+"'"
         }
         //console.log(_this.length)
-        //console.log( _this.RNAID)
+        // console.log( _this.RNAID,"RNAID")
      
          
         axios.post("api/property/fuzzySeq",{
@@ -212,21 +217,29 @@ AGCACAGAAGACGAAGAGCTGGAATAGAGCTCGCCTCGGCTCTGCTGGCCTTGGCTGCAGCTCTTCCAGAAACCCGGGGC
           let tempSeq = respond.data
           for(let index = 0;index < tempSeq.length;index++){
             let keyID = tempSeq[index]
-            _this.SeqData[keyID.NONCODE_TRANSCRIPT_ID] = tempSeq[index]
+            _this.SeqData[keyID.transcript_id] = tempSeq[index]
           }
-          //console.log(_this.SeqData)
+          console.log(_this.SeqData)
           for(let j = 0; j < _this.length-1 ; j++){        
-            let sseqid = _this.resData[j].split('\t')[1]
+            let sseqid = _this.resData[j].split('\t')[1].split('|')[0]
             let pident = _this.resData[j].split('\t')[2]
             let length = _this.resData[j].split('\t')[3]
             let evalue = _this.resData[j].split('\t')[4]
             let bitscore = _this.resData[j].split('\t')[5].split('\r')[0]
-
-            //console.log("key: " + sseqid + " ,value: " + _this.SeqData[sseqid])
-            let Name = _this.SeqData[sseqid]["Name"]
+            console.log(_this.SeqData[sseqid]+"key:"+sseqid)
+            // console.log("key: " + sseqid + " ,value: " + _this.SeqData[sseqid])
+            if(_this.SeqData[sseqid] == undefined){
+              continue
+            }
+            let UID = _this.SeqData[sseqid]["UID"]
             let Organism = _this.SeqData[sseqid]["Organism"]
-            let NONCODE_Gene_ID = _this.SeqData[sseqid]["NONCODE_Gene_ID"]
-            let NONCODE_TRANSCRIPT_ID = _this.SeqData[sseqid]["NONCODE_TRANSCRIPT_ID"]
+            let transcript_id = _this.SeqData[sseqid]["transcript_id"]
+            let chr = _this.SeqData[sseqid]["chr"]
+            let start = _this.SeqData[sseqid]["start"]
+            let end = _this.SeqData[sseqid]["end"]
+            let strand = _this.SeqData[sseqid]["strand"] === '-' ? "reverse" : "forward"
+            let version =  Organism === 'Human' ?"(hg38)":"(mm10)"
+            let position = chr + ":" + start + "-" + end + "," + strand + version
             let Sequence = _this.SeqData[sseqid]["FASTA"]
             let Seqlength = _this.SeqData[sseqid]["length"]
             let result = {
@@ -236,10 +249,10 @@ AGCACAGAAGACGAAGAGCTGGAATAGAGCTCGCCTCGGCTCTGCTGGCCTTGGCTGCAGCTCTTCCAGAAACCCGGGGC
               "length":length,
               "evalue":evalue,
               "bitscore":bitscore,
-              "Name":Name,
+              "UID":UID,
               "Organism":Organism,
-              "NONCODE_Gene_ID":NONCODE_Gene_ID,
-              "NONCODE_TRANSCRIPT_ID":NONCODE_TRANSCRIPT_ID,
+              "transcript_id":transcript_id,
+              "position":position,
               "Seqlength":Seqlength,
               "Sequence":Sequence            
             }
@@ -251,22 +264,23 @@ AGCACAGAAGACGAAGAGCTGGAATAGAGCTCGCCTCGGCTCTGCTGGCCTTGGCTGCAGCTCTTCCAGAAACCCGGGGC
          
         
         })
-        
-        
-        
       })
-      
-
-
-
-     
     },
 
     toUrl_DNA(data){
-      window.location.href = "http://www.noncode.org/show_gene.php?id="+data.split(".")[0]+"&version="+data.split(".")[1]+"&utd=1#"
+      sessionStorage.setItem('dataBlast', JSON.stringify(data));
+      this.$router.push({
+        name:'Gene',
+        params:data,
+        query:{page:"Blast"}
+      })
     },
     toUrl_RNA(data){
-      window.location.href = "http://www.noncode.org/show_rna.php?id="+data.split(".")[0]+"&version="+data.split(".")[1]+"&utd=1#"
+      this.$router.push({
+        name:'Visual',
+        params:{data},
+        query:{page:"Blast"}
+      })
     }
 
   }
@@ -303,8 +317,9 @@ AGCACAGAAGACGAAGAGCTGGAATAGAGCTCGCCTCGGCTCTGCTGGCCTTGGCTGCAGCTCTTCCAGAAACCCGGGGC
     font-size: 0;
 }
 .demo-table-expand label {
-  width: 90px;
-  color: #99a9bf;
+  width: auto;
+  font-size:16px;
+  font-weight:bold;
 }
 .demo-table-expand {
   margin-right: 0;
@@ -345,9 +360,6 @@ AGCACAGAAGACGAAGAGCTGGAATAGAGCTCGCCTCGGCTCTGCTGGCCTTGGCTGCAGCTCTTCCAGAAACCCGGGGC
   margin-bottom: 0;
 }
 
-.el-form-item :deep(.el-form-item__label)  {
-  border-right: 1px solid #ebeef5;
-}
 
 
 // /deep/ 相当于 >>>

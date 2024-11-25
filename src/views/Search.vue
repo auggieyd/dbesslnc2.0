@@ -31,12 +31,12 @@
             
           </el-autocomplete>
         </div>
-        <div class="content">
+        <div class="content" >
           <!-- 未进行查询 没有数据显示 -->
           <el-row v-if="id==0" style="padding: 5px;" class="content">
             <div class="wrapper">
               <el-col :span="12"  class="explain">
-                <img src="../../public/assets/img/sta.png" alt="" style="height: auto; width:100%;">
+                <img src="../../public/assets/img/sta3.png" alt="" style="height: auto; width:100%;">
               </el-col>
               <el-col :span="12" class="explain">
                 <p>
@@ -46,7 +46,7 @@
                 a fuzzy search can be performed by "%".More detailed fuzzy query rules are given in 'Search help'
                 in the tutorial section of the 'Help' page.
                 </p>
-                <img alt="search example" style="height:auto; width: 100%;" src="../../public/assets/img/sea.png" />
+                <img alt="search example" style="height:auto; width: 100%;" src="../../public/assets/img/sea2.png" />
               </el-col>
             </div>
 
@@ -71,7 +71,7 @@
             style="width: 100%"
             ref="table"
           >
-            <el-table-column label="Gene UID" prop="UID" width="150px" >
+            <el-table-column label="Gene UID" prop="UID" width="110px" >
               <template #default="scope">
                 <span @click="toUrl(scope.row)" class="hand">{{scope.row.UID}}</span>
               </template>
@@ -79,25 +79,25 @@
 
             <el-table-column label="Symbol" prop="gene_name"  >
             </el-table-column>
-            <el-table-column label="NCBI Gene ID" prop="NCBI_id">
+            <el-table-column label="NCBI Gene ID" prop="NCBI_id"  width="120px">
               <template #default="scope">
                 <span @click="toUrl_NCBI(scope.row.NCBI_id)" class="hand">{{scope.row.NCBI_id}}</span>
               </template>
             </el-table-column>
-            <el-table-column label="LncBook Gene ID" prop="Lncbook_id" width="180px" >
+            <el-table-column label="LncBook Gene ID" prop="Lncbook_id"  width="150px">
               <template #default="scope">
                 <span @click="toUrl_LncBook(scope.row.Lncbook_id)" class="hand">{{scope.row.Lncbook_id }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="NONCODE Gene ID" prop="NONCODEId" width="180px" >
+            <el-table-column label="NONCODE Gene ID" prop="NONCODEId"  width="170px">
               <template #default="scope">
                 <span @click="toUrl_NONCODE(scope.row.Noncode_id)" class="hand">{{scope.row.Noncode_id }}</span>
               </template>
             </el-table-column>
             
-            <el-table-column label="Organism" prop="Organism" width="200px" >
+            <el-table-column label="Organism" prop="Organism"  >
             </el-table-column>
-            <el-table-column label="Validity" prop="evidence_type" width="100px" >
+            <!-- <el-table-column label="Validity" prop="evidence_type"  >
               <template v-slot="scope">
                 <div  v-if="scope.row.evidence_type === 0">
                   <el-tag size="small" type="info" effect="plain">CRISPR</el-tag>
@@ -113,37 +113,53 @@
                   <el-tag size="small" type="info" effect="dark">Predicted</el-tag>
                 </div>
               </template>
-            </el-table-column>  
+            </el-table-column>   -->
 
-            <el-table-column label="PubMedID" prop="PMID"  width="100px" >
+            <el-table-column label="PubMedID" prop="PMID"  >
               <template #default="scope">
                 <a :href="url+scope.row.PMID" target="_black">
                   {{scope.row.PMID}}
                 </a>
               </template>
             </el-table-column>
-            <el-table-column label="vivo" prop="vivo" width="100px">
+            <el-table-column label="General" prop="vivo" >
               <template #default="scope">
-                <span >{{scope.row.vivo === 1? "√" : "×"}}</span>
+                <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                <i v-show="scope.row.vivo === 1" class="el-icon-check"></i>
+                <i v-show="scope.row.vivo !== 1" class="el-icon-close"></i>                
               </template>
             </el-table-column>
-            <el-table-column label="vitro" prop="role" width="100px">
+            <el-table-column label="Cell-viability" prop="role" >
               <template #default="scope">
-                <span >{{scope.row.role ? "√" : "×"}}</span>
+                <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                <i v-show="scope.row.vitro === 1" class="el-icon-check"></i>
+                <i v-show="scope.row.vitro !== 1" class="el-icon-close"></i>    
               </template>
             </el-table-column>
-            <el-table-column label="cancer-related" prop="cancer_related" width="100px">
+            <el-table-column label="Cancer-related" prop="cancer_related" >
               <template #default="scope">
-                <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span>
+                <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                <i v-show="scope.row.cancer_related > 0" class="el-icon-check"></i>
+                <i v-show="scope.row.cancer_related === 0" class="el-icon-close"></i> 
               </template>
             </el-table-column>
-            <el-table-column label="disease-related" prop="disease_related" width="100px">
+            <el-table-column label="Disease-related" prop="disease_related" >
               <template #default="scope">
-                <span >{{scope.row.disease_related === 1 ? "√" : "×"}}</span>
+                <i v-show="scope.row.disease_related === 1" class="el-icon-check"></i>
+                <i v-show="scope.row.disease_related === 0" class="el-icon-close"></i> 
               </template>
             </el-table-column>
           </el-table>
-
+          <el-pagination
+              v-if = "id==1"
+              class="pagesearch"
+              background 
+              v-model:current-page="currentPage"
+              v-model:page-size="pageSize"
+              @current-change="handleChange"
+              layout="prev, pager, next, jumper"
+              :total="Total">
+            </el-pagination>
         </div>
     </div>
 </template>
@@ -155,6 +171,9 @@ export default {
   // inject:['reload'],
   data(){
     return {
+      currentPage: 1,
+      pageSize: 20,
+      Total: 0,
       isShow:true,
       lncrnaTable:"",//推到前端的数据
       inputContent:"",//输入的数据
@@ -169,7 +188,7 @@ export default {
 
         },
         {
-          label:"Query by essential level",
+          label:"Query by essential role",
           options: [
             {value:"option3",label:"General"},
             {value:"option4",label:"Cell viability"},
@@ -202,6 +221,8 @@ export default {
       fuzzyCancer:[],
       fuzzyCell:[],
       fuzzyDisease:[],
+      // tempsearpath
+      tempPath:""
     }
   },
   methods: {
@@ -242,6 +263,19 @@ export default {
         );
       };
     },
+    fetchData(path){
+      var _this = this;
+      var sqlPath = "api/property/"+path;
+
+      axios.post(sqlPath,{
+        page:_this.currentPage,
+        pageSize:_this.pageSize
+      }).then(function(respond){
+        _this.lncrnaTable=respond.data.items;
+        _this.Total = respond.data.total;
+        _this.id = 1;
+      })
+    },
     Search(){
       // console.log("Search 函数调用成功！");
       var inputContent = this.inputContent;//输入框中的内容
@@ -252,10 +286,13 @@ export default {
       if(searchOpt == "option1"){
         //输入框为空
         if(inputContent == ""){
-          axios.post("api/property/selectHuman").then(function(respond){
-            _this.lncrnaTable=respond.data;
-            _this.id = 1;
-          })
+          _this.tempPath = "selectHuman";
+          _this.currentPage = 1;
+          _this.fetchData("selectHuman");
+          // axios.post("api/property/selectHuman").then(function(respond){
+          //   _this.lncrnaTable=respond.data;
+          //   _this.id = 1;
+          // })
         }
         //输入框不为空
         else{
@@ -269,10 +306,13 @@ export default {
       else if(searchOpt == "option2"){
         //输入框为空
         if(inputContent == ""){
-          axios.post("api/property/selectMouse").then(function(respond){
-            _this.lncrnaTable=respond.data;
-            _this.id = 1;
-          })
+          _this.tempPath = "selectMouse";
+          _this.currentPage = 1;
+          _this.fetchData("selectMouse");
+          // axios.post("api/property/selectMouse").then(function(respond){
+          //   _this.lncrnaTable=respond.data;
+          //   _this.id = 1;
+          // })
         }
         //输入框不为空
         else{
@@ -286,10 +326,13 @@ export default {
       else if(searchOpt == "option3"){
         //输入框为空
         if(inputContent == ""){
-          axios.post("api/property/select_reason_vital").then(function(respond){
-            _this.lncrnaTable=respond.data;
-            _this.id = 1;
-          })
+          _this.tempPath = "select_reason_vital";
+          _this.currentPage = 1;
+          _this.fetchData("select_reason_vital");
+          // axios.post("api/property/select_reason_vital").then(function(respond){
+          //   _this.lncrnaTable=respond.data;
+          //   _this.id = 1;
+          // })
         }
         //输入框不为空
         else{
@@ -303,10 +346,13 @@ export default {
       else if(searchOpt == "option4"){
         //输入框为空
         if(inputContent == ""){
-          axios.post("api/property/select_cell").then(function(respond){
-            _this.lncrnaTable=respond.data;
-            _this.id = 1;
-          })
+          _this.tempPath = "cellGrowth";
+          _this.currentPage = 1;
+          _this.fetchData("cellGrowth");
+          // axios.post("api/property/select_cell").then(function(respond){
+          //   _this.lncrnaTable=respond.data;
+          //   _this.id = 1;
+          // })
         }
         //输入框不为空
         else{
@@ -323,10 +369,13 @@ export default {
       else if(searchOpt == "option7"){
         //输入框为空
         if(inputContent == ""){
-          axios.post("api/property/select_disease_related").then(function(respond){
-            _this.lncrnaTable=respond.data;
-            _this.id = 1;
-          })
+          _this.tempPath = "select_disease_related";
+          _this.currentPage = 1;
+          _this.fetchData("select_disease_related");
+          // axios.post("api/property/select_disease_related").then(function(respond){
+          //   _this.lncrnaTable=respond.data;
+          //   _this.id = 1;
+          // })
         }
         //输入框不为空
         else{
@@ -336,14 +385,17 @@ export default {
           })
         }
       }
-      //选择 option 5 reason is tumor
-      else if(searchOpt == "option5"){
+      //选择 option 6 reason is tumor
+      else if(searchOpt == "option6"){
         //输入框为空
         if(inputContent == ""){
-          axios.post("api/property/select_reason_tumor").then(function(respond){
-            _this.lncrnaTable=respond.data;
-            _this.id = 1;
-          })
+          _this.tempPath = "select_reason_tumor";
+          _this.currentPage = 1;
+          _this.fetchData("select_reason_tumor");
+          // axios.post("api/property/select_reason_tumor").then(function(respond){
+          //   _this.lncrnaTable=respond.data;
+          //   _this.id = 1;
+          // })
         }
         //输入框不为空
         else{
@@ -355,14 +407,18 @@ export default {
         }
       }
       
-      //option 6 reason is cancer
-      else if(searchOpt == "option6"){
+      //option 5 reason is cancer
+      else if(searchOpt == "option5"){
         //输入框为空
         if(inputContent == ""){
-          axios.post("api/property/select_reason_cancer").then(function(respond){
-            _this.lncrnaTable=respond.data;
-            _this.id = 1;
-          })
+          _this.tempPath = "select_reason_cancer";
+          _this.currentPage = 1;
+          _this.fetchData("select_reason_cancer");
+          
+          // axios.post("api/property/select_reason_cancer").then(function(respond){
+          //   _this.lncrnaTable=respond.data;
+          //   _this.id = 1;
+          // })
         }
         //输入框不为空
         else{
@@ -396,6 +452,11 @@ export default {
         query:{page:"Search"}
       })
 
+    },
+    handleChange(newPage,path) {
+      // console.log(newPage);
+      this.currentPage = newPage;
+      this.fetchData(this.tempPath);
     }
     
   },
@@ -429,7 +490,7 @@ export default {
           "value":vital.data[i]["gene_name"]
           })
         }
-        console.log(tumor.data);
+        // console.log(tumor.data);
           for (let i = 0;i< tumor.data.length;i++){
           _this.fuzzyTumor.push({
           "value":tumor.data[i]["gene_name"]
@@ -489,7 +550,7 @@ export default {
 }
 </script>
 
-<style>
+<style >
 /* 没有用scoped 如果使用斑马线设置无效 */
 .header {
   width: 100%;
@@ -547,6 +608,8 @@ export default {
 
 .content {
   padding: 10px;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .el-table {
@@ -574,6 +637,7 @@ export default {
 .explain p {
   text-indent: 2em;
   text-align: justify;
+  font-family: Arial, "Microsoft YaHei", "微软雅黑", serif;
 }
 
 .demo-table-expand {
@@ -617,6 +681,21 @@ span {
   align-items:center;
   padding-left:10px;
 }
-
+.pagesearch{
+  margin-top: 10px;
+  text-align: center;
+}
+.el-pagination.is-background .el-pager li:hover{
+  color: #389a99 !important;
+}
+.el-pagination.is-background .el-pager li:not(.disabled):hover{
+  color: #389a99 !important;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active:hover{
+  background-color: #389a99 !important;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active{
+  background-color: #389a99 !important;  
+}
 
 </style>

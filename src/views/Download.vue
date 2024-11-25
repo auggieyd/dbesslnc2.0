@@ -13,36 +13,26 @@
       <div class="download-content" style="height:40%">
         <p>
           <img src="../../public/assets/img/downicon.png" class="icon" />
-          <a :href="'/data/essential lncRNA.json'" download="">
-            essential lncRNA.json
+          <a :href="'/data/esslnc.xlsx'" download="">
+            All essential lncRNA.xlsx
           </a>
           : This file contains all data.
         </p>
          <p>
           <img src="../../public/assets/img/downicon.png" class="icon" />
-          <a :href="'/data/general.json'" download="">
-            general.json
+          <a :href="'/data/exp_crispr_records.xlsx'" download="">
+            CRISPR Experimental Record.xlsx
           </a>
-          : This file contains all general data.
+          : This file contains all CRISPR Experimental Record.
         </p>
 
         <p>
           <img src="../../public/assets/img/downicon.png" class="icon" />
-          <a :href="'/data/tumor suppressor gene.json'" download="">
-            tumor suppressor.json
+          <a :href="'/data/disease_related.xlsx'" download="">
+            Disease Related.xlsx
           </a>
-          : This file contains all tumor suppressor  data.
+          : This file contains all disease related  data.
         </p>
-
-        <p>
-          <img src="../../public/assets/img/downicon.png" class="icon" />
-          <a :href="'/data/oncogene.json'" download="">
-            oncogene.json
-          </a>
-          : This file contains all oncogene data.
-        </p>
-
-
       </div>
     </div>
     <div class="files">
@@ -50,8 +40,8 @@
       <div class="download-content" style="height:40%">
         <div >
           <img src="../../public/assets/img/github.png" class="icon" />
-          <a href=" https://github.com/yyZhang14/dbEssLnc" target="_blank">
-           https://github.com/yyZhang14/dbEssLnc
+          <a href=" https://github.com/auggieyd/dbesslnc2.0" target="_blank">
+            https://github.com/auggieyd/dbesslnc2.0
           </a>
         </div>
 

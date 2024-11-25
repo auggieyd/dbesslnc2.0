@@ -8,14 +8,14 @@
     <!-- 返回顶部按钮 -->
     <el-backtop>
       <div
-        style="{
-                        height: 100%;
-                        width: 100%;
-                        background-color: #f2f5f6;
-                        box-shadow: 0 0 6px rgba(0,0,0, .12);
-                        text-align: center;
-                        line-height: 40px;
-                        color: rgb(115, 200, 200);
+        :style="{
+                        height: '100%',
+                        width: '100%',
+                        backgroundColor: '#f2f5f6',
+                        boxShadow: '0 0 6px rgba(0,0,0, .12)',
+                        textAlign: 'center',
+                        lineHeight: '40px',
+                        color: 'rgb(115, 200, 200)'
                     }"
       >
         TOP
@@ -130,5 +130,22 @@ a {
   -ms-border-radius: 5px;
   border-radius: 5px;
   /* padding-bottom: 40px; */
+}
+.pagination {
+  margin-top: 5px;
+  width: 80%;
+  text-align: center;
+}
+:deep(.el-pagination.is-background .el-pager li:hover) {
+  color: #389a99 !important;
+}
+:deep(.el-pagination.is-background .el-pager li:not(.disabled):hover) {
+  color: #389a99 !important;
+}
+:deep(.el-pagination.is-background .el-pager li:not(.disabled).active:hover) {
+  background-color: #389a99 !important;
+}
+:deep(.el-pagination.is-background .el-pager li:not(.disabled).active) {
+  background-color: #389a99 !important;  
 }
 </style>

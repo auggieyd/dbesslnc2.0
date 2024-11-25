@@ -15,11 +15,12 @@
            Essential lncRNAs are important for fundamental cellular processes including 
            gene expression regulation and signal pathways,even concerned with the progression
             of the diseases or tumors.Here,we developed a database named dbEssLnc 
-            (<b><a href="https://esslnc.pufengdu.org">https://esslnc.pufengdu.org</a></b>),which manually 
+            (<b><a href="https://esslnc2.pufengdu.org">https://esslnc2.pufengdu.org</a></b>),which manually 
             collects and collates essential lncRNAs information from existing databases and published 
-            literature. Currently, the dbEssLnc database contains <b>207</b> essential lncRNAs , 
+            literature. Currently, the dbEssLnc database contains <b>6287</b> essential lncRNAs , 
             and the data will be continuously added and updated.
           </p>
+          <img width="400" alt="browse help" src="../../public/assets/img/help/workflow.svg" />
         </el-collapse-item>
 
         <el-collapse-item title="2. Browse help" name="2">
@@ -27,31 +28,30 @@
             <strong>(1).</strong> Users can browse information of essential lncRNAs 
             and their original references. The navigation bar on the left side shows 
             all the contents users can browse in the 'Browse' page. It takes some time to
-            load data when opening the page.The sidebar of the web page allows you to anchor
-             three tables. There is a button on the right side of the table to expand the data in more detail.
+            load data when opening the page.
           </p>
-          <img alt="browse help" src="../../public/assets/img/help/bro1.png" />
-
           <p>
-            <strong>(2).</strong> The NCBI_gene_Id and PubMed  in the table can directly go to the NCBI
-             website to read gene and article information.
+            <strong>(2).</strong> Users can click on the Gene UID to navigate to the gene details page.
           </p>
-          <img alt="browse help" src="../../public/assets/img/help/bro2.png" />
-
+          <p>
+            <strong>(3).</strong> The NCBI_gene_Id and PubMed  in the table can directly go to the NCBI
+            website to read gene and article information.
+          </p>
+          <img alt="browse help" src="../../public/assets/img/help/bhelp.png" />
         </el-collapse-item>
         <el-collapse-item title="3. Gene help" name="3">
           <p>
             <strong>(1).</strong> Users can click lncRNA gene name in "Browse" or "Search" page, then page will jump to this "Gene" page. The "Gene"
-            page show detail information of gene, such as name, NONCODE gene id, NCBI gene id ,aliase,the reason to be essential,organism 
-            and gene ontology annotations. Users click "NONCODE Gene ID" can link to NONCODE database, click "NCBI Gene ID" can link to NCBI website.
+            page show detail information of gene, such as gene symbol, LncBook gene id,NONCODE gene id, position, NCBI gene id ,aliase,the reason to be essential,organism, 
+            gene ontology annotations and CRISPR experimental records . Users click "LncBook Gene ID/NONCODE Gene ID" can link to LncBook/NONCODE database, click "NCBI Gene ID" can link to NCBI website.
           </p>
-          <img alt="gene help" src="../../public/assets/img/help/gene1.png" />
+          <img alt="gene help" src="../../public/assets/img/help/ghelp.png" />
 
           <p>
-            <strong>(2).</strong> Gene page also show  all transcript id of this gene in NONCODE database.Users click "NONCODE transcript id" can link to
+            <strong>(2).</strong> Gene page also show  all transcript id of this gene in in their original sources.Users click "transcript id" can link to
             "Visual" page.
           </p>
-          <img alt="gene help" src="../../public/assets/img/help/gene2.png" />
+          <img alt="gene help" src="../../public/assets/img/help/thelp.png" />
 
         </el-collapse-item>
 
@@ -61,7 +61,7 @@
             page show detail information of lncRNA gene, such as name, NONCODE id, NCBI gene id ,the reason to be 
             essential,organsim, gene ontology annotations and gene sequence.
           </p>
-          <img alt="visual help" src="../../public/assets/img/help/visual1.png" />
+          <img alt="visual help" src="../../public/assets/img/help/tdhelp.png" />
           <p>
             <strong>(2).</strong>This part show the expression profile data of lncRNA. The mouse expression
             profile data included six tissues.
@@ -71,7 +71,7 @@
             <strong>(3).</strong>This part show the expression profile data of lncRNA. The human expression 
             profile data included 24 tissues.
           </p>
-          <img alt="visual help" src="../../public/assets/img/help/visual3.png" />
+          <img alt="visual help" src="../../public/assets/img/help/vhelp.png" />
         </el-collapse-item>
 
         <el-collapse-item title="5. Descriptions about 'Search' page and Fuzzy search" name="5">
@@ -81,21 +81,16 @@
             the search box matches the first few letters of the names of
             essential lncRNAs.
           </p>
-          <img alt="search help" src="../../public/assets/img/help/sea1.png" />
           <p>
-            <strong>(2).</strong> Clich on the button to expand the folding panel to read more essential lncRNAs information.
-          </p>
-          <img alt="search help" src="../../public/assets/img/help/sea2.png" />
-          <p>
-            <strong>(3).</strong>The query box supports wildcard queries using '_' and '%'.
+            <strong>(2).</strong>The query box supports wildcard queries using '_' and '%'.
              Where '_' can match any single character, and '%' matches any number of characters.
           </p>
-          <img alt="search help" src="../../public/assets/img/help/sea3.png" />
-          <img alt="search help" src="../../public/assets/img/help/sea4.png" />
+          <img alt="search help" src="../../public/assets/img/help/shelp.png" />
+          
           <p>
-            <strong>(4).</strong> Users click gene name ,page will link to "Gene" page.
+            <strong>(3).</strong> Users click gene UID ,page will link to "Gene" page.
           </p>
-           <img alt="search help" src="../../public/assets/img/help/sea5.png" />
+           <img alt="search help" src="../../public/assets/img/help/shelp2.png" />
         </el-collapse-item>
         
         <el-collapse-item title="6. Blast help" name="6">
@@ -106,23 +101,26 @@
             alignment will  be display below.
              Enter lncRNA sequence or click 'Example' to use template lncRNA sequence.
           </p>
-          <img alt="batch convert help" src="../../public/assets/img/help/bla1.png" />
           <p>
             <strong>(2).</strong>
             Set e-value and word size,then click 'Blast' button to doing sequence alignment, the result will be shown in following table.
           </p>
-          <img alt="bacth convert help" src="../../public/assets/img/help/bla2.png" />
           <p>
             <strong>(3).</strong>
-            For example, Users input the sequence of Meg3 in mouse,will see homologous gene MEG3 in human.
+            For example, Users input the sequence of MEG3 in mouse,will see homologous gene meg3 in mouse.
           </p>
-          <img alt="bacth convert help" src="../../public/assets/img/help/bla3.png" />
+          <img alt="batch convert help" src="../../public/assets/img/help/bhelp1.png" />
+          <p>
+            <strong>(4).</strong>
+            Clicking the expand button allows you to view detailed information, and clicking the Gene UID directs you to the gene detail page.
+          </p>
+          <img alt="batch convert help" src="../../public/assets/img/help/bhelp2.png" />
         </el-collapse-item>
         <el-collapse-item title="7. Download help" name="7">
           <p>
-            <strong>(1).</strong> Users can download all data and source code of dbEssLnc database.
+            <strong>(1).</strong> Users can download all data and source code of dbEssLnc2.0 database.
           </p>
-          <img alt="download help" src="../../public/assets/img/help/down.png" />
+          <img alt="download help" src="../../public/assets/img/help/download.png" />
         </el-collapse-item>
       </el-collapse>
     <!-- </div> -->
@@ -193,7 +191,7 @@ export default {
       },
       series: [
         {
-        data: [{value:173,name:'Human'},{value:34,name:'Mouse'}],
+        data: [{value:6253,name:'Human'},{value:34,name:'Mouse'}],
         type: 'bar',
         itemStyle:{
           normal:{
@@ -214,12 +212,17 @@ export default {
     var option2 = {
 
     title: {
-      text: 'Group by Reason',
+      text: 'Group by Essential role',
       left: 'center'
     },
     xAxis: {
       type: 'category',
-      data: ['general', 'tumor suppressor ', 'oncogene']
+      data: ['general', 'tumor suppressor ', 'oncogene','cell viability','disease-related'],
+      axisLabel: {
+            // rotate: 30, // 旋转30度
+            interval: 0, // 显示所有标签
+   
+        }
     },
     yAxis: {
       type: 'value'
@@ -229,7 +232,7 @@ export default {
     },
     series: [
       {
-        data: [40,69,98],
+        data: [40,73,100,1165,5040],
         type: 'bar',
         itemStyle:{
           normal:{
@@ -243,7 +246,7 @@ export default {
               }
           }        
         },
-        barWidth:'50%'
+        barWidth:'40%'
       }
     ]
   };
@@ -291,8 +294,9 @@ export default {
 }
 
 .content img {
-  width: 90%;
+  width: 80%;
   height: auto;
+  margin-left: 5vw;
 }
 
 :deep(.el-collapse-item__header) {

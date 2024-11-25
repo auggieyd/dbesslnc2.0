@@ -7,15 +7,16 @@
       />
       Browse all
     </el-row>
-    <el-container style="height: expression(document.body.clientHeight-130px); border: 1px solid #eee">
+    <el-container ref="dynamicHeight" style="border: 1px solid #eee">
       <!-- 侧边导航栏 -->
       <el-aside 
-        width="300px"
+        width="18vw"
         style="background-color: rgb(238, 241, 246); text-align:left;">
         <el-menu :default-openeds="['1']">
+          <!-- In vivo -->
           <el-submenu index="1">
             <template v-slot:title>
-              <i class="el-icon-s-grid"></i><b>General</b>
+              <i class="el-icon-s-grid"></i><b>In vivo</b>
             </template>
 
             <el-menu-item index="1-1" >
@@ -27,7 +28,7 @@
           <!-- Cell growth and proliferation -->
           <el-submenu index="2">
             <template v-slot:title>
-              <i class="el-icon-s-grid"></i><b>Cell growth and proliferation</b>
+              <i class="el-icon-s-grid"></i><b>In vitro</b>
             </template>
             <el-menu-item index="2-1" >
               <!-- <a href="#vital">essential lncRNA</a> -->
@@ -57,7 +58,7 @@
             </template>
             <el-menu-item index="5-1" >
               <!-- <a href="#vital">essential lncRNA</a> -->
-              <a href="javascript:void(0)" @click="goAnchor('#disease-related')">Diease related</a>
+              <a href="javascript:void(0)" @click="goAnchor('#disease-related')">Pathogenic</a>
             </el-menu-item>
           </el-submenu>
           <!-- Organism -->
@@ -87,7 +88,7 @@
         <!-- show vital -->
           <div>
             <!-- <a name="vital"></a> -->
-            <h3 id="vital">In Vivo</h3>
+            <h3 id="vital">General</h3>
             <el-table
             :data = "vital"
             :header-cell-style ="{background:'#eef1f6',color:'#606266'}"
@@ -98,97 +99,86 @@
             strip highlight-current-row
             >
 
-            <el-table-column label="Gene UID" prop="UID" width="150">
-              <template #default="scope">
-                <span @click="toUrl(scope.row)" class="hand">{{scope.row.UID}}</span>
-              </template>
-            </el-table-column>
-
-            <el-table-column 
-              label="Symbol" 
-              prop="gene_name" 
-              width="150">
-            </el-table-column>
-
-            <el-table-column prop="NCBI_id" label="NCBI Gene ID" width="150">
-              <template #default="scope">
-              <a :href="urlNCBI+scope.row.NCBI_id" target="_black">
-                {{scope.row.NCBI_id}}
-              </a>
-              </template>
-            </el-table-column>
-
-            <el-table-column
-              label="Organism"
-              prop="Organism"
-              width="150">
-            </el-table-column>
-
-            <el-table-column label="Validity" prop="evidence_type" width = "200">
-              <template v-slot="scope">
-                <!-- 如果 evidence_type 为 1，显示 Literature 标签 -->
-                <el-tag v-if="scope.row.evidence_type === 1" type="info" effect="light">
-                  Literature
-                </el-tag>
-              </template>
-            </el-table-column> 
-            
-            <el-table-column
-              label="Essential role"
-              prop="Role"
-              width="150">
-            </el-table-column>
-
-            <el-table-column prop="PubMedID" label="PubMedID" width="150">
+              <el-table-column label="Gene UID" prop="UID" width="120">
                 <template #default="scope">
-                  <a :href="url+scope.row.PMID" target="_black">
-                    {{scope.row.PMID}}
-                  </a>
+                  <span @click="toUrl(scope.row)" class="hand">{{scope.row.UID}}</span>
                 </template>
-            </el-table-column>
-                        <!-- 扩展部分 -->
-            <!-- <el-table-column type="expand" label="Details" width="200">
-              <template #default="props">
-                <el-form label-position="left" inline class="demo-table-expand" >
-                  <el-form-item label="NONCODE Gene ID:">
-                    <span @click="toUrl_NONCODE(props.row.NONCODEId)" class="hand">{{ props.row.NONCODEId}}</span>
-                  </el-form-item>
-                  <el-form-item label="Aliase:">
-                    <span>{{ props.row.Aliases}}</span>
-                  </el-form-item>
-                  <el-form-item label="Gene Ontology Annotations:">
-                    <span id="span_style">{{props.row.Gene_Ontology_Annotations }}</span>
-                  </el-form-item>
-                </el-form>
-              </template>
-            </el-table-column> -->
+              </el-table-column>
 
+              <el-table-column 
+                label="Symbol" 
+                prop="gene_name" 
+                width="150">
+              </el-table-column>
 
+              <el-table-column prop="NCBI_id" label="NCBI Gene ID" width="130">
+                <template #default="scope">
+                <a :href="urlNCBI+scope.row.NCBI_id" target="_black">
+                  {{scope.row.NCBI_id}}
+                </a>
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                label="Organism"
+                prop="Organism"
+                width="120">
+              </el-table-column>
+
+              <!-- <el-table-column label="Validity" prop="evidence_type" width = "200">
+                <template v-slot="scope">
+                  <el-tag v-if="scope.row.evidence_type === 1" type="info" effect="light">
+                    Literature
+                  </el-tag>
+                </template>
+              </el-table-column>  -->
+              <el-table-column
+                label="Essential role"
+                prop="Role"
+                width="150">
+                General
+              </el-table-column>
+              <el-table-column label="vivo" prop="vivo" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.vivo === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.vivo !== 1" class="el-icon-close"></i>                
+                </template>
+              </el-table-column>
+              <el-table-column label="vitro" prop="role" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.vitro === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.vitro !== 1" class="el-icon-close"></i>    
+                </template>
+              </el-table-column>
+              <el-table-column label="Cancer-related" prop="cancer_related" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.cancer_related > 0" class="el-icon-check"></i>
+                  <i v-show="scope.row.cancer_related === 0" class="el-icon-close"></i> 
+                </template>
+              </el-table-column>
+              <el-table-column label="Disease-related" prop="disease_related" >
+                <template #default="scope">
+                  <i v-show="scope.row.disease_related === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.disease_related === 0" class="el-icon-close"></i> 
+                </template>
+              </el-table-column>      
+              <el-table-column prop="PubMedID" label="PubMedID" width="150">
+                  <template #default="scope">
+                    <a :href="url+scope.row.PMID" target="_black">
+                      {{scope.row.PMID}}
+                    </a>
+                  </template>
+              </el-table-column>    
             </el-table>    
           </div>
         <!-- show crispr cell -->
+         
           <div>
-            <h3 id="crispr-type">Cell growth and proliferation</h3>
-            <!-- select Filter -->
-            <!-- <div class="select-container">
-              <el-select v-model="typeValue" placeholder="Select Crispr type" style="width: 200px;">
-                <el-option
-                  v-for="item in optionsType"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-              <el-select v-model="lineValue" placeholder="Select Cell lines">
-                <el-option
-                  v-for="item in optionsCellLine"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-              <el-button type="primary" style="font-weight: bold;">Filter</el-button>
-            </div> -->
+            <h3 id="crispr-type">Cell viability</h3>
+
             <el-table
             :data = "cellGrowth"
             :header-cell-style ="{background:'#eef1f6',color:'#606266'}"
@@ -201,7 +191,7 @@
               <el-table-column
               label="Gene UID"
               prop="UID"
-              width="150">
+              width="120">
               <template #default="scope">
                 <span @click="toUrl(scope.row)" class="hand">{{scope.row.UID}}</span>
               </template>
@@ -215,37 +205,62 @@
               <el-table-column
               label="NCBI Gene ID"
               prop="NCBI_id"
-              width="150">
+              width="130">
               </el-table-column>
               <el-table-column
               label="Organism"
               prop="Organism"
-              width="150">
+              width="120">
               </el-table-column>
-              <el-table-column
+              <!-- <el-table-column
               label="Validity"
               prop="evidence_type"
               width="200">
               <template v-slot="scope">
-                <el-tag size = "small" v-if="scope.row.evidence_type === 0" type="info" effect="plain">
+                <el-tag size = "small" v-if="scope.row.evidence_type != 1" type="info" effect="plain">
                   CRISPR
                 </el-tag>
-                <!-- 如果 evidence_type 为 1，显示 Literature 标签 -->
-                <el-tag size = "small" v-if="scope.row.evidence_type === 1" type="info" effect="light">
+                <el-tag size = "small" v-if="scope.row.cancer_related > 0" type="info" effect="light">
                   Literature
                 </el-tag>
-                <!-- 如果 evidence_type 为 2，显示两个标签 -->
-                <div v-if="scope.row.evidence_type === 2">
-                  <el-tag size = "small" type="info" effect="plain">CRISPR</el-tag>
-                  <el-tag size = "small" type="info" effect="light">Literature</el-tag>
-                </div>
+                <el-tag size = "small" v-if="scope.row.disease_related === 1" type="info" effect="dark">
+                  Predicted
+                </el-tag>
               </template>
-              </el-table-column>
+              </el-table-column> -->
               <el-table-column
               label="Essential role"
               prop = "role"
               width="150">
+              Cell viability
               </el-table-column>
+              <el-table-column label="vivo" prop="vivo" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.vivo === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.vivo !== 1" class="el-icon-close"></i>                
+                </template>
+              </el-table-column>
+              <el-table-column label="vitro" prop="role" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.vitro === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.vitro !== 1" class="el-icon-close"></i>    
+                </template>
+              </el-table-column>
+              <el-table-column label="Cancer-related" prop="cancer_related" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.cancer_related > 0" class="el-icon-check"></i>
+                  <i v-show="scope.row.cancer_related === 0" class="el-icon-close"></i> 
+                </template>
+              </el-table-column>
+              <el-table-column label="Disease-related" prop="disease_related" >
+                <template #default="scope">
+                  <i v-show="scope.row.disease_related === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.disease_related === 0" class="el-icon-close"></i> 
+                </template>
+              </el-table-column> 
               <el-table-column
               label="PubMedID"
               prop="PMID"
@@ -274,7 +289,7 @@
             style="width: 100%"
             strip highlight-current-row
             >
-            <el-table-column label="Gene UID" prop="UID" width="150">
+            <el-table-column label="Gene UID" prop="UID" width="120">
               <template #default="scope">
                 <span @click="toUrl(scope.row)" class="hand">{{scope.row.UID}}</span>
               </template>
@@ -285,7 +300,7 @@
               width="150">
             </el-table-column>
 
-            <el-table-column prop="NCBI_gene_Id" label="NCBI Gene ID" width="150">
+            <el-table-column prop="NCBI_gene_Id" label="NCBI Gene ID" width="130">
               <template #default="scope">
               <a :href="urlNCBI+scope.row.NCBI_id" target="_black">
                 {{scope.row.NCBI_id}}
@@ -296,35 +311,56 @@
             <el-table-column
               label="Organism"
               prop="Organism"
-              width="150">
+              width="120">
             </el-table-column>
-            <el-table-column label="Validity" prop="evidence_type" width = "200">
+            <!-- <el-table-column label="Validity" prop="evidence_type" width = "200">
               <template v-slot="scope">
                 <el-tag size = "small" v-if="scope.row.evidence_type === 0" type="info" effect="plain">
                   CRISPR
                 </el-tag>
-                <!-- 如果 evidence_type 为 1，显示 Literature 标签 -->
                 <el-tag v-if="scope.row.evidence_type === 1" type="info" effect="light">
                   Literature
                 </el-tag>
-                <!-- 如果 evidence_type 为 2，显示两个标签 -->
                 <div v-if="scope.row.evidence_type === 2">
                   <el-tag type="info" effect="plain">CRISPR</el-tag>
                   <el-tag type="info" effect="light">Literature</el-tag>
                 </div>
               </template>
-            </el-table-column> 
+            </el-table-column>  -->
 
             <el-table-column
               label="Essential role"
               prop="Role"
               width="150">
+              Tumor suppressor
             </el-table-column>
-
-            <!-- <el-table-column
-              label="Ess Reason Description"
-              prop="Reason">
-            </el-table-column> -->
+            <el-table-column label="vivo" prop="vivo" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.vivo === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.vivo !== 1" class="el-icon-close"></i>                
+                </template>
+              </el-table-column>
+              <el-table-column label="vitro" prop="role" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.vitro === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.vitro !== 1" class="el-icon-close"></i>    
+                </template>
+              </el-table-column>
+              <el-table-column label="Cancer-related" prop="cancer_related" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.cancer_related > 0" class="el-icon-check"></i>
+                  <i v-show="scope.row.cancer_related === 0" class="el-icon-close"></i> 
+                </template>
+              </el-table-column>
+              <el-table-column label="Disease-related" prop="disease_related" >
+                <template #default="scope">
+                  <i v-show="scope.row.disease_related === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.disease_related === 0" class="el-icon-close"></i> 
+                </template>
+              </el-table-column> 
             
             <el-table-column prop="PubMedID" label="PubMedID" width="150">
                 <template #default="scope">
@@ -333,26 +369,6 @@
                   </a>
                 </template>
             </el-table-column>
-            <!-- expand -->
-            <!-- <el-table-column type="expand" label="Details" width="100">
-              <template #default="props">
-                <el-form label-position="left" inline class="demo-table-expand" >
-
-                  <el-form-item label="NONCODE Gene ID:">
-                    <span @click="toUrl_NONCODE(props.row.NONCODEId)" class="hand">{{ props.row.NONCODEId}}</span>
-                  </el-form-item>
-
-                  <el-form-item label="Aliase:">
-                    <span>{{ props.row.Aliases}}</span>
-                  </el-form-item>
-                  <el-form-item label="Gene Ontology Annotations:">
-                    <span id="span_style">{{ props.row.Gene_Ontology_Annotations }}</span>
-                  </el-form-item>
-
-                </el-form>
-              </template>
-            </el-table-column> -->
-
             </el-table>    
           </div>
         <!-- show cancer -->
@@ -371,7 +387,7 @@
             <el-table-column
               label="Gene UID"
               prop="UID"
-              width="150">
+              width="120">
               <template #default="scope">
                 <span @click="toUrl(scope.row)" class="hand">{{scope.row.UID}}</span>
               </template>
@@ -381,7 +397,7 @@
               prop="gene_name" 
               width="150">
             </el-table-column>
-            <el-table-column prop="NCBI_gene_Id" label="NCBI Gene ID" width="150">
+            <el-table-column prop="NCBI_gene_Id" label="NCBI Gene ID" width="130">
               <template #default="scope">
               <a :href="urlNCBI+scope.row.NCBI_id" target="_black">
                 {{scope.row.NCBI_id}}
@@ -391,58 +407,62 @@
             <el-table-column
               label="Organism"
               prop="Organism"
-              width="150">
+              width="120">
             </el-table-column>
-            <el-table-column label="Validity" prop="evidence_type" width = "200">
+            <!-- <el-table-column label="Validity" prop="evidence_type" width = "200">
               <template v-slot="scope">
                 <el-tag v-if="scope.row.evidence_type === 0" type="info" effect="plain">
                   CRISPR
                 </el-tag>
-                <!-- 如果 evidence_type 为 1，显示 Literature 标签 -->
                 <el-tag v-if="scope.row.evidence_type === 1" type="info" effect="light">
                   Literature
                 </el-tag>
-                <!-- 如果 evidence_type 为 2，显示两个标签 -->
                 <div v-if="scope.row.evidence_type === 2">
                   <el-tag type="info" effect="plain">CRISPR</el-tag>
                   <el-tag type="info" effect="light">Literature</el-tag>
                 </div>
               </template>
-            </el-table-column> 
+            </el-table-column>  -->
             <el-table-column
               label="Essential role"
               prop="Role"
               width="150">
+              Oncogene
             </el-table-column>
-
-            <!-- <el-table-column
-              label="Ess Reason Description"
-              prop="Reason">
-            </el-table-column> -->
-
-            <el-table-column prop="PubMedID" label="PubMedID" width="100">
+            <el-table-column label="vivo" prop="vivo" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.vivo === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.vivo !== 1" class="el-icon-close"></i>                
+                </template>
+              </el-table-column>
+              <el-table-column label="vitro" prop="role" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.vitro === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.vitro !== 1" class="el-icon-close"></i>    
+                </template>
+              </el-table-column>
+              <el-table-column label="Cancer-related" prop="cancer_related" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.cancer_related > 0" class="el-icon-check"></i>
+                  <i v-show="scope.row.cancer_related === 0" class="el-icon-close"></i> 
+                </template>
+              </el-table-column>
+              <el-table-column label="Disease-related" prop="disease_related" >
+                <template #default="scope">
+                  <i v-show="scope.row.disease_related === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.disease_related === 0" class="el-icon-close"></i> 
+                </template>
+              </el-table-column> 
+            <el-table-column prop="PubMedID" label="PubMedID" >
                 <template #default="scope">
                   <a :href="url+scope.row.PMID" target="_black">
                     {{scope.row.PMID}}
                   </a>
                 </template>
             </el-table-column>
-            <!-- expand -->
-            <!-- <el-table-column type="expand" label="Details" width="100">
-              <template #default="props">
-                <el-form label-position="left" inline class="demo-table-expand" >
-                  <el-form-item label="NONCODE Gene ID:">
-                    <span @click="toUrl_NONCODE(props.row.NONCODEId)" class="hand">{{ props.row.NONCODEId}}</span>
-                  </el-form-item>
-                  <el-form-item label="Aliase:">
-                    <span>{{ props.row.Aliases }}</span>
-                  </el-form-item>
-                  <el-form-item label="Gene Ontology Annotations:">
-                    <span id="span_style">{{ props.row.Gene_Ontology_Annotations }}</span>
-                  </el-form-item>
-                </el-form>
-              </template>
-            </el-table-column> -->
 
             </el-table>    
           </div>
@@ -461,7 +481,7 @@
             <el-table-column
               label="Gene UID"
               prop="UID"
-              width="150">
+              width="120">
               <template #default="scope">
                 <span @click="toUrl(scope.row)" class="hand">{{scope.row.UID}}</span>
               </template>
@@ -471,7 +491,7 @@
               prop="gene_name" 
               width="150">
             </el-table-column>
-            <el-table-column prop="NCBI_id" label="NCBI Gene ID" width="150">
+            <el-table-column prop="NCBI_id" label="NCBI Gene ID" width="130">
               <template #default="scope">
               <a :href="urlNCBI+scope.row.NCBI_id" target="_black">
                 {{scope.row.NCBI_id}}
@@ -481,10 +501,10 @@
             <el-table-column
               label="Organism"
               prop="Organism"
-              width="150">
+              width="120">
               Human
             </el-table-column>
-            <el-table-column label="Validity" prop="evidence_type">
+            <!-- <el-table-column label="Validity" prop="evidence_type">
               <template v-slot="scope">
                 <div  v-if="scope.row.evidence_type === 0">
                   <el-tag size="small" type="info" effect="plain">CRISPR</el-tag>
@@ -502,19 +522,45 @@
                 <div  v-if="scope.row.evidence_type === 3">
                   <el-tag size="small" type="info" effect="dark">Predicted</el-tag>
                 </div>
-
               </template>
-            </el-table-column> 
+            </el-table-column>  -->
             <el-table-column
               label="Essential role"
-              width="180">
+              width="150">
               Pathogenic
             </el-table-column>
-            <el-table-column
-              label="Source"
-              width="150">
-              ClinVar
-            </el-table-column>
+            <el-table-column label="vivo" prop="vivo" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.vivo === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.vivo !== 1" class="el-icon-close"></i>                
+                </template>
+              </el-table-column>
+              <el-table-column label="vitro" prop="role" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.vitro === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.vitro !== 1" class="el-icon-close"></i>    
+                </template>
+              </el-table-column>
+              <el-table-column label="Cancer-related" prop="cancer_related" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.cancer_related > 0" class="el-icon-check"></i>
+                  <i v-show="scope.row.cancer_related === 0" class="el-icon-close"></i> 
+                </template>
+              </el-table-column>
+              <el-table-column label="Disease-related" prop="disease_related" >
+                <template #default="scope">
+                  <i v-show="scope.row.disease_related === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.disease_related === 0" class="el-icon-close"></i> 
+                </template>
+              </el-table-column> 
+              <el-table-column
+                label="Source"
+                width="150">
+                ClinVar
+              </el-table-column>
             </el-table>    
             <el-pagination
               class="pagination"
@@ -523,7 +569,8 @@
               v-model:page-size="pageSizeCell"
               @current-change="handleDiseaseChange"
               layout="prev, pager, next, jumper"
-              :total="diseaseTotal"></el-pagination>
+              :total="diseaseTotal">
+            </el-pagination>
           </div>
         <!-- human -->
           <div>
@@ -539,63 +586,77 @@
             strip highlight-current-row
             >
             <el-table-column
-              label="Name"
-              prop="Name"
-              width="150">
+              label="Gene UID"
+              prop="UID"
+              >
               <template #default="scope">
-                <span @click="toUrl(scope.row)" class="hand">{{scope.row.Name}}</span>
+                <span @click="toUrl(scope.row)" class="hand">{{scope.row.UID}}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="NCBI_gene_Id" label="NCBI Gene ID" width="150">
+            <el-table-column
+              label = "Symbol"
+              prop="gene_name" 
+              >
+            </el-table-column>
+            <el-table-column prop="NCBI_gene_Id" label="NCBI Gene ID" >
               <template #default="scope">
-              <a :href="urlNCBI+scope.row.NCBI_gene_Id" target="_black">
-                {{scope.row.NCBI_gene_Id}}
+              <a :href="urlNCBI+scope.row.NCBI_id" target="_black">
+                {{scope.row.NCBI_id}}
               </a>
               </template>
             </el-table-column>
-
             <el-table-column
-              label="Role"
-              prop="Role"
-              width="140">
+              label="Organism"
+              prop="Organism"
+              >
             </el-table-column>
-            <el-table-column
-              label="Detailed Reason Description"
-              prop="Reason">
-            </el-table-column>
-
-            <el-table-column prop="PubMedID" label="PubMedID" width="100">
+            <el-table-column label="vivo" prop="vivo" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.vivo === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.vivo !== 1" class="el-icon-close"></i>                
+                </template>
+              </el-table-column>
+              <el-table-column label="vitro" prop="role" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.vitro === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.vitro !== 1" class="el-icon-close"></i>    
+                </template>
+              </el-table-column>
+              <el-table-column label="Cancer-related" prop="cancer_related" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.cancer_related > 0" class="el-icon-check"></i>
+                  <i v-show="scope.row.cancer_related === 0" class="el-icon-close"></i> 
+                </template>
+              </el-table-column>
+              <el-table-column label="Disease-related" prop="disease_related" >
+                <template #default="scope">
+                  <i v-show="scope.row.disease_related === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.disease_related === 0" class="el-icon-close"></i> 
+                </template>
+              </el-table-column> 
+              <el-table-column prop="PubMedID" label="PubMedID" >
                 <template #default="scope">
                   <a :href="url+scope.row.PMID" target="_black">
                     {{scope.row.PMID}}
                   </a>
                 </template>
-            </el-table-column>
-
-            <el-table-column type="expand" label="Details" width="100">
-              <template #default="props">
-                <el-form label-position="left" inline class="demo-table-expand" >
-                  <el-form-item label="NONCODE Gene ID:">
-                    <span @click="toUrl_NONCODE(props.row.NONCODEId)" class="hand">{{ props.row.NONCODEId}}</span>
-                  </el-form-item>
-                  <el-form-item label="Aliase:">
-                    <span>{{ props.row.Aliases }}</span>
-                  </el-form-item>
-                  <el-form-item label="Gene Ontology Annotations:">
-                    <span id="span_style">{{ props.row.Gene_Ontology_Annotations }}</span>
-                  </el-form-item>
-                  <!-- <el-form-item label="Gene Sequence:" >
-                    <span id="span_style">{{ props.row.fasta }}</span>
-                  </el-form-item> -->
-                </el-form>
-            </template>
-            </el-table-column>
-
-            </el-table>    
+              </el-table-column>
+            </el-table>
+            <el-pagination
+              class="pagination"
+              background 
+              v-model:current-page="currentPageHuman"
+              v-model:page-size="pageSizeCell"
+              @current-change="handleHumanChange"
+              layout="prev, pager, next, jumper"
+              :total="humanTotal">
+            </el-pagination>    
           </div>
         <!-- mouse -->
           <div>
-           
             <h3 id = "xiaoshu">Mouse</h3>
             <el-table
             :data = "xiaoshu"
@@ -607,100 +668,66 @@
             strip highlight-current-row
             >
             <el-table-column
-              label="Name"
-              prop="Name"
-              width="150">
+              label="Gene UID"
+              prop="UID"
+              >
               <template #default="scope">
-                <span @click="toUrl(scope.row)" class="hand">{{scope.row.Name}}</span>
+                <span @click="toUrl(scope.row)" class="hand">{{scope.row.UID}}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="NCBI_gene_Id" label="NCBI Gene ID" width="150">
+            <el-table-column
+              label = "Symbol"
+              prop="gene_name" 
+              >
+            </el-table-column>
+            <el-table-column prop="NCBI_gene_Id" label="NCBI Gene ID" >
               <template #default="scope">
-              <a :href="urlNCBI+scope.row.NCBI_gene_Id" target="_black">
-                {{scope.row.NCBI_gene_Id}}
+              <a :href="urlNCBI+scope.row.NCBI_id" target="_black">
+                {{scope.row.NCBI_id}}
               </a>
               </template>
             </el-table-column>
-
             <el-table-column
-              label="Role"
-              prop="Role"
-              width="140">
+              label="Organism"
+              prop="Organism"
+              >
             </el-table-column>
-            <el-table-column
-              label="Detailed Reason Description"
-              prop="Reason">
-            </el-table-column>
-
-            <el-table-column prop="PubMedID" label="PubMedID" width="100">
+            <el-table-column label="vivo" prop="vivo" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.vivo === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.vivo !== 1" class="el-icon-close"></i>                
+                </template>
+              </el-table-column>
+              <el-table-column label="vitro" prop="role" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.vitro === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.vitro !== 1" class="el-icon-close"></i>    
+                </template>
+              </el-table-column>
+              <el-table-column label="Cancer-related" prop="cancer_related" >
+                <template #default="scope">
+                  <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                  <i v-show="scope.row.cancer_related > 0" class="el-icon-check"></i>
+                  <i v-show="scope.row.cancer_related === 0" class="el-icon-close"></i> 
+                </template>
+              </el-table-column>
+              <el-table-column label="Disease-related" prop="disease_related" >
+                <template #default="scope">
+                  <i v-show="scope.row.disease_related === 1" class="el-icon-check"></i>
+                  <i v-show="scope.row.disease_related === 0" class="el-icon-close"></i> 
+                </template>
+              </el-table-column> 
+              <el-table-column prop="PubMedID" label="PubMedID" >
                 <template #default="scope">
                   <a :href="url+scope.row.PMID" target="_black">
                     {{scope.row.PMID}}
                   </a>
                 </template>
-            </el-table-column>
-
-            <el-table-column type="expand" label="Details" width="100">
-              <template #default="props">
-                <el-form label-position="left" inline class="demo-table-expand" >
-                  <el-form-item label="NONCODE Gene ID:">
-                    <span @click="toUrl_NONCODE(props.row.NONCODEId)" class="hand">{{ props.row.NONCODEId}}</span>
-                  </el-form-item>
-                  <el-form-item label="Aliase:">
-                    <span>{{ props.row.Aliases }}</span>
-                  </el-form-item>
-                  <el-form-item label="Gene Ontology Annotations:">
-                    <span id="span_style">{{ props.row.Gene_Ontology_Annotations }}</span>
-                  </el-form-item>
-            
-                </el-form>
-            </template>
-            </el-table-column>
-
-            </el-table>    
-          </div>
-        <!-- show cell line -->
-        <!-- <div>
-            <h3 id="cell-line">cell line</h3>
-            <el-table
-            :data = "Hela"
-            :header-cell-style ="{background:'#eef1f6',color:'#606266'}"
-            height="400"
-            border
-            stripe
-            style="width: 100%"
-            strip highlight-current-row
-            >
-            <el-table-column
-              label="gene_id"
-              prop="gene_id"
-              width="100">
-            </el-table-column>
-            <el-table-column
-              label="exp_type"
-              prop="exp_type"
-              width="150">
-            </el-table-column>
-            <el-table-column
-              label="cell_line"
-              prop="cell_line"
-              width="150">
-            </el-table-column>
-            <el-table-column
-              label="exp_score"
-              prop="exp_score"
-              width="150">
-            </el-table-column>
-            <el-table-column
-              label="role"
-              prop="role"
-              width="150">
-            </el-table-column>
-            
+              </el-table-column>
             </el-table>
-        </div>  -->
-
-
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -710,7 +737,6 @@
 <script>
 import axios from "axios";
 import { ElLoading } from 'element-plus'
-import { options } from "less";
 
 export default{
   data () {
@@ -719,6 +745,7 @@ export default{
       urlNCBI:"https://www.ncbi.nlm.nih.gov/gene/",
       cellTotal:0,
       diseaseTotal:0,
+      humanTotal:0,
       vital:[],
       tumor:[],
       cancer:[],
@@ -728,13 +755,14 @@ export default{
       Hela:[],
       cellGrowth:[],
       ci:[],
-      count:6,
+      count:5,
       tagTypes: ['success', 'info', 'warning', 'danger'],
       typeValue: '',
       lineValue: '',
       currentPageCell: 1,
       currentPageDisease: 1,
-      pageSizeCell: 10,
+      currentPageHuman: 1,
+      pageSizeCell: 20,
       optionsType: [
         {
           value: 'CRISPRi',
@@ -844,6 +872,7 @@ export default{
         text:"Loading...",
         background:"rgba(0,0,0,0.7)"
       });
+      window.addEventListener('resize', this.setDynamicHeight);
 
 //show vital table data 
       axios.post("api/property/vital").then(respond =>{
@@ -866,31 +895,33 @@ export default{
       _this.count-- ;
       _this.LoadingClose();
       //console.log("cancer")
-
+// show humman table data
       });
-      axios.post("api/property/selectHuman").then(respond =>{
-      _this.ren = respond.data;
-      // console.log(_this.ren);
+      axios.post("api/property/selectHuman",{
+        page:_this.currentPageHuman,
+        pageSize:20
+      }).then(respond =>{
+      _this.ren = respond.data.items;
+      _this.humanTotal = respond.data.total;
       _this.count-- ;
       _this.LoadingClose();
-      //console.log("cancer")
-
       });
-      axios.post("api/property/selectMouse").then(respond =>{
+// show mouse table data  
+      axios.post("api/property/selectMouse",{
+        page:1,
+        pageSize:40
+      }).then(respond =>{
         
-      _this.xiaoshu = respond.data;
-      // console.log(_this.xiaoshu);
+      _this.xiaoshu = respond.data.items;
       _this.count-- ;
       _this.LoadingClose();
-      //console.log("cancer")
-
-      })
+      });
 // show Celluar table data
       axios.post("api/property/cellgrowth",{
         page:_this.currentPageCell,
         pageSize:_this.pageSizeCell
       }).then(respond =>{
-        // console.log(respond.data);
+        console.log(respond.data.items,"tets");
         _this.cellGrowth = respond.data.items;
         _this.cellTotal = respond.data.total;
       // console.log(_this.cellGrowth);
@@ -911,63 +942,11 @@ export default{
       _this.LoadingClose();
       //console.log("cancer")
       })
-// show crispr type table data
-      // axios.post("api/property/selectCi").then(respond =>{
-      // _this.ci = respond.data;
-      // const data = respond.data;
-      // const mergedData = {};
-      // data.forEach(item => {
-      //   const { gene_id, cell_line, exp_score,role,exp_type } = item;
-
-      //   // 如果 gene_id 不在 mergedData 中，初始化一个新对象
-      //   if (!mergedData[gene_id]) {
-      //     mergedData[gene_id] = {
-      //       gene_id,
-      //       cell_line: [],
-      //       exp_score: [],
-      //       count: 0,
-      //       role,
-      //       exp_type,
-      //     };
-      //   }
-
-      //   // 合并 cell_line 和 exp_score，并增加 count
-      //   mergedData[gene_id].cell_line.push(cell_line);
-      //   mergedData[gene_id].exp_score.push(exp_score);
-      //   mergedData[gene_id].count += 1;
-      // });
-
-      // // 将合并后的结果转换回数组格式，并将 cell_line 和 exp_score 用 ';' 分隔
-      // const result = Object.values(mergedData).map(item => {
-      //   let role;
-      //   if (item.count < 2) {
-      //     role = 'Cell line specific';
-      //   } else if (item.count >= 2 && item.count < 6) {
-      //     role = 'Common essential';
-      //   } else if (item.count >= 6) {
-      //     role = 'Core essential';
-      //   }
-      
-      //   return {
-      //     gene_id: item.gene_id,
-      //     cell_line: item.cell_line.join(';'),
-      //     exp_score: item.exp_score.join(';'),
-      //     count: item.count,
-      //     role: role,
-      //     exp_type: item.exp_type,
-      //   };
-      // });
-
-      // // 将处理后的数据赋值给 _this.ci
-      // _this.ci = result;
-      // console.log(_this.ci);
-      //       _this.count-- ;
-      //       _this.LoadingClose();
-      //       //console.log("cancer")
-      // })
 
   },
+
   methods: {
+    
     // fetchCellData
     fetchCellData() {
       axios.post("api/property/cellgrowth",{
@@ -1033,7 +1012,17 @@ export default{
       console.log(newPage);
       this.currentPageDisease = newPage;
       this.fetchDiseaseData();
-    }
+    },
+    handleHumanChange(newPage) {
+      this.currentPageHuman = newPage;
+      axios.post("api/property/selectHuman",{
+        page:newPage,
+        pageSize:20
+      }).then(respond =>{
+        this.ren = respond.data.result;
+        this.humanTotal = respond.data.total;
+      });
+    },
   }
 }
 </script>
@@ -1071,6 +1060,7 @@ export default{
 .el-aside {
   color: #333;
 }
+
 .el-menu-item {
   font-size: 15px;
 }
@@ -1151,7 +1141,7 @@ span {
 }
 .pagination {
   margin-top: 5px;
-  width: 80%;
+  width: 90%;
   text-align: center;
 }
 :deep(.el-pagination.is-background .el-pager li:hover) {

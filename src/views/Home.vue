@@ -5,7 +5,7 @@
         src="../../public/assets/img/home.png"
         style="height: 45px; width:auto;vertical-align: middle; margin-right:10px; margin-bottom:5px;"
       />
-      Welcome to dbEssLnc
+      Welcome to dbEssLnc2.0
     </el-row>
     <el-row :gutter="100" >
       <div class="wrapper">
@@ -14,9 +14,9 @@
         </el-col>
         <el-col :span="10"  class="duiqi" >
           <i style="font-size: 20px;  color: #606060; margin: 40px" class="el-icon-info" >
-            Introduction of dbEssLnc</i>
+            Introduction of dbEssLnc2.0</i>
           <p>
-            <b>dbEssLnc</b> is the abbreviation of <b>Ess</b>ential <b>Lnc</b>RNA
+            <b>dbEssLnc2.0</b> is the abbreviation of <b>Ess</b>ential <b>Lnc</b>RNA
             database. 
           </p>
           <p>
@@ -38,7 +38,7 @@
             <router-link to="/search"
               ><b><i>Search</i></b></router-link
             >
-            page provides the ability to search by the name/aliases/NONCODE gene ID/reason of essential lncRNA.
+            page provides the ability to search by the gene UID/name/aliases/NONCODE gene ID/LncBook gene ID/reason of essential lncRNA.
            
           </p>
           <p>
@@ -54,7 +54,7 @@
             <router-link to="/download"
               ><b><i>Download</i></b></router-link
             >
-            page list all static links to the data packages and source code in the dbEssLnc
+            page list all static links to the data packages and source code in the dbEssLnc2.0
             database.
           </p>
           <p>
@@ -62,38 +62,38 @@
             <router-link to="/help"
               ><b><i>Help</i></b></router-link
             >
-            page provides three parts: the Tutorial part gives detailed instruction on how to use the dbEssLnc database, 
+            page provides three parts: the Tutorial part gives detailed instruction on how to use the dbEssLnc2.0 database, 
             the Statistics part shows the basic data analysis of the database according to organism and reason, 
             the Contact part provides information on how to contact authors of the database.
           </p>
           <p>
-            Currently, <b>207</b> essential lncRNAs are deposited in the
-            dbEssLnc database,and new data are constently added by manual screening.
+            Currently, <b>6287</b> essential lncRNAs are deposited in the
+            dbEssLnc2.0 database,and new data are constently added by manual screening.
           </p>
           <p>
-            Last update on: May.17th.2022.
+            Last update on: Nov.30th.2024.
           </p>
         </el-col>
         <el-col :span="10">
           <img
             alt="essential lncRNA"
-            src="../../public/assets/img/figure1.svg"
+            src="../../public/assets/img/framework.svg"
             style="width: 600px; margin-top: 90px;"
             
           />
           <div>
             <span style="font-size: 14px; float:right;" class="duiqi">
               <b></b>
-              <p>The work flow of data curation process and architecture in dbEssLnc. (A) 
-                  Work flow is divided to 5 steps. Step1: Using key words to collect essential 
-                  lncRNA data in PubMed. Step2: Screening details of essential lncRNA from literatures.
-                   Step3:Mapping gene name to order databases to get other details. Step4: Essential lncRNAs 
-                   are categorized as general essential lncRNA, lncRNA tumor suppressor  and lncRNA oncogene. 
-                   Step5:Marking “N.A.” for information not collected.
-                    (B) Architecture of dbEssLnc. dbEsslnc has seven functional pages, including "Browse", 
+              <p>The work flow of data curation process:<br/> 
+                  Work flow is divided to 4 steps. Step1: Using key words to collect essential 
+                  lncRNA data in PubMed. Step2: Manually extract the CRISPR experimental results for each lncRNA across different cell lines and map the variant sites in the ClinVar database to lncRNAs.
+                   Step3: Map genomic coordinates from hg19 to hg38 and map lncRNAs to other databases to retrieve additional details.
+                   Step4:Four categories of essential lncRNAs are deposited in the dbEssLnc2.0<br/>  
+                  Architecture of dbEssLnc:<br/>
+                   dbEsslnc has seven functional pages, including "Browse", 
                     "Search","Blast","Download","Help", "Gene" and "Visual" page. Users click the gene name in the "Browse" and "Search" 
                     to jump to the "Gene" page for detailed information of gene. "Gene" page can jump to 
-                    "Visual" page to get information about lncRNA transcript by clicking gene transcript id in NONCODE.
+                    "Visual" page to get information about lncRNA transcript by clicking gene transcript id .
               </p>
                
             </span>

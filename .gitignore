@@ -2,6 +2,9 @@
 node_modules
 /dist
 map
+paper
+data.ipynb
+getseq.ipynb
 
 # local env files
 .env.local
