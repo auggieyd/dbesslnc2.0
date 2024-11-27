@@ -1,0 +1,2 @@
+dbess.sql filter=lfs diff=lfs merge=lfs -text
+blast/lncrna/lncRNA2.fasta filter=lfs diff=lfs merge=lfs -text
