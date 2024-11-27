@@ -1,5 +1,5 @@
-# dbEssLnc: A manually curated database of human and mouse essential lncRNA genes
-We manually curated 206 essential lncRNAs from literatures for establishing a database on essential lncRNAs, which is named as dbEssLnc (Database of essential lncRNAs). The dbEssLnc database has a web-based user-friendly interface for the users to browse, to search, to visualize and to blast search the records in the database. The dbEssLnc database is freely accessible at https://esslnc.pufengdu.org. 
+# dbEssLnc2.0: Expansion of Essential Long Non-Coding RNAs in Human cell lines and Disease
+ In dbEsslnc2.0, Compared to the previous version, we have added 6,080 essential lncRNAs, including 1,165 experimentally validated long non-coding RNAs from CRISPR-based genomic screens and 5,040 disease-related putative essential lncRNAs associated with pathogenic variants. Furthermore, the database incorporated additional information, including novel essentiality classifications, gene annotations, and variant data. dbEssLnc2.0 can be accessible freely at https://esslnc2.pufengdu.org.
 ## 1.Intruduction
 
 We store some essential lncRNAs information in a MySQL database. We used the node.js script engine and javaScript from the
@@ -24,18 +24,18 @@ npm install /cnpm i
 ![Alt text](https://github.com/yyZhang14/dbEssLnc/blob/main/public/md/node.png)
 ### 2.2 Add SQL file to the database
 
-After downloading mysql services,Users can download MYSQL Workbench software to import SQL files **dbesslnc** into the database. Note that the encoding format of the database is UTF8. There are 6 tables in the database dbesslnc, 
-which are final,vital,tumor,cancer,trans,expression respectively.
+After downloading mysql services,Users can download MYSQL Workbench software to import SQL files **dbesslnc** into the database. Note that the encoding format of the database is UTF8. There are 8 tables in the database dbesslnc.
 ```
-final table: all essential gene information.
-vital table: all general lncRNA information.
-tumor table: all tumor suppressor gene information.
-cancer table: all oncogene information.
+esslnc table: all essential gene information.
+exp_crispr table: all Cell viability lncRNA information.
+disease_related table: all disease related(Pathogenic) gene information.
+variants table: all variants information.
+lncrna_variant_mapping table: variants map to lncRNAs.
 trans table: all gene transcript information.
-expression table: all lncRNA expression profile information.
+expression table: all mouse lncRNA expression profile information.
+exp_profile table: all human lncRNA expression profile information.
 ```
 
-![Alt text](https://github.com/yyZhang14/dbEssLnc/blob/main/public/md/mysql.PNG)
 
 ### 2.3 Install Blast
 Visit Blast.ncbi(https://blast.ncbi.nlm.nih.gov/Blast.cgi) to download the Blast installer.
@@ -81,7 +81,7 @@ blastn -version
 # some commands for import sql file
 create database dbesslnc；
 use dbesslnc；
-source sqlpath(eg. /home/yyzhang/dbesslnc.sql)；
+source sqlpath(eg. /home/auggieyd/dbesslnc.sql)；
 show databases;
 show tables;
 ```

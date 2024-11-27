@@ -89,7 +89,7 @@
                   lncRNA data in PubMed. Step2: Manually extract the CRISPR experimental results for each lncRNA across different cell lines and map the variant sites in the ClinVar database to lncRNAs.
                    Step3: Map genomic coordinates from hg19 to hg38 and map lncRNAs to other databases to retrieve additional details.
                    Step4:Four categories of essential lncRNAs are deposited in the dbEssLnc2.0<br/>  
-                  Architecture of dbEssLnc:<br/>
+                  Architecture of dbEssLnc2.0:<br/>
                    dbEsslnc has seven functional pages, including "Browse", 
                     "Search","Blast","Download","Help", "Gene" and "Visual" page. Users click the gene name in the "Browse" and "Search" 
                     to jump to the "Gene" page for detailed information of gene. "Gene" page can jump to 

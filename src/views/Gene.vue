@@ -63,7 +63,7 @@
               </el-form-item> -->
               <el-form-item label="CRISPR Experimental Records:"></el-form-item>
               <el-table :data="expData" border style="width: 80%;">
-                <el-table-column label = "Target" prop="gene_id" width="150"></el-table-column>
+                <el-table-column label = "Target" prop="target_id" width="150"></el-table-column>
                 <el-table-column label = "CRISPR Type" prop="exp_type" width="150"></el-table-column>
                 <el-table-column label = "Exp Score" prop="exp_score" width="150"></el-table-column>
                 <el-table-column label = "Role" prop="role" width="150"></el-table-column>
