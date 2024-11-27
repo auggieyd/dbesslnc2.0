@@ -47,7 +47,7 @@
               ><b><i>Blast</i></b></router-link
             >
             page incorporates the Blast tool for comparing user-entered sequences 
-            with those in the dbEssLnc database.
+            with those in the dbEssLnc2.0 database.
           </p>
           <p>
             The

@@ -99,7 +99,7 @@ service nginx restart
 8. You can install PM2 to manager your node process.
 9. Type and execute the command `pm2 start index.js` in the server folder to start the project.Open your browser, type in the domain name, and you will see the website.
 ![Alt text](https://github.com/yyZhang14/dbEssLnc/blob/main/public/md/pm2.PNG)
-![Alt text](https://github.com/yyZhang14/dbEssLnc/blob/main/public/md/bro.PNG)
+![Alt text](https://github.com/auggieyd/dbEssLnc2.0/blob/master/public/md/bro2.PNG)
 ### 
 ## Citation
 Zhang YY, Zhang WY, Xin XH, Du PF. dbEssLnc: A manually curated database of human and mouse essential lncRNA genes. Comput Struct Biotechnol J. 2022 May 23;20:2657-2663. doi: 10.1016/j.csbj.2022.05.043. PMID: 35685362; PMCID: PMC9162909.
