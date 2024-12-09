@@ -28,12 +28,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // 后端api路由
-app.use("/api/property", proApi);
+app.use("/v2/api/property", proApi);
 
 // 部署上线时读取静态文件
 app.use(express.static(path.join(__dirname, "../dist")));
 
 // 监听端口
-app.listen(8080, () => {
-  console.log("success listen at port: 8080");
+app.listen(8081, () => {
+  console.log("success listen at port: 8081");
 });

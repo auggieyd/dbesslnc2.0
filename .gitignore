@@ -1,10 +1,12 @@
 .DS_Store
-node_modules
-/dist
-map
-paper
+node_modules/
+dist/
+map/
+paper/
 data.ipynb
 getseq.ipynb
+old/
+conf.d/
 
 # local env files
 .env.local
