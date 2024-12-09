@@ -13,7 +13,7 @@ import Gene from '../views/Gene.vue'
 //1.通过Vue.use（插件），安装插件
 // Vue.use(VueRouter)
 
-const routerHistory = createWebHistory()
+const routerHistory = createWebHistory('/v2')
  
 
 //2.创建VueRouter对象

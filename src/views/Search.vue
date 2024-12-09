@@ -465,13 +465,13 @@ export default {
     var _this = this;
     axios
       .all([
-        axios.post("/api/property/fuzzyHuman"),
-        axios.post("/api/property/fuzzyMouse"),
-        axios.post("/api/property/fuzzyVital"),
-        axios.post("/api/property/fuzzyTumor"),
-        axios.post("/api/property/fuzzyCancer"),
-        axios.post("/api/property/fuzzyCell"),
-        axios.post("/api/property/fuzzyDisease")
+        axios.post("/v2/api/property/fuzzyHuman"),
+        axios.post("/v2/api/property/fuzzyMouse"),
+        axios.post("/v2/api/property/fuzzyVital"),
+        axios.post("/v2/api/property/fuzzyTumor"),
+        axios.post("/v2/api/property/fuzzyCancer"),
+        axios.post("/v2/api/property/fuzzyCell"),
+        axios.post("/v2/api/property/fuzzyDisease")
       ])
       .then(
         axios.spread((human, mouse,vital ,tumor,cancer,cell,disease) => {

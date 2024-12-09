@@ -202,7 +202,7 @@ export default{
       // this.showData=this.dataList.FASTA.slice(0,1000);
       this.showData = `${this.dataList.FASTA.slice(0,200)}
                     <img
-                    src="./open.png"
+                    src="/v2/assets/img/open.png"
                     style="width:12px; height:12px"
                     class="open"
                     />
@@ -254,7 +254,7 @@ export default{
         if(event.target.className === 'open' && event.target.nodeName === 'IMG'){
                 this.showData = `${this.dataList.FASTA}
                     <img
-                    src="./close.png"
+                    src="/v2/assets/img/close.png"
                     style="width:12px; height:12px"
                     class="close"
                     />
@@ -263,7 +263,7 @@ export default{
         if(event.target.className === 'close' && event.target.nodeName === 'IMG'){
                 this.showData = `${this.dataList.FASTA.slice(0,200)}
                     <img
-                    src="./open.png"
+                    src="/v2/assets/img/open.png"
                     style="width:12px; height:12px"
                     class="open"
                     />

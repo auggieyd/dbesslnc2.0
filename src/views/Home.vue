@@ -13,11 +13,14 @@
 
         </el-col>
         <el-col :span="10"  class="duiqi" >
-          <i style="font-size: 20px;  color: #606060; margin: 40px" class="el-icon-info" >
+          <i style="font-size: 20px;  color: #606060; margin: 40px 0 20px 0;" class="el-icon-info" >
             Introduction of dbEssLnc2.0</i>
+          <p class="nav1">
+            To visit dbEssLnc V1.0,<a href="https://esslnc.pufengdu.org/v1/" style="color: #551A8B;" target="_blank"> click here</a>
+          </p>
           <p>
             <b>dbEssLnc2.0</b> is the abbreviation of <b>Ess</b>ential <b>Lnc</b>RNA
-            database. 
+            database, version 2.0. 
           </p>
           <p>
             The
@@ -152,5 +155,15 @@
 .wrapper p{
   line-height:200%;
   font-size:16px;
+}
+.nav1{
+  font-size: 18px;
+  font-weight: bold;
+  color: #606060;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0; /* 浅灰色背景 */
+  border-radius: 5px; /* 圆角边框 */
+  padding: 5px;
 }
 </style>
