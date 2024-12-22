@@ -3,7 +3,7 @@ const debug = process.env.NODE_ENV !== "production";
 
 module.exports = {
   // 基本路径 相对路径
-  publicPath: "/v1/",
+  publicPath: "/v2/",
   // 输出文件目录
   // outputDir: "dist",
   outputDir: process.env.outputDir,
