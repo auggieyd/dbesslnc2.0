@@ -15,9 +15,9 @@
         <el-col :span="10"  class="duiqi" >
           <i style="font-size: 20px;  color: #606060; margin: 40px 0 20px 0;" class="el-icon-info" >
             Introduction of dbEssLnc2.0</i>
-          <p class="nav1">
+          <!-- <p class="nav1">
             To visit dbEssLnc V1.0,<a href="https://esslnc.pufengdu.org/v1/" style="color: #551A8B;" target="_blank"> click here</a>
-          </p>
+          </p> -->
           <p>
             <b>dbEssLnc2.0</b> is the abbreviation of <b>Ess</b>ential <b>Lnc</b>RNA
             database, version 2.0. 

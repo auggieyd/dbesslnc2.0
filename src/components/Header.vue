@@ -20,6 +20,15 @@
              {{item.name}}
            </router-link>  
         </li> 
+        <li>
+          <a href="https://esslnc.pufengdu.org/v1/">
+            <img
+            alt="V1.0"
+            src="../../public/assets/img/jump.svg"
+            style="height: 28px; vertical-align: middle;"/>
+            V1.0
+          </a>
+        </li>
         <li class="dropdownIcon">
           <a href="javascript:void(0);" @click="dropdownMenu()">&#9776;</a>
         </li>
