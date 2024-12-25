@@ -1,4 +1,5 @@
 # 
+library(GeneSummary)
 tb <- loadGeneSummary(organism = 9606)
 
 gene_ids <- read.table("ncbi_gene_id.txt", header = FALSE, stringsAsFactors = FALSE)
