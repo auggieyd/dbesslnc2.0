@@ -15,25 +15,7 @@
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
--- ----------------------------
--- Table structure for disease_related
--- ----------------------------
-DROP TABLE IF EXISTS `disease_related`;
-CREATE TABLE `disease_related`  (
-  `Noncode_id` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `Lncbook_id` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `likely_or_pathogenic_count` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `chr` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `start` int NOT NULL,
-  `end` int NOT NULL,
-  `strand` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `num_id` int NOT NULL AUTO_INCREMENT,
-  `NCBI_id` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `gene_name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `UID` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `disease_related` int NULL DEFAULT 1,
-  PRIMARY KEY (`num_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 33004 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
+
 
 -- ----------------------------
 -- Table structure for esslnc
