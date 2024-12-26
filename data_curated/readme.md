@@ -26,6 +26,13 @@
 
 Different studies use various methods to measure the impact of lncRNAs on cell viability, and we need to filter based on the settings established in each study.
 
+| citation                                                     |
+| ------------------------------------------------------------ |
+| **CRSPR i：** Liu S J, Horlbeck M A, Cho S  W, et al. CRISPRi-based genome-scale identification of functional long  noncoding RNA loci in human cells[J]. Science, 2017, 355(6320): eaah7111. |
+| **CRISPR splice:** Liu Y, Cao Z, Wang Y, et al. Genome-wide screening for  functional long noncoding RNAs in human cells by Cas9 targeting of splice  sites[J]. Nature Biotechnology, 2018, 36(12): 1203-1210. |
+| **CRISPR_delete:** Zhu S, Li W, Liu J, et al. Genome-scale deletion screening of  human long non-coding RNAs using a paired-guide RNA CRISPR–Cas9 library[J].  Nature Biotechnology, 2016, 34(12): 1279-1286. |
+| **CRISPR casRx:** Montero J J, Trozzo R, Sugden M, et al. Genome-scale  pan-cancer interrogation of lncRNA dependencies using CasRx[J]. Nature  Methods, 2024: 1-13. |
+
 - **CRISPR i  :**  Extracting information from the table involves filtering different cell lines according to the columns. The criteria for retention are that the `lncRNA gene hit type`columns value must be `lncRNA hit` and the `screen score` columns value must greater than 7  and the `ave_Rep1_Rep2|average phenotype of strongest 3 sgRNAs)`column value must be less than 0. It is important to note that for the IPSC cell line, the selection is `gamma_T0vT12`.
 
   ![image-20241217142938151](./assets/image-20241217142938151.png)
@@ -56,19 +63,33 @@ Due to differences in eras and annotation discrepancies, we need to further upda
 
 #### Genome Coordinate Alignment
 
-1. Store the extracted lncRNA identifiers as a list in the first step. Extract the annotation information corresponding to the reference genome.
+1. Store the extracted lncRNA identifiers as a list in the first step.
+
+   - crispri_id.txt
+   - crispr_delete_id.txt
+   - crispr_splice_id.txt
+   - crispr_casrx_id.txt
+   
+1.  Extract the annotation information corresponding to the reference genome.For instance,in the crispr delete study,lncRNAs from gencode v19 were utilized.We downloaded the original reference gtf file and extracted the annotation information generate bed files.
+
+   - crispri19.bed: 
+   - crispr_delete19.bed
+   - crispr_splice38.bed
 
    Details see code: `/match/coor_match.ipynb:step1` 
-
+   
+   > In the CRISPR-splice matching process,only LINC00869 matched to two genes:ENSG00000226067.3;ENSG00000277147.1.We used the sgRNA sequence lin2176_s_39054: CCTCTGTCCCTTCTATTCCC provided in the literature for BLAST similarity search and matched it to ENSG00000226067.
+   
    > Only for`crispr_splice`and`crispr_delete`. After executing the aforementioned code, adjust the code to generate   crispr_xxxx_seq.bed  . If it's the hg19 version, further operations are required to convert to hg38.
-
-   ```python
-   id_field = extract_attribute(attributes, 'exon_id') 
-   #-->
-   id_field = extract_attribute(attributes, 'transcript_id')
-   ```
-
-   > noted that : The supplementary data of the (CRISPR casRx) literature provides the reference coordinates for the hg38 genome.(/match/crispr_casRx.bed)
+   >
+   > ```python
+   > id_field = extract_attribute(attributes, 'exon_id') 
+   > #-->
+   > id_field = extract_attribute(attributes, 'transcript_id')
+   > ```
+   >  Generate   crispr_splice_seq.bed   and   crispr_delete_seq.bed   (after liftover conversion to hg38).
+   
+   > **Noted that** : The supplementary data of the (CRISPR casRx) literature provides the reference coordinates for the hg38 genome.(/match/crispr_casRx.bed)
 
 #### Genome Coordinate convert
 
@@ -107,11 +128,11 @@ bedtools intersect -a crispr_delete38.bed -b crispr_splice38.bed -wo -s -r -f 1 
 # For example: RP11-540O11.1-RP11-540O11.1, TMEM9B-AS1-LH02375, etc.
 ```
 
-Detailed data processing. Details see code: `/match/coor_match.ipynb:step3`. Conduct manual checks on the exons reported in `tocheck.txt` that have 100% overlap.
+ Details see code: `/match/coor_match.ipynb:step3`. Conduct manual checks on the exons reported in `tocheck.txt` that have 100% overlap.
 
 <img src="./assets/image-20241225105948611.png" alt="image-20241225105948611" style="zoom:80%;" />
 
-2. Generate a merge.txt file. The complete merge process can be seen in the code:`/match/coor_match.ipynb:step4`
+2. Generate a merge.txt file. The complete merge process can be seen in the code:`/match/coor_match.ipynb:step4`.Only the **NEAT1** group has three genes that can be merged; manually modify and combine them into one group.
 
    ![image-20241217233557071](./assets/image-20241217233557071.png)
 
@@ -120,22 +141,19 @@ Detailed data processing. Details see code: `/match/coor_match.ipynb:step3`. Con
 Obtain gene IDs from the NONCODE V6 , LncBook,and GENCODE databases to enhance data usability.
 
 1. Convert GTF files into custom BED files for ease of subsequent filtering.(`/match/map_annotations.ipynb:Step1.1`)
+
 2. Based on the complete matching of the coordinate ranges at the lowest exon level,if the exons of the lncRNA we have collected are completely equal to or covered by the exons of the lncRNA in the reference database,and are on the same strand,they can be mapped to the corresponding reference lncRNA.If a gene matches multiple genes,select the one with the largest overlapping range.
    Details see code:(`/match/map_annotations.ipynb:Step2`)
 
-3. Generate database annotations **mapping files**. See the detailed selection code at`/match/map_annotations.ipynb`
+3. Generate database annotations **mapping files**. See the detailed selection code at`/match/map_annotations.ipynb:step2`
 
-   **mapping files**:`lncbook_map.tsv,noncode_map.tsv,gencode_map.tsv`
-
-4. Obtaining NCBI Gene IDs by matching th`gene_name`field in th`gencode_map.tsv`file with the symbol field in the `non-coding_RNA.txt` file downloaded from HGNC.
+   **mapping files**:`lncbook_map.tsv,noncode_map.tsv,gencode_map.tsv`,`res_map.tsv`
 
 #### Map the  Ontology Annotations 
 
-1. Obtaining NCBI Gene IDs by matching th`gene_name`field in th`gencode_map.tsv`file with the symbol field in th`non-coding_RNA.txt`file downloaded from HGNC.
+1. Through the non-coding_RNA.txt file provided by HGNC,you can obtain the mapping from gene_name(symbol)to NCBI gene id(entrez_id).
 
-   Details see code: `/match/map_annotations.ipynb`
-
-2. Use the `GeneSummary` R package to obtain Gene Ontology annotations via NCBI gene ID.
+2. Use the `GeneSummary` R package to obtain Gene Ontology annotations via NCBI gene ID. After integrating all lncRNA entries,export all matched NCBI gene ids. (`/match/ncbi_gene_id.txt`)
 
    - Install `GeneSummary` R package in R 4.3.3
 
@@ -147,18 +165,23 @@ Obtain gene IDs from the NONCODE V6 , LncBook,and GENCODE databases to enhance d
    ```
 
    - Execute the script file.`/match/map_go.R`
+   
+3. The code for importing the aforementioned data into the database can be found at:`/store/dbess.ipynb:step3.2`
 
 #### To obtain sequence 
 
-1. Using the REST API provided by Ensembl to obtain the sequence of a gene region.`/match/get_seq.py`
+1. Handling BED file format for easy processing, Process the`crispr_splice_seq.bed`,`crispr_delete_seq.bed`files(after liftover conversion to hg38) generated in the`/match/coor_match.ipynb:step1` and `crispri38.bed`,`crispr_casRx.bed`,to create custom bed files(seq_xxx.bed) that can be processed by subsequent code.
+   Detatils see code:`/gene_fa.ipynb:step1`
+
+2. Using the REST API provided by Ensembl to obtain the sequence of a gene region.`/match/get_seq.py`
 
    ```python
    python get_seq.py
    ```
 
-2. Based on public lncRNA databases such as NONCODE that store exon-level sequences, splice the sequences from previous step and generate a FASTA file.
-   Details see code:`/match/gen_fa.ipynb`
-   
+3. Based on public lncRNA databases such as NONCODE that store exon-level sequences, splice the sequences from previous step and generate a FASTA file(`lncRNA2.fasta`)
+   Details see code:`/match/gen_fa.ipynb:step3`
+
    > Before this step,you need to modify the content of`coor_match.ipynb`step1,specifically for the Gencode GTF file.
    > `id_field = extract_attribute(attributes, 'exon_id') -->id_field = extract_attribute(attributes, 'transcript_id')`
    > See the code.`/match/gen_fa.ipynb`
@@ -237,13 +260,26 @@ Obtain gene IDs from the NONCODE V6 , LncBook,and GENCODE databases to enhance d
 
 ## Sorting out the essential lncRNAs obtained through literature mining
 
-1. A total of 173  essential lncRNAs were manually collected from dbesslnc.(`/dbesslnc/dbesslnc.txt`,`dbesslnc_reason.txt`)
+1. A total of 173  human essential lncRNAs and 34 mouse essential lncRNAs and their annotations  were manually collected from dbesslnc.
+   - `/dbesslnc/dbesslnc.txt`:Human essential lncRNA ID file.
+     `/dbesslnc/dbesslnc_reason.txt`: detailed introduction of human essential lncRNA.
+   - `/dbesslnc/dbesslnc_mouse.csv`: Annotation file of essential lncRNAs in mice(manually assigned UIDs,such as ELM000001 and Coordinate range.).
+     `/dbesslnc/dbesslnc_mouse_trans.txt`: Mouse essential lncRNA transcript file.
+   - `/dbesslnc/dbesslnc_mouse_expression.csv`:Mouse expression data file.
 
-2. Generate a mapping file between `gene_name` and `gene_id` through`/match/map_annotations.ipynb:step1.1` Generate files: `/match/gene_mapping.txt`.Based on this file,use `gene_name` as the key to obtain `gene_id`, and according to `gene_id`, retrieve annotation information from`/clinvar_map/lncRNA_redference/NONCODE_LncBook_same_merged.bed`. For lncRNAs that fail to map, obtain the information again using `Noncode_id`. (Script: `cancer/proDbessLnc.py`) Generate files:`dbesslnc_gene.csv`,`dbesslnc_gene_remaining.csv`
+2. Generate a mapping file between `gene_name` and `gene_id` through`/match/map_annotations.ipynb:step1.1` Generate files: `/match/gene_mapping.txt`.
+   Based on this file,use `gene_name` as the key to obtain `gene_id`, and according to `gene_id`, retrieve annotation information from`/clinvar_map/lncRNA_redference/NONCODE_LncBook_same_merged.bed`. 
+   For lncRNAs that fail to map, obtain the information again using `Noncode_id`. (Script: `cancer/proDbessLnc.py`) Generate files:`dbesslnc_gene.csv`,`unmap_from_dbesslnc.csv`
 
-3. For the remaining seven lncRNAs(`dbesslnc_gene_remaining.csv`) that could not have their coordinate information retrieved from the reference lncRNA collection, manually search and supplement annotation information in the genecards database.`/dbesslnc/unmap_from_dbesslnc.txt`
+3. For the remaining **6** lncRNAs(`dbesslnc_gene_remaining.csv`) that could not have their coordinate information retrieved from the reference lncRNA collection, manually search and supplement annotation information in the genecards database.`/dbesslnc/unmap_from_dbesslnc.txt`
 
 ![image-20241225135903101](./assets/image-20241225135903101.png)
+
+4. For the lncRNAs derived from mice of the dbesslnc strain,we have also conducted additional annotation.
+   - Download the reference file for mouse lncRNAs: [NONCODEv6_mm10.lncAndGene.bed.gz](http://www.noncode.org/datadownload/NONCODEv6_mm10.lncAndGene.bed.gz)
+   - Extract transcript coordinates and exon information from the reference BED file of mouse lncRNAs using `/dbesslnc/get_exon_mouse.sh`.
+   - Retrieve the mapping table of essential mouse lncRNAs NONCODE gene IDs and transcript IDs from the dbesslnc database (file: `dbesslnc_mouse_trans.txt`).
+   - Annotate transcript information for essential mouse lncRNAs using `/dbesslnc/getExonMouse.py`.  Generate: `mouse_trans.csv`.
 
 ## Data management and storage into the database.
 
@@ -263,8 +299,9 @@ For the database schema, please refer to the file   `/store/dbess_schema.sql`  .
 
 2. Import the lncRNA gene into the **esslnc** table. Execute the data import code `/store/dbess.ipynb：Step2,3` When importing data,simply modify the corresponding file names,table names,and field names, 
 
-   - **Step2:Import gene entries**:Import genomic annotation information of lncRNA genes from three data sources.
+   - **Step2:Import gene entries**:Import genomic annotation information of human lncRNA genes from **three** data sources.
      details see code:`/store/dbess.ipynb：Step2`
+   - **Step2.6: Import the mouse's essential lncRNA(from dbesslnc)**:import `dbesslnc_mouse.csv` to esslnc
    - **Step3.1: Import the mapped gene IDs(for lncRNA verified by CRISPR  )**
      import the mapped public database gene IDs and gene names,along with other mapped data
      details see code:`/store/dbess.ipynb：Step3.1`
@@ -274,8 +311,9 @@ For the database schema, please refer to the file   `/store/dbess_schema.sql`  .
    > During the genome version conversion process, genes that fail to convert are manually checked and entered into the database.
 
 3. Generate unique identifiers for human lncRNA to facilitate system management.Assign unique identifiers to the collected lncRNA genes following the allocation principle:`ELH+xxxxxx`,for example,`ELH000001`. 
+   The unique identifiers of mice are the same as mentioned above.(`ELM+xxxxxx`)
    details see code:`/store/dbess.ipynb：Step4`
-
+   
 4. Import transcript annotations into the **trans** table (lncRNA verified by CRISPR). 
 
    - Using the UID from the previous step,generated by`dbess.ipynb:Step4.2`,the`seq_xxx.bed`generated by`/match/gen_fa.ipynb`,and the`/match/lncRNA2.fasta` file,generate basic annotations for transcripts and import them into the database.
@@ -286,14 +324,16 @@ For the database schema, please refer to the file   `/store/dbess_schema.sql`  .
 
    - Using the UID from the previous step,generated by`dbess.ipynb:Step4.5`,`non_crispr_UID.txt`
    - Extract the basic annotation information of these lncRNAs and import it into the database.Count the number of exons and record the coordinate for all reference lncRNA transcripts. (Script: `/clinvar_map/lncRNA_reference/get_exon.sh`).Retrieve the number and the coordinate of exon for  transcripts of all essential lncRNA genes. (Script: `/clinvar_map/db/exon/getExon.py`)
-     Generate:`/clinvar_map/db/exon/non_crispr_lncRNA.csv`
-   - Extract sequences from NONCODE and LncBook databases and import them into the database.
+     Generate:`/clinvar_map/db/exon/non_crispr_lncRNA.csv`,Import this file by:`/store/dbess.ipynb:step5.3`
+   - Extract sequences from NONCODE and LncBook databases and import them into the database.details see code:`/store/dbess.ipynb:step5.3`
    - details see code:`/store/dbess.ipynb:step5.2,step5.3`
+
+   - Import mouse transcript information annotated with transcript coordinate information(`/dbesslnc/mouse_trans.csv`). 
 
 6. Import CRISPR experiment record`exp_crispr.csv` into **exp_crispr** table.
 
    - Details see code:`/store/dbess.ipynb:Step7`
-   - Group by  exp_type  and  target_id  columns, for groups with a count of 1, mark as 'cell-line specific' and update in the table; for groups with a count of 2-5, mark as 'common essential'; and for groups with a count greater than 5, mark as 'core essential'.Details see code:`/store/dbess.ipynb:Step7.1`
+   - Group by  `exp_type`  and  `target_id`  columns, for groups with a count of 1, mark as 'cell-line specific' and update in the table; for groups with a count of 2-5, mark as 'common essential'; and for groups with a count greater than 5, mark as 'core essential'.Details see code:`/store/dbess.ipynb:Step7.1`
 
 7. Import variants Mapping file into **lncrna_variant_mapping ** table and variants file into the **variants** table
 
