@@ -36,7 +36,7 @@
           <el-row v-if="id==0" style="padding: 5px;" class="content">
             <div class="wrapper">
               <el-col :span="12"  class="explain">
-                <img src="../../public/assets/img/sta3.png" alt="" style="height: auto; width:100%;">
+                <img src="../../public/assets/img/sta4.png" alt="" style="height: auto; width:100%;">
               </el-col>
               <el-col :span="12" class="explain">
                 <p>

@@ -15,12 +15,12 @@
            Essential lncRNAs are important for fundamental cellular processes including 
            gene expression regulation and signal pathways,even concerned with the progression
             of the diseases or tumors.Here,we developed a database named dbEssLnc 
-            (<b><a href="https://esslnc2.pufengdu.org">https://esslnc2.pufengdu.org</a></b>),which manually 
+            (<b><a href="https://esslnc.pufengdu.org/v2/">https://esslnc.pufengdu.org/v2/</a></b>),which manually 
             collects and collates essential lncRNAs information from existing databases and published 
-            literature. Currently, the dbEssLnc database contains <b>6287</b> essential lncRNAs , 
+            literature. Currently, the dbEssLnc database contains <b>6315</b> essential lncRNAs , 
             and the data will be continuously added and updated.
           </p>
-          <img width="400" alt="browse help" src="../../public/assets/img/help/workflow.svg" />
+          <img width="400" alt="browse help" src="../../public/assets/img/help/work.svg" />
         </el-collapse-item>
 
         <el-collapse-item title="2. Browse help" name="2">
@@ -191,7 +191,7 @@ export default {
       },
       series: [
         {
-        data: [{value:6253,name:'Human'},{value:34,name:'Mouse'}],
+        data: [{value:6281,name:'Human'},{value:34,name:'Mouse'}],
         type: 'bar',
         itemStyle:{
           normal:{
@@ -232,7 +232,7 @@ export default {
     },
     series: [
       {
-        data: [40,73,100,1165,5040],
+        data: [41,88,117,1161,5059],
         type: 'bar',
         itemStyle:{
           normal:{

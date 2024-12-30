@@ -22,11 +22,11 @@
               </el-form-item>
               <el-form-item label="LncBook:" >
                   <span>
-                    {{ dataList.Lncbook_trans_id ? 'transcript:&nbsp':'N.A.' }} 
+                    {{ dataList.Lncbook_trans_id !== 'N.A.' ? 'transcript:&nbsp':'' }} 
                     {{  dataList.Lncbook_trans_id }}
-                    {{ dataList.Lncbook_id ? ',&nbspgene:&nbsp ':'' }}
+                    {{ dataList.Lncbook_id !== 'N.A.' ? ',&nbspgene:&nbsp ':'' }}
                     <text
-                      v-if="dataList.Lncbook_id"
+                      v-if="dataList.Lncbook_id !== 'N.A.'"
                       @click="toUrl_LncBook(dataList.Lncbook_id)"
                       class="hand">
                       {{ dataList.Lncbook_id }}
@@ -35,19 +35,19 @@
               </el-form-item>
               <el-form-item label="NONCODE:">
                 <span>
-                    {{ dataList.NONCODE_TRANSCRIPT_ID ? 'transcript:&nbsp':'N.A.' }} 
+                    {{ dataList.Noncode_trans_id !== 'N.A.' ? 'transcript:&nbsp':'' }} 
                     <text
-                      v-if="dataList.NONCODE_TRANSCRIPT_ID"
-                      @click="toUrl_RNA(dataList.NONCODE_TRANSCRIPT_ID)"
+                      v-if="dataList.Noncode_trans_id!== 'N.A.'"
+                      @click="toUrl_RNA(dataList.Noncode_trans_id)"
                       class="hand">
-                      {{ dataList.NONCODE_TRANSCRIPT_ID }}
+                      {{ dataList.Noncode_trans_id }}
                     </text>
-                    {{ dataList.NONCODE_Gene_ID ? ',&nbspgene:&nbsp ':'' }}
+                    {{ dataList.Noncode_id !== 'N.A.' ? ',&nbspgene:&nbsp ':'' }}
                     <text
-                      v-if="dataList.NONCODE_Gene_ID"
-                      @click="toUrl_DNA(dataList.NONCODE_Gene_ID)"
+                      v-if="dataList.Noncode_id !== 'N.A.'"
+                      @click="toUrl_DNA(dataList.Noncode_id)"
                       class="hand">
-                      {{ dataList.NONCODE_Gene_ID }}
+                      {{ dataList.Noncode_id }}
                     </text>   
                   </span>  
               </el-form-item>

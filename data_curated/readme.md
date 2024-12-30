@@ -80,14 +80,14 @@ Due to differences in eras and annotation discrepancies, we need to further upda
    
    > In the CRISPR-splice matching process,only LINC00869 matched to two genes:ENSG00000226067.3;ENSG00000277147.1.We used the sgRNA sequence lin2176_s_39054: CCTCTGTCCCTTCTATTCCC provided in the literature for BLAST similarity search and matched it to ENSG00000226067.
    
-   > Only for`crispr_splice`and`crispr_delete`. After executing the aforementioned code, adjust the code to generate   crispr_xxxx_seq.bed  . If it's the hg19 version, further operations are required to convert to hg38.
+   >  After executing the aforementioned code, adjust the code to generate   crispr_xxxx_seq.bed  . If it's the hg19 version, further operations are required to convert to hg38.
    >
    > ```python
    > id_field = extract_attribute(attributes, 'exon_id') 
    > #-->
    > id_field = extract_attribute(attributes, 'transcript_id')
    > ```
-   >  Generate   crispr_splice_seq.bed   and   crispr_delete_seq.bed   (after liftover conversion to hg38).
+   >  Generate   crispr_splice_seq.bed   and   crispr_delete_seq.bed crispri_seq.bed   (after liftover conversion to hg38).
    
    > **Noted that** : The supplementary data of the (CRISPR casRx) literature provides the reference coordinates for the hg38 genome.(/match/crispr_casRx.bed)
 
@@ -111,9 +111,9 @@ Run LiftOver e.g.
 ```
 
 `unmapped.bed`: Contains unmapped regions with reasons for failure. 
- Those that fail to convert require further manual inspection and processing.
+ Those that fail to convert require further manual inspection and processing.（Delete the entries in the converted BED file that contain these gene IDs.）
 
-![image-20241225141258443](./assets/image-20241225141258443.png)
+
 
 #### Merge lncRNA entries
 
@@ -170,7 +170,7 @@ Obtain gene IDs from the NONCODE V6 , LncBook,and GENCODE databases to enhance d
 
 #### To obtain sequence 
 
-1. Handling BED file format for easy processing, Process the`crispr_splice_seq.bed`,`crispr_delete_seq.bed`files(after liftover conversion to hg38) generated in the`/match/coor_match.ipynb:step1` and `crispri38.bed`,`crispr_casRx.bed`,to create custom bed files(seq_xxx.bed) that can be processed by subsequent code.
+1. Handling BED file format for easy processing, Process the`crispr_splice_seq.bed`,`crispr_delete_seq.bed`,`crispri_seq.bed`files(after liftover conversion to hg38) generated in the`/match/coor_match.ipynb:step1` and `crispri38.bed`,`crispr_casRx.bed`,to create custom bed files(seq_xxx.bed) that can be processed by subsequent code.
    Detatils see code:`/gene_fa.ipynb:step1`
 
 2. Using the REST API provided by Ensembl to obtain the sequence of a gene region.`/match/get_seq.py`
@@ -295,7 +295,7 @@ For the database schema, please refer to the file   `/store/dbess_schema.sql`  .
    SOURCE /path/to/your/dbess_schema.sql;
    ```
 
-   ![image-20241220183835620](./assets/image-20241220183835620.png)
+   <img src="./assets/image-20241227202155297.png" alt="image-20241227202155297" style="zoom:80%;" />
 
 2. Import the lncRNA gene into the **esslnc** table. Execute the data import code `/store/dbess.ipynb：Step2,3` When importing data,simply modify the corresponding file names,table names,and field names, 
 
