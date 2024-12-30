@@ -76,7 +76,7 @@
         </div>
         <div class="files">
           <h3 class="top">Transcripts In Gene</h3>
-          <div class="content" style="height:40%">
+          <div class="content" style="height:600px">
             <div class="tabletitle" v-if="id==1">
                 <el-row>
                     <el-col :span="4" :offset="10">
@@ -86,6 +86,7 @@
             </div>
             <el-table
             :header-cell-style="{background:'#eef1f6',color:'#606266'}"
+            height="600"
             :data="itemData"
             empty-text="N.A."
             border>
@@ -114,6 +115,7 @@
           <div class="content" style="height:40%">
             <el-table 
             :data="diseaseData" 
+            height="600"
             :header-cell-style="{background:'#eef1f6',color:'#606266'}"
             empty-text="N.A."
             border>

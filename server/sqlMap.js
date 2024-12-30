@@ -69,7 +69,7 @@ var sqlMap = {
       
       //用于模糊查询的输入建议
       fuzzyHuman:
-      "select DISTINCT gene_name from `esslnc` where Organism ='Human' AND gene_name != '-' order by gene_name",
+      "select DISTINCT gene_name from `esslnc` where Organism ='Human' AND gene_name != 'N.A.' order by gene_name",
       fuzzyMouse:
       "select DISTINCT gene_name from `esslnc` where Organism ='Mouse' AND gene_name != '-' order by gene_name",
       fuzzyVital:
@@ -79,7 +79,7 @@ var sqlMap = {
       fuzzyCancer:
       "select DISTINCT gene_name from `esslnc` where cancer_related = 1 AND gene_name != '-' order by gene_name",
       fuzzyCell:
-      "select DISTINCT gene_name from `esslnc` where vitro = 1 AND gene_name != '-' order by gene_name",
+      "select DISTINCT gene_name from `esslnc` where vitro = 1 AND gene_name != 'N.A.' order by gene_name",
       fuzzyDisease:
       "select DISTINCT gene_name from `esslnc` where disease_related = 1 AND gene_name != '-' order by gene_name",
 
