@@ -87,9 +87,9 @@ Due to differences in eras and annotation discrepancies, we need to further upda
    > #-->
    > id_field = extract_attribute(attributes, 'transcript_id')
    > ```
-   >  Generate   crispr_splice_seq.bed   and   crispr_delete_seq.bed crispri_seq.bed   (after liftover conversion to hg38).
+   >  Generate   crispr_splice_seq.bed   and   crispr_delete_seq.bed,crispri_seq.bed   (after liftover conversion to hg38).
    
-   > **Noted that** : The supplementary data of the (CRISPR casRx) literature provides the reference coordinates for the hg38 genome.(/match/crispr_casRx.bed)
+   > **Noted that** : The supplementary data of the (CRISPR casRx) literature provides the reference coordinates for the hg38 genome.After organizing the coordinate positions in Supplementary_table2.tsv and Supplementary_table3.tsv,a bed format file was generated.(/match/crispr_casRx.bed).
 
 #### Genome Coordinate convert
 
@@ -113,7 +113,7 @@ Run LiftOver e.g.
 `unmapped.bed`: Contains unmapped regions with reasons for failure. 
  Those that fail to convert require further manual inspection and processing.（Delete the entries in the converted BED file that contain these gene IDs.）
 
-
+![unmap_img](./assets/image-20241229193029673.png)
 
 #### Merge lncRNA entries
 
@@ -138,7 +138,7 @@ bedtools intersect -a crispr_delete38.bed -b crispr_splice38.bed -wo -s -r -f 1 
 
 #### Map the coordinate ranges to th latest public database to obtain annotations
 
-Obtain gene IDs from the NONCODE V6 , LncBook,and GENCODE databases to enhance data usability.
+Obtain gene IDs from the NONCODE V6 , LncBook V2.0,and GENCODEV47 databases to enhance data usability.
 
 1. Convert GTF files into custom BED files for ease of subsequent filtering.(`/match/map_annotations.ipynb:Step1.1`)
 

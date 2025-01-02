@@ -371,7 +371,7 @@ export default {
         if(inputContent == ""){
           _this.tempPath = "select_disease_related";
           _this.currentPage = 1;
-          _this.fetchData("select_disease_related");
+          _this.fetchData("diseaseRelated");
           // axios.post("api/property/select_disease_related").then(function(respond){
           //   _this.lncrnaTable=respond.data;
           //   _this.id = 1;

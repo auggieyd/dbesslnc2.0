@@ -1019,7 +1019,9 @@ export default{
         page:newPage,
         pageSize:20
       }).then(respond =>{
-        this.ren = respond.data.result;
+        // console.log(respond.data);
+        this.ren = respond.data.items;
+        // console.log(this.ren);
         this.humanTotal = respond.data.total;
       });
     },

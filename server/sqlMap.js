@@ -7,11 +7,10 @@ var sqlMap = {
       
       selectFinal: "select * from `final` ",
       //show essential lncRNA
-      selectVital:"select * from `esslnc` where vivo = 1",
-      //show tumor suppressor genes
-      selectTumor:"select * from `esslnc` where cancer_related = 2",
+      selectVital: "select * from `esslnc` where vivo = 1 order by UID ASC",  //show tumor suppressor genes
+      selectTumor:"select * from `esslnc` where cancer_related = 2 order by UID ASC",
       //show essential lncRNA in cancer cell
-      selectCancer:"select * from `esslnc` where cancer_related = 1",
+      selectCancer:"select * from `esslnc` where cancer_related = 1 order by UID ASC",
       //show essential lncRNA in disease related
       selectDiseaseMap:
       "select * from `lncrna_variant_mapping` where UID = ?",
@@ -22,8 +21,7 @@ var sqlMap = {
       //search page
       //organism is human
       selectHuman:
-      "select * from `esslnc` where Organism ='Human' limit ?,?",
-       //organism is mouse
+      "select * from `esslnc` where Organism ='Human' order by UID ASC limit ?,? ",  //organism is mouse
       selectMouse:
       "select * from `esslnc` where Organism ='Mouse' limit ?,?",
 
@@ -48,7 +46,7 @@ var sqlMap = {
       "select * from `exp_crispr`",
       // diease related
       select_diease_related:
-      "select * from esslnc where disease_related = 1 limit ?,?",
+      "select * from esslnc where disease_related = 1 order by UID ASC limit ?,? ",
 
 
       //fuzzy search 模糊查询
