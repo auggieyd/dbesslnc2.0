@@ -1,5 +1,5 @@
 # dbEssLnc2.0: Expansion of Essential Long Non-Coding RNAs in Human cell lines and Disease
- In dbEsslnc2.0, Compared to the previous version, we have added 6,080 essential lncRNAs, including 1,165 experimentally validated long non-coding RNAs from CRISPR-based genomic screens and 5,040 disease-related putative essential lncRNAs associated with pathogenic variants. Furthermore, the database incorporated additional information, including novel essentiality classifications, gene annotations, and variant data. dbEssLnc2.0 can be accessible freely at https://esslnc2.pufengdu.org.
+ In dbEsslnc2.0, Compared to the previous version, we have added 6,080 essential lncRNAs, including 1,165 experimentally validated long non-coding RNAs from CRISPR-based genomic screens and 5,040 disease-related putative essential lncRNAs associated with pathogenic variants. Furthermore, the database incorporated additional information, including novel essentiality classifications, gene annotations, and variant data. dbEssLnc2.0 can be accessible freely at https://esslnc.pufengdu.org/v2/.
 ## 1.Intruduction
 
 We store some essential lncRNAs information in a MySQL database. We used the node.js script engine and javaScript from the
@@ -24,11 +24,10 @@ npm install /cnpm i
 ![Alt text](https://github.com/yyZhang14/dbEssLnc/blob/main/public/md/node.png)
 ### 2.2 Add SQL file to the database
 
-After downloading mysql services,Users can download MYSQL Workbench software to import SQL files **dbesslnc** into the database. Note that the encoding format of the database is UTF8. There are 8 tables in the database dbesslnc.
+After downloading mysql services,Users can download MYSQL Workbench software to import SQL files **dbesslnc** into the database. Note that the encoding format of the database is UTF8. There are 7 tables in the database dbesslnc.
 ```
 esslnc table: all essential gene information.
 exp_crispr table: all Cell viability lncRNA information.
-disease_related table: all disease related(Pathogenic) gene information.
 variants table: all variants information.
 lncrna_variant_mapping table: variants map to lncRNAs.
 trans table: all gene transcript information.
@@ -81,7 +80,7 @@ blastn -version
 # some commands for import sql file
 create database dbesslnc；
 use dbesslnc；
-source sqlpath(eg. /home/auggieyd/dbesslnc.sql)；
+source sqlpath(eg. /home/auggieyd/dbesslnc2.sql)；
 show databases;
 show tables;
 ```
