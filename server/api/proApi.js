@@ -190,11 +190,11 @@ router.post("/selectHuman", (req, res) => {
   const offset = (page-1)*pageSize;
   connection.query(sql, [offset, pageSize], function(err, result) {
     if (err) {
-      console.log("[SELECT FROM final table where organism is human ERROR]:", err.msg);
+      console.log("[SELECT FROM esslnc table where organism is human ERROR]:", err.msg);
     }
     if (result) {
      // console.log(result)
-      jsonWrite(res, {items: result, total: 6271});
+      jsonWrite(res, {items: result, total: 6281});
     }
   });
 });
@@ -242,7 +242,7 @@ router.post("/select_reason_tumor", (req, res) => {
     }
     if (result) {
       //console.log(result)
-      jsonWrite(res, {items: result, total: 100});
+      jsonWrite(res, {items: result, total: 117});
     }
   });
 });
@@ -258,7 +258,7 @@ router.post("/select_reason_cancer", (req, res) => {
     }
     if (result) {
       //console.log(result)
-      jsonWrite(res, {items: result, total: 73});
+      jsonWrite(res, {items: result, total: 88});
     }
   });
 });

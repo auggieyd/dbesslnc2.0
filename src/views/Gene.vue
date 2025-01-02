@@ -171,6 +171,7 @@ export default{
         }
     },
     mounted(){
+        window.scrollTo(0, 0);
         this.tempPage = this.$route.query.page
         // console.log("标记Gene页面上个页面从哪里来",this.$route.params)
         if(this.tempPage == "Browse"){          

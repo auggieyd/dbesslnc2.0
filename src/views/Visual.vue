@@ -35,16 +35,16 @@
               </el-form-item>
               <el-form-item label="NONCODE:">
                 <span>
-                    {{ dataList.Noncode_trans_id !== 'N.A.' ? 'transcript:&nbsp':'' }} 
+                    {{ dataList.Noncode_trans_id !== 'N.A.' ? 'transcript:&nbsp':'N.A.' }} 
                     <text
                       v-if="dataList.Noncode_trans_id!== 'N.A.'"
                       @click="toUrl_RNA(dataList.Noncode_trans_id)"
                       class="hand">
                       {{ dataList.Noncode_trans_id }}
                     </text>
-                    {{ dataList.Noncode_id !== 'N.A.' ? ',&nbspgene:&nbsp ':'' }}
+                    {{ dataList.Noncode_trans_id !== 'N.A.' ? ',&nbspgene:&nbsp ':'' }}
                     <text
-                      v-if="dataList.Noncode_id !== 'N.A.'"
+                      v-if="dataList.Noncode_id !== 'N.A.' && dataList.Noncode_trans_id !== 'N.A.'"
                       @click="toUrl_DNA(dataList.Noncode_id)"
                       class="hand">
                       {{ dataList.Noncode_id }}
