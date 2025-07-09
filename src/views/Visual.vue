@@ -278,7 +278,7 @@ export default{
         //     this.initChart()
         // },1000)
         var chartDom = document.getElementById('figure1');
-        var myChart1 = echarts.init(chartDom);
+        var myChart1 = echarts.init(chartDom, null, { renderer: 'svg' });
         var _this = this;
         var option;
         option = {
@@ -286,6 +286,23 @@ export default{
             text: 'Expression profile',
             left: 'center'
           },
+    //        toolbox: {
+    //     show: true, // 显示工具箱
+    //     feature: {
+    //         saveAsImage: { // 保存为图片功能
+    //             show: true, // 显示保存图片按钮
+    //             title: '保存为图片' ,// 按钮标题
+    //             type: 'svg',
+    //             // name: '自定义文件名'
+    //         },
+    //         // 如果需要其他功能，可以在这里添加，例如：
+    //         // dataView: {show: true, readOnly: false, title: '数据视图'},
+    //         // restore: {show: true, title: '还原'},
+    //         // dataZoom: {show: true, title: {zoom: '区域缩放', back: '区域缩放还原'}}
+    //     },
+    //     right: 20, // 工具箱距离右侧的距离
+    //     top: 20    // 工具箱距离顶部的距离
+    // },
           tooltip:{
             trigger:'axis',
             axisPointer:{
