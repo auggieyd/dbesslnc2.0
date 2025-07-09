@@ -80,19 +80,19 @@
         <el-col :span="10">
           <img
             alt="essential lncRNA"
-            src="../../public/assets/img/framework.svg"
+            src="../../public/assets/img/interface.svg"
             style="width: 600px; margin-top: 90px;"
             
           />
           <div>
             <span style="font-size: 14px; float:right;" class="duiqi">
               <b></b>
-              <p>The work flow of data curation process:<br/> 
+              <p><b>The work flow of data curation process:</b><br/> 
                   Work flow is divided to 4 steps. Step1: Using key words to collect essential 
                   lncRNA data in PubMed. Step2: Manually extract the CRISPR experimental results for each lncRNA across different cell lines and map the variant sites in the ClinVar database to lncRNAs.
                    Step3: Map genomic coordinates from hg19 to hg38 and map lncRNAs to other databases to retrieve additional details.
                    Step4:Four categories of essential lncRNAs are deposited in the dbEssLnc2.0<br/>  
-                  Architecture of dbEssLnc2.0:<br/>
+                  <b>Architecture of dbEssLnc2.0:</b><br/>
                    dbEsslnc has seven functional pages, including "Browse", 
                     "Search","Blast","Download","Help", "Gene" and "Visual" page. Users click the gene name in the "Browse" and "Search" 
                     to jump to the "Gene" page for detailed information of gene. "Gene" page can jump to 
