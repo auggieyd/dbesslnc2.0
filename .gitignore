@@ -6,6 +6,7 @@ paper/
 data.ipynb
 getseq.ipynb
 old/
+v1/
 conf.d/
 
 # local env files
