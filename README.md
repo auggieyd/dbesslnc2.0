@@ -1,16 +1,16 @@
 # dbEssLnc2.0: Expansion of Essential Long Non-Coding RNAs in Human cell lines and Disease
- In dbEsslnc2.0, Compared to the previous version, we have added 6,080 essential lncRNAs, including 1,165 experimentally validated long non-coding RNAs from CRISPR-based genomic screens and 5,040 disease-related putative essential lncRNAs associated with pathogenic variants. Furthermore, the database incorporated additional information, including novel essentiality classifications, gene annotations, and variant data. dbEssLnc2.0 can be accessible freely at https://esslnc.pufengdu.org/v2/.
+ In dbEsslnc2.0, Compared to the previous version, we have added 6,107 essential lncRNAs, including 1,161 experimentally validated long non-coding RNAs from CRISPR-based genomic screens and 5,059 disease-related putative essential lncRNAs associated with pathogenic variants. Furthermore, the database incorporated additional information, including novel essentiality classifications, gene annotations, and variant data. dbEssLnc2.0 can be accessible freely at https://esslnc.pufengdu.org/v2/.
 ## 1.Intruduction
 
 We store some essential lncRNAs information in a MySQL database. We used the node.js script engine and javaScript from the
 Express framework to implement the backend system. The frontend was implement using JavaScript with the Vue framework. We 
-developed this object on **the Windows 10 platform** using the code editor Visual Studio Code(https://code.visualstudio.com/).
+developed this object on **the Windows 11 platform** using the code editor Visual Studio Code(https://code.visualstudio.com/).
 
 
 ## 2.Development
 
 ### 2.1 Installing dependency packages
-If you want to run this code in your development environment,you should first install **Node.js**(https://nodejs.org/en/download/) and **MySQL** (https://www.mysql.com/downloads/) on your machine. The **node** version used for this project is v14.17.1 and the **npm** version is v7.18.1.The versions used had better be consistent, otherwise unexpected errors will occur.
+If you want to run this code in your development environment,you should first install **Node.js**(https://nodejs.org/en/download/) and **MySQL** (https://www.mysql.com/downloads/) on your machine. The **node** version used for this project is v14.17.1, the **npm** version is v7.18.1 and the mysql version is Ver 8.0.42.The versions used had better be consistent, otherwise unexpected errors will occur.
 After your Node.js environment is ready, find out the location of your unpacked dbesslnc source code, and execute the command `npm install` separately to install all the dependencies of the project.
 If the download speed of individual dependencies is too slow, users can also download **cnpm** and 
 use `cnpm i` download.
@@ -52,14 +52,29 @@ Go to the root directory of the project, and execute the command `npm run serve`
 
 ### 2.5 Start backend
 
-Go to the root directory of the project,and enter **server** directory . Run `npm install` in the `server` folder.，
+Go to the root directory of the project,and enter **server** directory . 
 
-then execute the command `nodemon index.js` or `node index.js` to start backend service.Finally, Type `http://localhost:3000` in the browser, will see the website.
+```
+# Install dependency packages
+npm install
+# Start backend
+node index.js 
+```
 
-![Alt text](https://github.com/yyZhang14/dbEssLnc/blob/main/public/md/ser.PNG)
+Finally, Type `http://localhost:3000` in the browser, will see the website.
 
 ## 3.Production
-If you want to deploy the project to your own server when there are no problems in the development environment, you would need to excute npm run build in the root directory to get the **dist** folder firstly. And then configure the running environment on the server.
+If you want to deploy the project to your own server when there are no problems in the development environment, you would need to excute `npm run build` in the root directory to get the **dist** folder firstly. And then configure the running environment on the server.
+
+> Note. Adjust the structure of the`dist`folder to the following:
+
+dist
+├── server
+│   ├── assets
+│   ├── data
+│   └── md
+└── index.html
+
 ### Steps for production
 1. Install Node.js and MySQL on the server.
 2. Install BLAST on the server.
@@ -80,16 +95,15 @@ blastn -version
 
 ```
 # some commands for import sql file
-create database dbesslnc；
-use dbesslnc；
+create database dbess2；
+use dbess2；
 source sqlpath(eg. /home/auggieyd/dbesslnc2.sql)；
 show databases;
 show tables;
 ```
 4. Create a new directory (e.g. dbEssLnc) on the server.
-5. Use Xftp software to upload the **dist** folder, **server** folder , **blast** folder and package.json file to dbEssLnc directory.
-![Alt text](https://github.com/yyZhang14/dbEssLnc/blob/main/public/md/ftp.PNG)
-6. Execute the command `npm install` to install all the dependencies in the dbEssLnc directory.
+5. Use Xftp software or other tools to upload the **dist** folder, **server** folder and **blast** folder to **dbEssLnc** directory.
+6. Execute the command `npm install` to install all the dependencies in the **server** directory.
 7. Install and configure Nginx. Please pay special attention to path and configuration of the **nginx.conf** file(Nginx.conf is given above).
 ![Alt text](https://github.com/yyZhang14/dbEssLnc/blob/main/public/md/nginx.PNG)
 test nginx use following command.

@@ -5,7 +5,7 @@ MYSQL_CONFIG = {
     user     : 'root',
     password : 'root',
     database : 'dbess2',
-    port: 3307
+    port: 3306
   }
   module.exports = {
     MYSQL_CONFIG 

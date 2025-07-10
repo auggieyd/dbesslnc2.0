@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var mysql = require("mysql");
+var mysql = require("mysql2");
 var $sql = require("../sqlMap");
 // var path = require("path");
 var exec = require('child_process').exec;
@@ -11,13 +11,13 @@ var path = require("path");
 // var cookies = require("vue-cookies")
 
 
-//blast的一些路径
+// Paths for BLAST databases
 const BLASTDB = ""
-//服务器的路径
+// Server path for BLAST queries and results
 // const tempPath_query = "/home/yyzhang/dbesslnc/blast/temp/"
 // const tempPath_result= "/home/yyzhang/dbesslnc/blast/temp/" 
 // const db_path = "/home/yyzhang/dbesslnc/blast/lncrna/lncrna.fasta"
-//本地的路径
+// Local path for BLAST queries and results
 const tempPath_query = path.join(__dirname, '../../blast/temp/');
 const tempPath_result = path.join(__dirname, '../../blast/temp/');
 const db_path = path.join(__dirname, '../../blast/lncrna/lncRNA2.fasta');
@@ -25,14 +25,14 @@ const db_path = path.join(__dirname, '../../blast/lncrna/lncRNA2.fasta');
 
 const {MYSQL_CONFIG} = require('../db.js');
 // var blast = require("../blast.js")
-//创建连接
+// Create connection
 var connection = mysql.createConnection(MYSQL_CONFIG);
-//连接数据库
+// Connect to database
 connection.connect();
-// 构建树形数据
+// Build hierarchical data
 
 
-// 将数据转换为json格式
+// Convert data to JSON format
 var jsonWrite = function(res, ret) {
   if (typeof ret === "undefined") {
     res.json({
@@ -55,7 +55,7 @@ fs.writeFile('./a.log','',function(err){
     console.log(err)
   }
 });
-//browser 页面的sql语句
+// SQL statements for the browser page
 //show final table
 router.post("/final", (req, res) => {
   var sql = $sql.property.selectFinal;
@@ -111,7 +111,7 @@ router.post("/cancer", (req, res) => {
 // show cell growth table
 router.post("/cellGrowth", (req, res) => {
   const {page,pageSize} = req.body;
-  // console.log(req.body) 
+  // log request body
   const offset = (page-1)*pageSize;
   var sql = $sql.property.select_cell_growth;
   var count = $sql.property.cell_count;
@@ -133,7 +133,7 @@ router.post("/cellGrowth", (req, res) => {
 // show diease related table
 router.post("/diseaseRelated", (req, res) => {
   const {page,pageSize} = req.body;
-  // console.log(req.body)
+  // log request body
   const offset = (page-1)*pageSize;
   var sql = $sql.property.select_diease_related;
   var count = $sql.property.disease_count;
@@ -186,7 +186,7 @@ router.post("/diseaseMap", (req, res) => {
 router.post("/selectHuman", (req, res) => {
   var sql = $sql.property.selectHuman;
   const {page,pageSize} = req.body;
-  // console.log(req.body) 
+  // log request body
   const offset = (page-1)*pageSize;
   connection.query(sql, [offset, pageSize], function(err, result) {
     if (err) {
@@ -202,7 +202,7 @@ router.post("/selectHuman", (req, res) => {
 router.post("/selectMouse", (req, res) => {
   var sql = $sql.property.selectMouse;
   const {page,pageSize} = req.body;
-  // console.log(req.body) 
+  // log request body
   const offset = (page-1)*pageSize;
   connection.query(sql, [offset,pageSize], function(err, result) {
     if (err) {
@@ -218,7 +218,7 @@ router.post("/selectMouse", (req, res) => {
 router.post("/select_reason_vital", (req, res) => {
   var sql = $sql.property.select_reason_vital;
   const {page,pageSize} = req.body;
-  // console.log(req.body) 
+  // log request body
   const offset = (page-1)*pageSize;
   connection.query(sql, [offset,pageSize], function(err, result) {
     if (err) {
@@ -234,7 +234,7 @@ router.post("/select_reason_vital", (req, res) => {
 router.post("/select_reason_tumor", (req, res) => {
   var sql = $sql.property.select_reason_tumor;
   const {page,pageSize} = req.body;
-  // console.log(req.body) 
+  // log request body
   const offset = (page-1)*pageSize;
   connection.query(sql,[offset, pageSize], function(err, result) {
     if (err) {
@@ -250,7 +250,7 @@ router.post("/select_reason_tumor", (req, res) => {
 router.post("/select_reason_cancer", (req, res) => {
   var sql = $sql.property.select_reason_cancer;
   const {page,pageSize} = req.body;
-  // console.log(req.body) 
+  // log request body
   const offset = (page-1)*pageSize;
   connection.query(sql,[offset, pageSize], function(err, result) {
     if (err) {
