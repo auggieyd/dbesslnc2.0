@@ -1,8 +1,7 @@
-
-// sql语句
+// SQL statements
 var sqlMap = {
     property: {
-      // 显示数据 
+      // Display data
       //show final table data
       
       selectFinal: "select * from `final` ",
@@ -49,7 +48,7 @@ var sqlMap = {
       "select * from esslnc where disease_related = 1 order by UID ASC limit ?,? ",
 
 
-      //fuzzy search 模糊查询
+      //fuzzy search 
       searchHuman:
       'select * from `esslnc` where Organism ="Human" AND concat(UID,gene_name,Alias,Noncode_id,Lncbook_id,reason) like "%"?"%"',
       searchMouse:
@@ -65,7 +64,7 @@ var sqlMap = {
       searchDisease:
       'select * from `esslnc` where disease_related = 1 AND concat(UID,gene_name,Alias,Lncbook_id,Noncode_id,Reason) like "%"?"%"',
       
-      //用于模糊查询的输入建议
+      // For fuzzy search input suggestions
       fuzzyHuman:
       "select DISTINCT gene_name from `esslnc` where Organism ='Human' AND gene_name != 'N.A.' order by gene_name",
       fuzzyMouse:
@@ -81,11 +80,11 @@ var sqlMap = {
       fuzzyDisease:
       "select DISTINCT gene_name from `esslnc` where disease_related = 1 AND gene_name != '-' order by gene_name",
 
-      //用于blast页面 通过 转录本id 查找对应的内容
+      // For BLAST page: query content by transcript ID
       // fuzzySeq:
       // 'select * from `trans` where NONCODE_TRANSCRIPT_ID in (?)',
       // "select * from `trans` where NONCODE_TRANSCRIPT_ID in ("?")"
-      //用于 visual 页面 ，通过ID 查询对应的内容，做可视化
+      // For visualization page: query content by ID for visualization
       profileHuman:
       'select * from `exp_profile` where transcript_id = ? AND UID = ?',
       profileMouse:
@@ -100,4 +99,3 @@ var sqlMap = {
   };
   
   module.exports = sqlMap;
-  

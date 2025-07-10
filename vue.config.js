@@ -2,61 +2,62 @@ const path = require("path");
 const debug = process.env.NODE_ENV !== "production";
 
 module.exports = {
-  // 基本路径 相对路径
+  // Base URL (relative path)
   publicPath: "/v2/",
-  // 输出文件目录
+  // Output directory
   // outputDir: "dist",
   outputDir: process.env.outputDir,
-  assetsDir: "assets", // 静态资源目录 (js, css, img, fonts)的（相对于outputDir的）目录
+  // Directory for static assets (js, css, img, fonts) relative to outputDir
+  assetsDir: "assets",
   // indexPath: "index.html",
-  // eslint-loader 是否在保存的时候检查
+  // Whether to lint on save with eslint-loader
   lintOnSave: false,
   // use the full build with in-browser compiler?
   // https://vuejs.org/v2/guide/installation.html#Runtime-Compiler-vs-Runtime-only
   // compiler: false,
 
-  // webpack配置
+  // webpack configuration
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md   webpack链接API，用于生成和修改webapck配置
   chainWebpack: () => {
     if (debug) {
-      // 本地开发配置
+      // Development environment configuration
     } else {
-      // 生产开发配置
+      // Production environment configuration
     }
   },
   configureWebpack: config => {
-    // webpack配置，值位对象时会合并配置，为方法时会改写配置
+    // webpack configuration, merged if object, overridden if function
     if (debug) {
-      // 开发环境配置
+      // Development environment settings
       config.devtool = "cheap-module-eval-source-map";
       config.mode = "development";
     } else {
-      // 生产环境配置
+      // Production environment settings
       config.mode = "production";
     }
     Object.assign(config, {
-      // 开发生产共同配置
+      // Shared configuration for development and production
       resolve: {
         alias: {
-          "@": path.resolve(__dirname, "./src") //设置路径别名
+          "@": path.resolve(__dirname, "./src") // Set path alias
           //...
         }
       }
     });
   },
-  // vue-loader 配置项
+  // vue-loader configuration options
   // https://vue-loader.vuejs.org/en/options.html
   // vueLoader: {},
 
-  // 生产环境是否生成 sourceMap 文件
+  // Whether to generate sourceMap files in production
   productionSourceMap: true,
-  // css相关配置 配置高于chainWebpack中关于css loader的配置
+  // CSS related configuration, takes precedence over css loader configuration in chainWebpack
   css: {
-    // 是否使用css分离插件 ExtractTextPlugin
+    // Whether to extract CSS using ExtractTextPlugin
     extract: true,
-    // 开启 CSS source maps?是否在构建样式地图，false将提高构建速度
+    // Enable CSS source maps? Disabling improves build speed
     sourceMap: false,
-    // css预设器配置项
+    // CSS preprocessor options
     loaderOptions: {
       less: {
         lessOptions: {
@@ -67,16 +68,16 @@ module.exports = {
     requireModuleExtension: true
   },
   // use thread-loader for babel & TS in production build
-  // enabled by default if the machine has more than 1 cores 构建时开启多进程处理babel编译
+  // enabled by default if the machine has more than one core
   parallel: require("os").cpus().length > 1,
-  // 是否启用dll
+  // whether to enable dll
   // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#dll-mode
   // dll: false,
 
   // PWA 插件相关配置
   // see https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
   pwa: {},
-  // webpack-dev-server 相关配置
+  // webpack-dev-server related configuration
   devServer: {
     open: process.platform === "darwin",
     host: "0.0.0.0",
@@ -85,17 +86,17 @@ module.exports = {
     hotOnly: false,
     proxy: {
       "/api": {
-        target: "http://localhost:8081",//设置你调用的接口域名和端口号
+        target: "http://localhost:8081", // specify the domain and port of the API server
         changeOrigin: true,
         pathRewrite: {
           "^/api": "/api"
         }
       }
-    }, // 设置代理
+    }, // configure proxy
     // eslint-disable-next-line no-unused-vars
     before: app => {}
   },
-  // 第三方插件配置
+  // third-party plugin options
   pluginOptions: {
     // ...
   }
