@@ -52,7 +52,9 @@ Go to the root directory of the project, and execute the command `npm run serve`
 
 ### 2.5 Start backend
 
-Go to the root directory of the project,and enter **server** directory , then execute the command `nodemon index.js` or `node index.js` to start backend service.Finally, Type `http://localhost:3000` in the browser, will see the website.
+Go to the root directory of the project,and enter **server** directory . Run `npm install` in the `server` folder.，
+
+then execute the command `nodemon index.js` or `node index.js` to start backend service.Finally, Type `http://localhost:3000` in the browser, will see the website.
 
 ![Alt text](https://github.com/yyZhang14/dbEssLnc/blob/main/public/md/ser.PNG)
 
