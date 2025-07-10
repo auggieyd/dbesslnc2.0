@@ -68,12 +68,18 @@ If you want to deploy the project to your own server when there are no problems 
 
 > Note. Adjust the structure of the`dist`folder to the following:
 
+```
 dist
 ├── server
 │   ├── assets
 │   ├── data
 │   └── md
 └── index.html
+```
+
+
+
+
 
 ### Steps for production
 1. Install Node.js and MySQL on the server.
