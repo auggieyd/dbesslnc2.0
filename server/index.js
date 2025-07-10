@@ -34,6 +34,6 @@ app.use("/v2/api/property", proApi);
 app.use(express.static(path.join(__dirname, "../dist")));
 
 // 监听端口
-app.listen(8081, () => {
+app.listen(8081,'127.0.0.1', () => {
   console.log("success listen at port: 8081");
 });
