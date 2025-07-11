@@ -1,33 +1,3 @@
-.DS_Store
-node_modules/
-dist/
-map/
-paper/
-data.ipynb
-getseq.ipynb
-old/
-v1/
-conf.d/
-
-# local env files
-.env.local
-.env.*.local
-
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-.ipynb
 
 # ----------------------------
 # In prod 分支中，仅允许跟踪 dist/ 和 server/：
