@@ -28,3 +28,11 @@ pnpm-debug.log*
 *.sln
 *.sw?
 .ipynb
+
+# ----------------------------
+# In prod 分支中，仅允许跟踪 dist/ 和 server/：
+!/dist/
+!/dist/**
+!/server/
+!/server/**
+/server/node_modules/
