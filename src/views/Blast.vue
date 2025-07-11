@@ -200,14 +200,14 @@ CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAA
     handleExpandChange(row, expanded) {
       // console.log(expanded)
       if (expanded.length ) {
-        row.loading = true; // 设置当前行的loading状态为true
+        row.loading = true; 
         axios.post("api/property/fuzzySeq", {
           alignId: row.sseqid
         }).then(res => {
           // console.log(res.data)
-          // 假设接口返回的数据结构为 { UID, transcript_id, position, Seqlength, Sequence }
+          //  { UID, transcript_id, position, Seqlength, Sequence }
           const detail = Array.isArray(res.data) ? res.data[0] : res.data
-          // 将返回值赋给当前行
+          // console.log(detail)
           row.UID = detail.UID
           row.transcript_id = detail.transcript_id
           let chr = detail.chr
@@ -229,7 +229,7 @@ CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAA
                     />`
           row.Organism = detail.Organism
         }).finally(() => {
-          row.loading = false; // 设置当前行的loading状态为false
+          row.loading = false; // 
         })
       }
     },
