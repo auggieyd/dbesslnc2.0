@@ -37,16 +37,24 @@
        
 
         <el-table
-          :data = "tableData"
+          :data = "pageData"
           v-show="isShow"
           border
           stripe
           style = "width:100%;margin:20px auto 0 auto"
-          strip highlight-current-row>
-          <el-table-column type="expand">
-            <template #default="props">
-              <el-form label-position="left" inline class="demo-table-expand" >
+          row-key="indexID"
+          strip highlight-current-row
+          @expand-change="handleExpandChange">
+          <el-table-column  type="expand"  label="Detail" width="80"> 
+            <template #default="props" >
+              
+              <div class="expand-loading-wrap">
+              <p v-if="props.row.loading" v-loading="props.row.loading" style="text-align: center;">loading...</p>
 
+              <el-form v-else label-position="left" inline class="demo-table-expand" >
+                <el-form-item label="Organism:">
+                  <span>{{props.row.Organism}}</span>
+                </el-form-item>
                 <el-form-item label="Gene UID:">
                   <span @click="toUrl_DNA(props.row)" class="hand">{{ props.row.UID }}</span>
                 </el-form-item>
@@ -60,22 +68,12 @@
                   <span>{{props.row.Seqlength}}</span>
                 </el-form-item>
                 <el-form-item label="Sequence:" >
-                  <span class="newlist" v-html="props.row.Sequence">
+                  <span class="newlist" v-html="props.row.showData" @click="kzClick($event,props.row)">
                   </span>
                 </el-form-item>
               </el-form>
+              </div>
             </template>
-          </el-table-column>
-
-          <el-table-column
-            label="Gene UID"
-            prop="UID"
-            width="120">
-          </el-table-column>
-          <el-table-column
-            label="Organism"
-            prop="Organism"
-            width="100">
           </el-table-column>
           <el-table-column
             label="Subject seq id"
@@ -101,12 +99,17 @@
             label="Bitscore"
             prop="bitscore">
           </el-table-column>
-
-
-
-
         </el-table>    
-
+        <el-pagination
+          v-if = "isShowPage"
+          class="pagesearch"
+          background 
+          v-model:current-page="currentPage"
+          v-model:page-size="pageSize"
+          @current-change="handlePageChange"
+          layout="prev, pager, next, jumper"
+          :total="Total">
+        </el-pagination>
       </div>
     </div>
   </div>
@@ -157,11 +160,82 @@ CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAA
       isShow:false,
       length:1,
       RNAID:"",
-      SeqData:{}
-    
+      SeqData:{},
+      currentPage: 1,
+      pageSize: 10,
+      Total: 0,
+      isShowPage: false
+    }
+  },
+  computed: {
+    pageData() {
+      const start = (this.currentPage - 1) * this.pageSize;
+      return this.tableData.slice(start, start + this.pageSize);
     }
   },
   methods: {
+    kzClick(event,row){      
+      // console.log(event.target.className, event.target.nodeName)
+
+        if(event.target.className === 'open' && event.target.nodeName === 'IMG'){
+                row.showData = `${row.Sequence}
+                    <img
+                    src="/v2/assets/img/close.png"
+                    style="width:12px; height:12px"
+                    class="close"
+                    />
+                    `
+        }
+        if(event.target.className === 'close' && event.target.nodeName === 'IMG'){
+                row.showData = `${row.Sequence.slice(0,200)}
+                    <img
+                    src="/v2/assets/img/open.png"
+                    style="width:12px; height:12px"
+                    class="open"
+                    />
+                    `
+        }
+
+    },
+    handleExpandChange(row, expanded) {
+      // console.log(expanded)
+      if (expanded.length ) {
+        row.loading = true; // 设置当前行的loading状态为true
+        axios.post("api/property/fuzzySeq", {
+          alignId: row.sseqid
+        }).then(res => {
+          // console.log(res.data)
+          // 假设接口返回的数据结构为 { UID, transcript_id, position, Seqlength, Sequence }
+          const detail = Array.isArray(res.data) ? res.data[0] : res.data
+          // 将返回值赋给当前行
+          row.UID = detail.UID
+          row.transcript_id = detail.transcript_id
+          let chr = detail.chr
+          let start = detail.start
+          let end = detail.end
+          let strand = detail.strand === '-' ? "reverse" : "forward"
+          let version =  detail.Organism === 'Human' ?"(hg38)":"(mm10)"
+          let position = chr + ":" + start + "-" + end + "," + strand + version
+          let Sequence = detail.FASTA
+          let Seqlength = detail.length
+          row.position = position
+          row.Seqlength = Seqlength
+          row.Sequence = Sequence
+          row.showData = `${Sequence.slice(0,200)}
+                    <img
+                    src="/v2/assets/img/open.png"
+                    style="width:12px; height:12px"
+                    class="open"
+                    />`
+          row.Organism = detail.Organism
+        }).finally(() => {
+          row.loading = false; // 设置当前行的loading状态为false
+        })
+      }
+    },
+    handlePageChange(val) {
+      this.currentPage = val;
+    },
     SearchExample(){
       //显示example数据
       this.textarea = this.example;
@@ -179,7 +253,7 @@ CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAA
         text:"Loading...",
         background:"rgba(0,0,0,0.7)"
       });
-
+      this.isShowPage = true
       var _this = this
       _this.isShow = true
       axios.post("api/property/blast",{
@@ -209,62 +283,43 @@ CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAA
         }
         //console.log(_this.length)
         // console.log( _this.RNAID,"RNAID")
-     
-         
-        axios.post("api/property/fuzzySeq",{
-        alignId: _this.RNAID
-        }).then(respond => {
-          let tempSeq = respond.data
-          for(let index = 0;index < tempSeq.length;index++){
-            let keyID = tempSeq[index]
-            _this.SeqData[keyID.transcript_id] = tempSeq[index]
-          }
-          console.log(_this.SeqData)
-          for(let j = 0; j < _this.length-1 ; j++){        
+        for(let j = 0; j < _this.length-1 ; j++){        
             let sseqid = _this.resData[j].split('\t')[1].split('|')[0]
             let pident = _this.resData[j].split('\t')[2]
             let length = _this.resData[j].split('\t')[3]
             let evalue = _this.resData[j].split('\t')[4]
             let bitscore = _this.resData[j].split('\t')[5].split('\r')[0]
-            console.log(_this.SeqData[sseqid]+"key:"+sseqid)
-            // console.log("key: " + sseqid + " ,value: " + _this.SeqData[sseqid])
-            if(_this.SeqData[sseqid] == undefined){
-              continue
-            }
-            let UID = _this.SeqData[sseqid]["UID"]
-            let Organism = _this.SeqData[sseqid]["Organism"]
-            let transcript_id = _this.SeqData[sseqid]["transcript_id"]
-            let chr = _this.SeqData[sseqid]["chr"]
-            let start = _this.SeqData[sseqid]["start"]
-            let end = _this.SeqData[sseqid]["end"]
-            let strand = _this.SeqData[sseqid]["strand"] === '-' ? "reverse" : "forward"
-            let version =  Organism === 'Human' ?"(hg38)":"(mm10)"
-            let position = chr + ":" + start + "-" + end + "," + strand + version
-            let Sequence = _this.SeqData[sseqid]["FASTA"]
-            let Seqlength = _this.SeqData[sseqid]["length"]
+
             let result = {
-              
+              "indexID":j+sseqid,
               "sseqid":sseqid,
               "pident":pident,
               "length":length,
               "evalue":evalue,
               "bitscore":bitscore,
-              "UID":UID,
-              "Organism":Organism,
-              "transcript_id":transcript_id,
-              "position":position,
-              "Seqlength":Seqlength,
-              "Sequence":Sequence            
+              "UID": '',
+              "transcript_id": '',
+              "position": '',
+              "Seqlength": '',
+              "Sequence": '',
+              "Organism": ''
             }
-
             _this.tableData.push(result)
-           
-          }
-          loadingInstance.close() 
-         
-        
-        })
-      })
+        }
+
+        loadingInstance.close() 
+      }).finally(() => {
+        // 计算总条数
+        _this.Total = _this.tableData.length;
+        _this.currentPage = 1; 
+        // 如果没有数据，提示用户
+        if (_this.Total === 0) {
+          window.alert("No results found for the given query.");
+        }
+      }).catch(error => {
+        console.error("Error during search:", error);
+        loadingInstance.close();
+      });
     },
 
     toUrl_DNA(data){
@@ -313,9 +368,9 @@ CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAA
   white-space: pre-line;
   //color: #232324;
 }
-.demo-table-expand {
-    font-size: 0;
-}
+// .demo-table-expand {
+//     font-size: 0;
+// }
 .demo-table-expand label {
   width: auto;
   font-size:16px;
@@ -543,5 +598,9 @@ span {
   font-weight:700;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   font-size:15px;
+}
+.example-showcase .el-loading-mask {
+  position: relative;
+  z-index: 9;
 }
 </style>

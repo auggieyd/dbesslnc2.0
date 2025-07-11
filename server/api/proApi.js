@@ -453,7 +453,7 @@ router.post("/blast",(req,res)=>{
         res.status(400);
         res.send({
           error:true,
-          message:"post参数缺失（user_seq,user_eValue)"
+          message:"post参数缺失(user_seq,user_eValue)"
         })
       }
       else{
@@ -511,9 +511,8 @@ router.post("/blast",(req,res)=>{
 router.post("/fuzzySeq",(req,res)=> {
   //var sql=$sql.property.fuzzySeq;  
   var alignId = req.body.alignId;
-  
-  var sql = "select * from `trans` where transcript_id in ("+alignId+")";
-  connection.query(sql,(err,result)=>{
+  var sql = "select * from `trans` where transcript_id = ?";
+  connection.query(sql,[alignId],(err,result)=>{
     
     if(err) {
       console.log(err.msg)
