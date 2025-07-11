@@ -40,9 +40,9 @@ exp_profile table: all human lncRNA expression profile information.
 Visit Blast.ncbi(https://blast.ncbi.nlm.nih.gov/Blast.cgi) to download the Blast installer.
 ```
 # create fasta sequence database
-makeblastdb -in lncrna.fasta -dbtype nucl
+makeblastdb -in lncRNA2.fasta -dbtype nucl
 # a test to use blast tool
-blastn -query tar.fasta -db blast/lncrna/lncrna.fasta -out a.txt -evalue 1e-5 -outfmt 6
+blastn -query tar.fasta -db blast/lncrna/lncRNA2.fasta -out a.txt -evalue 1e-5 -outfmt 6
 ```
 
 ### 2.4 Start frontend
