@@ -74,14 +74,14 @@
             dbEssLnc2.0 database,and new data are constently added by manual screening.
           </p>
           <p>
-            Last update on: Nov.30th.2024.
+            Last update on: Jan.2th.2025.
           </p>
         </el-col>
         <el-col :span="10">
           <img
             alt="essential lncRNA"
-            src="../../public/assets/img/interface.svg"
-            style="width: 600px; margin-top: 90px;"
+            src="../../public/assets/img/home.svg"
+            style="width: 100%; margin-top: 90px;"
             
           />
           <div>
