@@ -125,28 +125,28 @@
             <el-table-column label="General" prop="vivo" >
               <template #default="scope">
                 <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
-                <i v-show="scope.row.vivo === 1" class="el-icon-check"></i>
-                <i v-show="scope.row.vivo !== 1" class="el-icon-close"></i>                
+                <i v-show="scope.row.vivo === 1" class="my-icon-check"></i>
+                <i v-show="scope.row.vivo !== 1" class="my-icon-close"></i>                
               </template>
             </el-table-column>
             <el-table-column label="Cell-viability" prop="role" >
               <template #default="scope">
                 <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
-                <i v-show="scope.row.vitro === 1" class="el-icon-check"></i>
-                <i v-show="scope.row.vitro !== 1" class="el-icon-close"></i>    
+                <i v-show="scope.row.vitro === 1" class="my-icon-check"></i>
+                <i v-show="scope.row.vitro !== 1" class="my-icon-close"></i>    
               </template>
             </el-table-column>
             <el-table-column label="Cancer-related" prop="cancer_related" >
               <template #default="scope">
                 <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
-                <i v-show="scope.row.cancer_related > 0" class="el-icon-check"></i>
-                <i v-show="scope.row.cancer_related === 0" class="el-icon-close"></i> 
+                <i v-show="scope.row.cancer_related > 0" class="my-icon-check"></i>
+                <i v-show="scope.row.cancer_related === 0" class="my-icon-close"></i> 
               </template>
             </el-table-column>
             <el-table-column label="Disease-related" prop="disease_related" >
               <template #default="scope">
-                <i v-show="scope.row.disease_related === 1" class="el-icon-check"></i>
-                <i v-show="scope.row.disease_related === 0" class="el-icon-close"></i> 
+                <i v-show="scope.row.disease_related === 1" class="my-icon-check"></i>
+                <i v-show="scope.row.disease_related === 0" class="my-icon-close"></i> 
               </template>
             </el-table-column>
           </el-table>
@@ -177,7 +177,7 @@ export default {
       isShow:true,
       lncrnaTable:"",//推到前端的数据
       inputContent:"",//输入的数据
-      searchOpt:"option2",// 选择框中的数据
+      searchOpt:"option3",// 选择框中的数据
       options: [
         {
           label:"Query by Organism",
@@ -204,14 +204,15 @@ export default {
 
       //用于模糊搜索的输入建议
       properties:[],//空的
-      propertyresults:[{value: "Fendrr"},{value: "Gm38509"},{value: "Haglr"},{value: "Pantr2"},{value: "Lncpint"},
-                      {value: "Tsix"},{value: "Dnm3os"},{value: "Mir124a-1hg"},{value: "Meg3"},{value: "Chaserr"},
-                      {value: "Xist"},{value: "Gm12610"},{value: "lncKdm2b"},{value: "Bvht"},{value: "Paupar"},
-                      {value: "Trp53cor1"},{value: "Dreh"},{value: "Gas5"},{value: "Miat"},{value: "Tunar"},
-                      {value: "Dlx6os1"},{value: "9030622O22Rik"},{value: "Tslrn1"},{value: "Hm629797"},{value: "4933409F18Rik"},
-                      {value: "Gm2044"},{value: "Mhrt"},{value: "Jpx"},{value: "Airn"},{value: "Kcnq1ot1"},
-                      {value: "Hand2os1"},{value: "Ttc39aos1"},{value: "Neat1"},{value: "Hdnr"}],
-
+      propertyresults:[
+        {value: "AIRN"}, {value: "Bvht"}, {value: "Chaserr"},
+        {value: "Dlx6os1"}, {value: "Dnm3os"}, {value: "Dreh"}, {value: "Fendrr"}, {value: "Gas5"},
+        {value: "Gm12610"}, {value: "Gm2044"}, {value: "Gm38509"}, {value: "Haglr"}, {value: "Hand2os1"},
+        {value: "Hdnr"}, {value: "Hm629797"}, {value: "Jpx"}, {value: "Kcnq1ot1"}, {value: "LIVAR"},
+        {value: "lncKdm2b"}, {value: "Lncpint"}, {value: "LNCTAM34A"}, {value: "Meg3"}, {value: "MHRT"},
+        {value: "Miat"}, {value: "Mir124a-1hg"}, {value: "Neat1"}, {value: "Pantr2"}, {value: "Paupar"},
+        {value: "PICSAR"}, {value: "SENCR"}, {value: "Trp53cor1"}, {value: "Tsix"}, {value: "Tslrn1"},
+        {value: "Ttc39aos1"}, {value: "Tunar"}, {value: "Xist"},{value: "4933409F18Rik"}, {value: "9030622O22Rik"}, ],
 
       // property:[],//查询的结果
       fuzzyHuman:[],
@@ -530,6 +531,7 @@ export default {
       } else if (searchOpt == "option3" ) {
        
         _this.propertyresults =  _this.fuzzyVital;
+        console.log(_this.propertyresults,"vital");
       } 
       else if (searchOpt == "option4") {
         _this.propertyresults =  _this.fuzzyCell;
@@ -697,5 +699,20 @@ span {
 .el-pagination.is-background .el-pager li:not(.disabled).active{
   background-color: #389a99 !important;  
 }
-
+.my-icon-check {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url('/assets/img/selected.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.my-icon-close {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url('/assets/img/not_selected.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 </style>

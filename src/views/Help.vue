@@ -345,5 +345,8 @@ h3 {
     display: inline-block;
 
 }
+:deep(.el-collapse-item__header){
+  font-weight: bold;
+}
 
 </style>

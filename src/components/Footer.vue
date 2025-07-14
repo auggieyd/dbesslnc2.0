@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <p>
-      Copyright &copy; 2021 College of Intelligence and Computing, Tianjin
+      Copyright &copy; 2024 College of Intelligence and Computing, Tianjin
       University All rights reserved.
     </p>
   </div>
