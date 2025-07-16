@@ -149,7 +149,7 @@
 }
 .wrapper{
   display:flex;
-  align-item:center;
+  align-items:center;
   padding-left:10px;
 }
 .wrapper p{

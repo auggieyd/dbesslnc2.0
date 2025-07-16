@@ -1163,7 +1163,7 @@ span {
   display: inline-block;
   width: 20px;
   height: 20px;
-  background-image: url('/assets/img/selected.svg');
+  background-image: url('/v2/assets/img/selected.svg');
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -1171,7 +1171,7 @@ span {
   display: inline-block;
   width: 20px;
   height: 20px;
-  background-image: url('/assets/img/not_selected.svg');
+  background-image: url('/v2/assets/img/not_selected.svg');
   background-size: contain;
   background-repeat: no-repeat;
 }
