@@ -209,7 +209,7 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,and GENCODEV47 databases to e
 1. Filter variants in `variant_summary.txt`. Firstly, the `Assembly` field should be `GRCh38`. Secondly, retain variants with at least one star and without conflicts. Finally, filter out variants that do not appear in the `clinvar_20240603.vcf` file. (Script: `/clinvar_map/variants/left-shift/pre_process.py`)
 2. Obtain the variant length from `ClinVarVCVRelease_2024-09.xml`. (Script: `/clinvar_map/variants/left-shift/get_length_xml.py`)
 3. Filter out variants longer than 100bp and calculate the left-shift coordinates for the variants. (Script: `/clinvar_map/variants/left-shift/after_process.py`)
-
+4. Find out the lethal and life-threatening phenotypes according to the filtering rules. (Script:`/clinvar_map/phenotype/phenotype_screen.py`)
 #### Merge reference lncRNAs
 
 1. Merge lncRNAs from NONCODEv6 and LncBookv2.0
