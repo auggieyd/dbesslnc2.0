@@ -1,4 +1,4 @@
-# dbEssLnc2.0: Expansion of Essential Long Non-Coding RNAs in Human cell lines and Disease
+# dbEssLnc2.0: exploring disease-associated essential long non-coding RNAs in human cell lines
  In dbEsslnc2.0, Compared to the previous version, we have added 6,107 essential lncRNAs, including 1,161 experimentally validated long non-coding RNAs from CRISPR-based genomic screens and 5,059 disease-related putative essential lncRNAs associated with pathogenic variants. Furthermore, the database incorporated additional information, including novel essentiality classifications, gene annotations, and variant data. dbEssLnc2.0 can be accessible freely at https://esslnc.pufengdu.org/v2/.
 ## 1.Intruduction
 
