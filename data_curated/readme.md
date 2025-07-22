@@ -200,7 +200,7 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,and GENCODEV47 databases to e
   - NONCODE V6 LncRNA and LncRNA Genes[ NONCODEv6_hg38.lncAndGene.bed.gz](http://www.noncode.org/datadownload/NONCODEv6_hg38.lncAndGene.bed.gz)
   - LncBook V2.0[ lncRNA_LncBookv2.0_GRCh38.gtf.gz](https://ngdc.cncb.ac.cn/lncbook/files/lncRNA_LncBookv2.0_GRCh38.gtf.gz)
   - The hg38 coordinate file(1 base) of lncRNAs that have been validated by CRISPR,from`/store/dbess.ipynb:Step2.1`.
-    `/store/crispr.txt`
+    file:`/store/crispr.txt` 
 
 ### 2. Variants filtering and putative essential long non-coding RNA gene labelling.
 
