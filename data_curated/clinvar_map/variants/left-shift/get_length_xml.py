@@ -13,7 +13,7 @@ df_filtered = pd.read_csv(temp_file, sep='\t', dtype=dtype)
 variation_ids = set(df_filtered['VariationID'].astype(str))
 
 # XML file path
-xml_file = '../ClinVarVCVRelease_2024-0902.xml'
+xml_file = './ClinVarVCVRelease_2025-0630.xml'
 
 # Use iterparse to parse the XML file incrementally and store VariationID and VariantLength
 context = ET.iterparse(xml_file, events=("start", "end"))  # Incremental XML parsing
