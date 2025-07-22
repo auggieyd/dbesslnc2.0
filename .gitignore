@@ -1,7 +1,6 @@
 .DS_Store
 node_modules/
 dist/
-map/
 paper/
 data.ipynb
 getseq.ipynb

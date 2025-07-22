@@ -36,7 +36,7 @@
           <el-row v-if="id==0" style="padding: 5px;" class="content">
             <div class="wrapper">
               <el-col :span="12"  class="explain">
-                <img src="../../public/assets/img/sta4.png" alt="" style="height: auto; width:100%;">
+                <img src="../../public/assets/img/sta.png" alt="" style="height: auto; width:100%;">
               </el-col>
               <el-col :span="12" class="explain">
                 <p>
@@ -703,7 +703,7 @@ span {
   display: inline-block;
   width: 20px;
   height: 20px;
-  background-image: url('/assets/img/selected.svg');
+  background-image: url('/v2/assets/img/selected.svg');
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -711,7 +711,7 @@ span {
   display: inline-block;
   width: 20px;
   height: 20px;
-  background-image: url('/assets/img/not_selected.svg');
+  background-image: url('/v2/assets/img/not_selected.svg');
   background-size: contain;
   background-repeat: no-repeat;
 }

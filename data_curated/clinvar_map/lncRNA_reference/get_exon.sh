@@ -1,7 +1,7 @@
 # Extract transcripts for each gene, obtain mapping of gene ID and transcript ID
 # For the lncbook's gtf, obtain the number of exons per transcript by counting
 
-tac lncRNA_LncBookv2.0_GRCh38.gtf | awk -F '\t' '
+tac ./LncBook/lncRNA_LncBookv2.0_GRCh38.gtf | awk -F '\t' '
 $3 == "exon" {
     match($9, /transcript_id "[^"]+"/);
     transcript_id = (RSTART > 0 ? substr($9, RSTART+15, RLENGTH-16) : "");
@@ -11,7 +11,7 @@ $3 == "exon" {
             exon_ranges[transcript_id] = exon_range;
             exon_numbers[transcript_id] = 1;
         } else {
-            exon_ranges[transcript_id] = exon_ranges[transcript_id] "," exon_range;
+            exon_ranges[transcript_id] = exon_range "," exon_ranges[transcript_id];
             exon_numbers[transcript_id]++; 
         }
     }
@@ -26,12 +26,12 @@ $3 == "transcript" {
         exon_number = (transcript_id in exon_numbers ? exon_numbers[transcript_id] : "");
         print gene_id "," transcript_id "," $1 "," $4 "," $5 "," $7 "," exon_number "," exon_range;
     }
-}' > LncBookv2.0_lncRNA_transcripts_temp.csv
-tac LncBookv2.0_lncRNA_transcripts_temp.csv > LncBookv2.0_lncRNA_transcripts.csv
-rm LncBookv2.0_lncRNA_transcripts_temp.csv
+}' > ./LncBook/LncBookv2.0_lncRNA_transcripts_temp.csv
+tac ./LncBook/LncBookv2.0_lncRNA_transcripts_temp.csv > ./LncBook/LncBookv2.0_lncRNA_transcripts.csv
+rm ./LncBook/LncBookv2.0_lncRNA_transcripts_temp.csv
 
 # NONCODE's gtf file contains exon_number directly, just extract it
-tac NONCODEv6_human_hg38_lncRNA.gtf | awk -F '\t' '
+tac ./NONCODE/NONCODEv6_human_hg38_lncRNA.gtf | awk -F '\t' '
 $3 == "exon" {
     match($9, /transcript_id "[^"]+"/);
     transcript_id = (RSTART > 0 ? substr($9, RSTART+15, RLENGTH-16) : "");
@@ -40,7 +40,7 @@ $3 == "exon" {
         if (!(transcript_id in exon_ranges)) {
             exon_ranges[transcript_id] = exon_range; 
         } else {
-            exon_ranges[transcript_id] = exon_ranges[transcript_id] "," exon_range;  
+            exon_ranges[transcript_id] = exon_range "," exon_ranges[transcript_id];  
         }
     }
 }
@@ -55,6 +55,6 @@ $3 == "transcript" {
         exon_range = (transcript_id in exon_ranges ? "\"" exon_ranges[transcript_id] "\"" : ""); 
         print gene_id "," transcript_id "," $1 "," $4 "," $5 "," $7 "," exon_number "," exon_range;
     }
-}' > NONCODEv6_lncRNA_transcripts_temp.csv
-tac NONCODEv6_lncRNA_transcripts_temp.csv > NONCODEv6_lncRNA_transcripts.csv
-rm NONCODEv6_lncRNA_transcripts_temp.csv
+}' > ./NONCODE/NONCODEv6_lncRNA_transcripts_temp.csv
+tac ./NONCODE/NONCODEv6_lncRNA_transcripts_temp.csv > ./NONCODE/NONCODEv6_lncRNA_transcripts.csv
+rm ./NONCODE/NONCODEv6_lncRNA_transcripts_temp.csv

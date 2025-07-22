@@ -70,7 +70,7 @@ Due to differences in eras and annotation discrepancies, we need to further upda
    - crispr_splice_id.txt
    - crispr_casrx_id.txt
    
-1.  Extract the annotation information corresponding to the reference genome.For instance,in the crispr delete study,lncRNAs from gencode v19 were utilized.We downloaded the original reference gtf file and extracted the annotation information generate bed files.
+2.  Extract the annotation information corresponding to the reference genome.For instance,in the crispr delete study,lncRNAs from gencode v19 were utilized.We downloaded the original reference gtf file and extracted the annotation information generate bed files.
 
    - crispri19.bed: 
    - crispr_delete19.bed
@@ -188,75 +188,66 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,and GENCODEV47 databases to e
 
 
 
-## Putative Essential lncRNA Based on Pathogenic Variant Data from the ClinVar Database
+## Putative Essential lncRNA Based on Variant assocate with lethal phenotypes Data from the ClinVar Database
 
 ### 1. Download the data from the public database and the genomic reference annotation file.
 
 - Variants
-  - Tab-delimited report for variants  which have been submitted to ClinVar[variant_summary.txt.gz](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/variant_summary.txt.gz)
-  - VCF file of variants with precise endpoints [clinvar_20240603.vcf.gz](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar_20241215.vcf.gz)
-  - XML file with variant length [ClinVarVCVRelease_2024-09.xml.gz](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/xml/ClinVarVCVRelease_2024-09.xml.gz)
+  - Tab-delimited report for variants which have been submitted to ClinVar [variant_summary.txt.gz](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/variant_summary.txt.gz)
+  - VCF file of variants with precise endpoints [clinvar.vcf.gz](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz)
+  - XML file with variant length [ClinVarVCVRelease_00-latest.xml.gz](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/xml/ClinVarVCVRelease_00-latest.xml.gz)
 - LncRNA 
   - NONCODE V6 LncRNA and LncRNA Genes[ NONCODEv6_hg38.lncAndGene.bed.gz](http://www.noncode.org/datadownload/NONCODEv6_hg38.lncAndGene.bed.gz)
   - LncBook V2.0[ lncRNA_LncBookv2.0_GRCh38.gtf.gz](https://ngdc.cncb.ac.cn/lncbook/files/lncRNA_LncBookv2.0_GRCh38.gtf.gz)
-  - The hg38 coordinate file(1 base) of lncRNAs that have been validated by CRISPR,from`/store/dbess.ipynb:Step2.1`.
+  - The hg38 coordinate file(1 base) of lncRNAs that have been validated by CRISPR, from`/store/dbess.ipynb:Step2.1`.
     file:`/store/crispr.txt` 
 
 ### 2. Variants filtering and putative essential long non-coding RNA gene labelling.
 
 #### Variants filtering 
 
-1. Filter variants in `variant_summary.txt`. Firstly, the `Assembly` field should be `GRCh38`. Secondly, retain variants with at least one star and without conflicts. Finally, filter out variants that do not appear in the `clinvar_20240603.vcf` file. (Script: `/clinvar_map/variants/left-shift/pre_process.py`)
-2. Obtain the variant length from `ClinVarVCVRelease_2024-09.xml`. (Script: `/clinvar_map/variants/left-shift/get_length_xml.py`)
-3. Filter out variants longer than 100bp and calculate the left-shift coordinates for the variants. (Script: `/clinvar_map/variants/left-shift/after_process.py`)
+1. Filter variants in `variant_summary.txt`. Firstly, the `Assembly` field should be `GRCh38`. Secondly, retain variants with at least one star and without conflicts. Finally, filter out variants that do not appear in the `clinvar_20240603.vcf` file. Meanwhile, `RCVaccessions` with incomplete phenotypic information were retrieved. (Script: `/clinvar_map/variants/left-shift/pre_process.py`)
+
+2. Using the API provided by NCBI to obtain the complete list of phenotypes based on RCV accessions. (Script: `/clinvar_map/varinats/left_shift/get_conditions_by_RCV.py`)
+
+3. Use the obtained phenotype list to complete the missing information and generate a complete and deduplicated list of phenotypes. (Script: `/clinvar_map/variants/left-shift/complete_phenotype.py`)
+
 4. Find out the lethal and life-threatening phenotypes according to the filtering rules. (Script:`/clinvar_map/phenotype/phenotype_screen.py`)
+
+5. Obtain the variant length from `ClinVarVCVRelease_2025-06.xml`. (Script: `/clinvar_map/variants/left-shift/get_length_xml.py`)
+
+6. Retain variants with a length of ≤100bp and containing lethal phenotypes and calculate the left-shift coordinates for the variants. (Script: `/clinvar_map/variants/left-shift/after_process.py`)
 #### Merge reference lncRNAs
 
 1. Merge lncRNAs from NONCODEv6 and LncBookv2.0
 
-   - Use `bedtools` to identify lncRNAs that have the same coordinate. (Script: `/clinvar_map/lncRNA_reference/merge_noncode_lncbook.sh`)
+   Use `bedtools` to identify lncRNAs that have the same coordinate. (Script: `/clinvar_map/lncRNA_reference/merge_noncode_lncbook.sh`)
 
 2. Merge lncRNAs from the two databases, retaining only one record for lncRNAs with same coordinate. (Script: `/clinvar_map/lncRNA_reference/merge.py`)
 
 #### Map variants to reference lncRNAs set
 
-1. Map variants to reference lncRNA set using `bedtools`. (Script: `/clinvar_map/lncRNA_reference/map.sh`)
-
+1. Map variants to reference lncRNA set using `bedtools`. (Script: `/clinvar_map/map/map.sh`)
 2. Map result statistics (Script: `/clinvar_map/db/statistic/statistic.py`)
-
-   - Retain mapping entries that include variants with clinical significance marked as `pathogenic` or `likely pathogenic`.
-
-   - Count putative essential lncRNAs that overlap with pathogenic or likely pathogenic variants.(`/clinvar_map/db/statictis/lncRNA.csv`)
-
+   - Count putative essential lncRNAs that overlap with variants associated with lethal phenotypes.(`/clinvar_map/db/statictis/lncRNA.csv`)
 3. Annotate additional annotations for lncRNAs
-
    - Extact `Noncode ID` and `Lncbook ID` for ID conversion.(Script:`/clinvar_map/db/conversion/get_id_for_conversion.sh`)
-   - Use the LncBook [**ID Conversion Tool** ](https://ngdc.cncb.ac.cn/lncbook/tools/conversion)to query the `NCBI_ID` and `gene_name` for lncRNAs. (Script: `/clinvar_map/db/conversion/id_conversion.py`) Generate:`/clinvar_map/db/conversion/lnbook_conversion_results.csv`and`/clinvar_map/db/conversion/noncode_conversion_results.csv`
-
-   -  Merge`/clinvar_map/db/statistic/lncRNAs`, `/clinvar_map/db/conversion/lnbook_conversion_results.csv` and`/clinvar_map/db/conversion/noncode_conversion_results.csv`. (Script: `/clinvar_map/db/conversion/merge_NCBI_symbol.py`)
-
-4. Filter out putative essential lncRNAs that have CRISPR experimental evidence(`/store/crispr.txt`). If a putative essential lncRNA has exactly the same coordinates as another essential lncRNA with experimental evidence, the putative essential lncRNA is deleted. Delete mappings associated with these putative essential.(Script:`/clinvar_map/crispr_overlap/filter_out.sh`)
-
-5. Count pathogenic or likely pathogenic variants map to putative essential that don't have CRISPR experimental evidence. Count the mappings between pathogenic or likely pathogenic variants and putative essential lncRNAs. (Script:`/clinvar_map/criepr_overlap/statistic.py`) Generate:`/clinvar_map/db/crispr_overlap/variants_nocrispr.csv` and `/clinvar_map/db/crispr_overlap/lncRNA_variant_mapping_nocrispr.csv`
+   - Use the LncBook [**ID Conversion Tool** ](https://ngdc.cncb.ac.cn/lncbook/tools/conversion)to query the `NCBI_ID`, `gene_name` and `ensembl_id`  for lncRNAs. (Script: `/clinvar_map/db/conversion/id_conversion.py`) Generate:`/clinvar_map/db/conversion/lnbook_conversion_results.csv`and`/clinvar_map/db/conversion/noncode_conversion_results.csv`
+   - Merge`/clinvar_map/db/statistic/lncRNAs`, `/clinvar_map/db/conversion/lnbook_conversion_results.csv` and`/clinvar_map/db/conversion/noncode_conversion_results.csv`. (Script: `/clinvar_map/db/conversion/merge_NCBI_symbol.py`)
+4. Filter out putative essential lncRNAs that have CRISPR experimental evidence(`/store/crispr.txt`). If a putative essential lncRNA has exactly the same coordinates as another essential lncRNA with experimental evidence, the putative essential lncRNA is deleted. Delete mappings associated with these putative essential.(Script:`/clinvar_map/crispr_overlap/filter_out.sh`) Generate:(`/clinvar_map/db/crispr_overlap/final_lncRNA_nocrispr.bed`) 
+5. Count variants associated with lethal phenotypes map to putative essential that don't have CRISPR experimental evidence. Count the mappings between variants associated with lethal phenotypes and putative essential lncRNAs. (Script:`/clinvar_map/criepr_overlap/statistic.py`) Generate:`/clinvar_map/db/crispr_overlap/variants_nocrispr.csv` and `/clinvar_map/db/crispr_overlap/lncRNA_variant_mapping_nocrispr.csv`
 
 #### Map variants to  essential lncRNAs verified by CRISPR experiments.
 
-1. Convert the txt file of essential lncRNAs verified by CRISPR experiments(`/store/crispr.txt `generated in`/store/dbess.ipynb:Step2.2 Export data for variants mapping`) to bed file.(Script:`/clinvar_map/db/crispr_map/txt2bed.sh`)
+1. Convert the txt file of essential lncRNAs verified by CRISPR experiments(`/store/crispr.txt `generated in`/store/dbess.ipynb:Step2.2 Export data for variants mapping`) to bed file. Map variants to lncRNAs using `bedtools`.(Scripts:`/clinvar_map/crispr_map/map.sh`)
 
-2. Map variants to lncRNAs using `bedtools`.(Scripts:`/clinvar_map/crispr_map/map.sh`)
-
-3. Result statistics (Script: `/clinvar_map/db/crispr_map/statistic.py`)
-
-   - Retain mapping entries that include variants with clinical significance marked as `pathogenic` or `likely pathogenic`.
-
-   - Count experimentally verified essential lncRNAs that overlap with pathogenic or likely pathogenic variants.
+2. Result statistics (Script: `/clinvar_map/db/crispr_map/statistic.py`)
+   - Count experimentally verified essential lncRNAs that overlap with variants associated with lethal phenotypes.
      Generate： `/clinvar_map/db/crispr_map/crispr_lncRNA.csv`
-
-   - Count pathogenic or likely pathogenic variants overlapped with experimentally verified essential lncRNAs.
+   - Count variants associated with lethal phenotypes overlapped with experimentally verified essential lncRNAs.
      Generate：`/clinvar_map/db/crispr_map/crispr_variants.csv`
-
    - Organize the mapping relationship between variants and lncRNAs.
-     Generate：`/clinvar_map/db/crispr_map/crispr_variants.csv`
+     Generate：`/clinvar_map/db/crispr_map/crispr_mapping.csv`
 
 ## Sorting out the essential lncRNAs obtained through literature mining
 
@@ -335,16 +326,16 @@ For the database schema, please refer to the file   `/store/dbess_schema.sql`  .
    - Details see code:`/store/dbess.ipynb:Step7`
    - Group by  `exp_type`  and  `target_id`  columns, for groups with a count of 1, mark as 'cell-line specific' and update in the table; for groups with a count of 2-5, mark as 'common essential'; and for groups with a count greater than 5, mark as 'core essential'.Details see code:`/store/dbess.ipynb:Step7.1`
 
-7. Import variants Mapping file into **lncrna_variant_mapping ** table and variants file into the **variants** table
+7. Import variants Mapping file into **lncrna_variant_mapping** table and variants file into the **variants** table
 
    - Create a local mapping table for lncRNA verified by crispr through `/store/dbess.ipynb: Step4.3` 
-     Generate:`/store/crispr_UID.txt`. 
+     Generate:`/store/crispr_map.txt`. 
    - Create a local mapping table for disease_related lncRNAs through `/store/dbess.ipynb: Step4.4` 
-     Generate:`/store/disease_related_UID.txt`. 
+     Generate:`/store/disease_map.txt`. 
    - Replace `target` in `/clinvar_map/db/crispr_map/crispr_mapping.csv` with  `UID`    (Script:   `/clinvar_map/db/construct_map/get_map_crispr.py`  ).
-     Generate:`/clinvar_map/db/construct_map/crispr_mapping.csv`
-   - Replace `Noncode_id` and` Lncbook_id` in `/clinvar_map/db/crispr_overlap/lncRNA_variant_mapping_nocrispr.csv` with  `UID`    (Script:   `/clinvar_map/db/construct_map/get_map_disease.py`  ).
-     Generate:`/clinvar_map/db/construct_map/disease_mapping.csv`
+     Generate:`/clinvar_map/db/construct_map/final_crispr_mapping.csv`
+   - Replace `Noncode_id` and` Lncbook_id` in `/clinvar_map/db/crispr_overlap/lncRNA_variant_mapping_nocrispr.csv` with  `UID`    (Script:   `/clinvar_map/db/construct_map/get_map_nocrispr.py`  ).
+     Generate:`/clinvar_map/db/construct_map/final_nocrispr_mapping.csv`
    - Import the table generated above.For detailed code,see`/store/dbess.ipynb:Step8`.
 
 8. Import human lncRNA esspression file into **exp_profile** table

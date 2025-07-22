@@ -56,7 +56,7 @@
               </el-form-item>
 
               <el-form-item label="Gene Ontology Annotations:" style="width:70%">
-                <span>{{ dataList.Go_annotation }}</span>
+                <span >{{ dataList.Go_annotation }}</span>
               </el-form-item>
               <!-- <el-form-item label="Sequence:">
                 <span>{{ dataList.Sequence }}</span>
@@ -77,13 +77,13 @@
         <div class="files">
           <h3 class="top">Transcripts In Gene</h3>
           <div class="content" style="height:600px">
-            <div class="tabletitle" v-if="id==1">
+            <!-- <div class="tabletitle" v-if="id==1">
                 <el-row>
                     <el-col :span="4" :offset="10">
                         Transcript ID 
                     </el-col>
                 </el-row>
-            </div>
+            </div> -->
             <el-table
             :header-cell-style="{background:'#eef1f6',color:'#606266'}"
             height="600"
@@ -166,6 +166,7 @@ export default{
             strand:"",
             tempPage:"",
             UID:"",
+            id:0
 
 
         }
@@ -176,15 +177,15 @@ export default{
         // console.log("标记Gene页面上个页面从哪里来",this.$route.params)
         if(this.tempPage == "Browse"){          
           this.dataList = JSON.parse(sessionStorage.getItem("dataBrowse"));
-          console.log(this.dataList,"browse")
+          // console.log(this.dataList,"browse")
         }
         if(this.tempPage == "Search"){          
           this.dataList = JSON.parse(sessionStorage.getItem("dataSearch"));
-          console.log(this.dataList,"search")
+          // console.log(this.dataList,"search")
         }
         if(this.tempPage == "Blast"){          
           this.dataList.UID = JSON.parse(sessionStorage.getItem("dataBlast")).UID;
-          console.log(this.dataList,"blast")
+          // console.log(this.dataList,"blast")
         }
         // console.log(this.dataList,'test');
         this.UID = this.dataList.UID;
@@ -195,13 +196,13 @@ export default{
         axios.post("api/property/transcript",{    
             UID:this.UID
         }).then(respond =>{
-            console.log(respond.data);
+            // console.log(respond.data);
             this.itemData=respond.data;
         });
         axios.post("api/property/gene",{
             UID:this.UID
         }).then(respond =>{
-            console.log(respond.data,"detail")
+            // console.log(respond.data,"detail")
             this.dataList=respond.data[0];
             const data = respond.data;
             // console.log(data)
@@ -224,7 +225,7 @@ export default{
         axios.post("api/property/diseaseMap",{
             UID:this.UID
         }).then(respond =>{
-            console.log(respond.data);
+            // console.log(respond.data);
             this.diseaseData=respond.data.disease;
         });
     },
