@@ -5,7 +5,7 @@
 ### 1. Download the data from the original literature and the genomic reference annotation file.
 
 - CRISPR i  
-  - Experimental and Analytical Results [Supplementary Table S4][https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.aah7111&file=aah7111-tables3.xlsx] 
+  - Experimental and Analytical Results [Supplementary Table S4][https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.aah7111&file=aah7111-tables4.xlsx] 
   - The reference genome annotation used in the study: genomic information(hg19)[ GTF](https://github.com/symbiologist/dualgenomewide/blob/main/analysis/reference/output/00_lncrna_reference/lncrna.gtf.gz)
 - CRISPR delete
   - MAGeCK results of negatively and positively selected lncRNAs in Huh7.5 cell line.  [Supplementary Table 5](https://static-content.springer.com/esm/art%3A10.1038%2Fnbt.3715/MediaObjects/41587_2016_BFnbt3715_MOESM32_ESM.xlsx) 
@@ -345,3 +345,5 @@ For the database schema, please refer to the file   `/store/dbess_schema.sql`  .
    - Calculate the mean TPM (Transcripts Per Million) of lncRNAs across different tissues. (Script: `/clinvar_map/db/exp/cal_exp.py`)
    - Retrieve the expression profile of lncRNAs. (Script: `/clinvar_map/db/exp/get_exp.py`
    - Import the table generated above.For detailed code,see`/store/dbess.ipynb:Step9`.
+
+[https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.aah7111&file=aah7111-tables4.xlsx]: 
