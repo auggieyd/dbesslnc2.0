@@ -43,8 +43,8 @@ Different studies use various methods to measure the impact of lncRNAs on cell v
 
 - **CRISPR splice :** To extract necessary non-coding lncRNAs from the table,apply the following criteria: 
 
-  1)Retain rows where the`Gene_symbol`column indicates non-coding RNAs; 
-
+  1)Retain rows where the`Gene_symbol`column indicates non-coding RNAs(Exclude the gene symbols of the 35 control coding genes mentioned in the literature.`coding_gene.txt); 
+  
   2)Keep only those rows where the`Screen_score`column has values greater than **2**.
 
   ![image-20241217144213740](./assets/image-20241217144213740.png)
