@@ -348,4 +348,3 @@ For the database schema, please refer to the file   `/store/dbess_schema.sql`  .
    - Retrieve the expression profile of lncRNAs. (Script: `/clinvar_map/db/exp/get_exp.py`
    - Import the table generated above.For detailed code,see`/store/dbess.ipynb:Step9`.
 
-[https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.aah7111&file=aah7111-tables4.xlsx]: 
