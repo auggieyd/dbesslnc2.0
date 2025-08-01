@@ -13,7 +13,7 @@
   - The reference genome annotation used in the study:[GENCODEV19](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_19/gencode.v19.long_noncoding_RNAs.gtf.gz)
 - CRISPR splice  
   - Screen scores of lncRNAs by splicing-targeting screen in multiple cell lines [Supplementary Table 6](https://static-content.springer.com/esm/art%3A10.1038%2Fnbt.4283/MediaObjects/41587_2018_BFnbt4283_MOESM23_ESM.xlsx)
-  - The source of the coding gene symbols used to exclude and obtain the final lncRNA results.[Supplementary Table 1](https://static-content.springer.com/esm/art%3A10.1038%2Fnbt.4283/MediaObjects/41587_2018_BFnbt4283_MOESM18_ESM.xlsx)
+  - The source of the coding gene symbols used to exclude and obtain the final lncRNA results.[Supplementary Table 3,positive ctrl sheet](https://static-content.springer.com/esm/art%3A10.1038%2Fnbt.4283/MediaObjects/41587_2018_BFnbt4283_MOESM20_ESM.xlsx)
 
   - The reference genome annotation used in the study: enomic information(hg38) [GENCODEV20]()
 - CRISPR CasRx
@@ -45,7 +45,7 @@ Different studies use various methods to measure the impact of lncRNAs on cell v
 
 - **CRISPR splice :** To extract necessary non-coding lncRNAs from the table,apply the following criteria: 
 
-  1)Retain rows where the`Gene_symbol`column indicates non-coding RNAs: Exclude the gene symbols of the 35 control coding genes mentioned in the literature.`/match/coding_gene.txt`(Extracted from Supplementary Table 1); 
+  1)Retain rows where the`Gene_symbol`column indicates non-coding RNAs: Exclude the gene symbols of the control coding genes mentioned in the literature.`/match/coding_gene.txt`(Extracted from Supplementary Table 3 positive ctrl sheet); 
   
   2)Keep only those rows where the`Screen_score`column has values greater than **2**.
 
