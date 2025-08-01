@@ -30,16 +30,20 @@ Different studies use various methods to measure the impact of lncRNAs on cell v
 
 | citation                                                     |
 | ------------------------------------------------------------ |
-| **CRSPR i：** Liu S J, Horlbeck M A, Cho S  W, et al. CRISPRi-based genome-scale identification of functional long  noncoding RNA loci in human cells[J]. Science, 2017, 355(6320): eaah7111. |
-| **CRISPR splice:** Liu Y, Cao Z, Wang Y, et al. Genome-wide screening for  functional long noncoding RNAs in human cells by Cas9 targeting of splice  sites[J]. Nature Biotechnology, 2018, 36(12): 1203-1210. |
-| **CRISPR_delete:** Zhu S, Li W, Liu J, et al. Genome-scale deletion screening of  human long non-coding RNAs using a paired-guide RNA CRISPR–Cas9 library[J].  Nature Biotechnology, 2016, 34(12): 1279-1286. |
-| **CRISPR casRx:** Montero J J, Trozzo R, Sugden M, et al. Genome-scale  pan-cancer interrogation of lncRNA dependencies using CasRx[J]. Nature  Methods, 2024: 1-13. |
+| **CRSPR i：**  [^1]: Liu S J, Horlbeck M A, Cho S  W, et al. CRISPRi-based genome-scale identification of functional long  noncoding RNA loci in human cells[J]. Science, 2017, 355(6320): eaah7111. |
+| **CRISPR splice:** [^2]: Liu Y, Cao Z, Wang Y, et al. Genome-wide screening for  functional long noncoding RNAs in human cells by Cas9 targeting of splice  sites[J]. Nature Biotechnology, 2018, 36(12): 1203-1210. |
+| **CRISPR_delete:** [^3]: Zhu S, Li W, Liu J, et al. Genome-scale deletion screening of  human long non-coding RNAs using a paired-guide RNA CRISPR–Cas9 library[J].  Nature Biotechnology, 2016, 34(12): 1279-1286. |
+| **CRISPR casRx:** [^4]: Montero J J, Trozzo R, Sugden M, et al. Genome-scale  pan-cancer interrogation of lncRNA dependencies using CasRx[J]. Nature  Methods, 2024: 1-13. |
 
-- **CRISPR i  :**  Extracting information from the table involves filtering different cell lines according to the columns. The criteria for retention are that the `lncRNA gene hit type`columns value must be `lncRNA hit` and the `screen score` columns value must greater than 7  and the `ave_Rep1_Rep2|average phenotype of strongest 3 sgRNAs)`column value must be less than 0. It is important to note that for the IPSC cell line, the selection is `gamma_T0vT12`.
+- **CRISPR i  :**  Extracting information from the table involves filtering different cell lines according to the columns. The criteria for retention are that the `lncRNA gene hit type`columns value must be `lncRNA hit`  [^1] and the `screen score` columns value must greater than 7 [^1]and the `ave_Rep1_Rep2|average phenotype of strongest 3 sgRNAs)`column value must be less than 0(A value less than 0 indicates that interfering with this gene will inhibit cell growth or proliferation.Conversely,a value greater than 0 indicates the opposite).
+   > According to the results provided in Figure 1E of reference[^1],for the      MDA-MB-231 and MCF7 cell lines,the `gamma_T0vT20`column is selected.For the iPSC cell line and other cell lines,the `gamma_T0vT12`column is selected.
 
   ![image-20241217142938151](./assets/image-20241217142938151.png)
 
-- **CRISPR delete:** To extract essential non-coding lncRNAs from the table,follow these three criteria: 1)Select only the tables that indicate `Negative selection`; 2)Retain rows where the`neg|fdr`column has values less than 0.25; 3)Remove rows that correspond to coding genes.
+- **CRISPR delete:** To extract essential non-coding lncRNAs from the table,follow these three criteria: 
+1)Select only the tables that indicate `Negative selection`; 
+2)Retain rows where the`neg|fdr`column has values less than 0.25,The parameters are set according to the standards provided in the literature [^3]; 
+3)Remove rows that correspond to coding genes.
 
   ![image-20241217143411763](./assets/image-20241217143411763.png)
 
@@ -47,11 +51,11 @@ Different studies use various methods to measure the impact of lncRNAs on cell v
 
   1)Retain rows where the`Gene_symbol`column indicates non-coding RNAs: Exclude the gene symbols of the control coding genes mentioned in the literature.`/match/coding_gene.txt`(Extracted from Supplementary Table 3 positive ctrl sheet); 
   
-  2)Keep only those rows where the`Screen_score`column has values greater than **2**.
+  2)Keep only those rows where the`Screen_score`column has values greater than **2**,The parameters are set according to the standards provided in the literature[^2].
 
   ![image-20241217144213740](./assets/image-20241217144213740.png)
 
-- **CRISPR CasRx :** In the "Supplementary_table12.csv" file, the relevant analysis information for this study is stored. We extract the table information based on the `dropFDR` column value being less than 0.25 and the `library` column being "ALBAROSSA_library" for a specific cell line. Here, only one cell line is displayed.
+- **CRISPR CasRx :** In the "Supplementary_table12.csv" file, the relevant analysis information for this study is stored. We extract the table information based on the `dropFDR` column value being less than 0.25 and the `library` column being "ALBAROSSA_library" for a specific cell line. Here, only one cell line is displayed. The parameters are set according to the standards provided in the literature [^4].
 
 ![image-20241217145322449](./assets/image-20241217145322449.png)
 
