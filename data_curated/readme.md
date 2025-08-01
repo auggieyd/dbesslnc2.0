@@ -30,12 +30,12 @@ Different studies use various methods to measure the impact of lncRNAs on cell v
 
 | citation                                                     |
 | ------------------------------------------------------------ |
-| **CRSPR i：**  [^1]: Liu S J, Horlbeck M A, Cho S  W, et al. CRISPRi-based genome-scale identification of functional long  noncoding RNA loci in human cells[J]. Science, 2017, 355(6320): eaah7111. |
-| **CRISPR splice:** [^2]: Liu Y, Cao Z, Wang Y, et al. Genome-wide screening for  functional long noncoding RNAs in human cells by Cas9 targeting of splice  sites[J]. Nature Biotechnology, 2018, 36(12): 1203-1210. |
-| **CRISPR_delete:** [^3]: Zhu S, Li W, Liu J, et al. Genome-scale deletion screening of  human long non-coding RNAs using a paired-guide RNA CRISPR–Cas9 library[J].  Nature Biotechnology, 2016, 34(12): 1279-1286. |
-| **CRISPR casRx:** [^4]: Montero J J, Trozzo R, Sugden M, et al. Genome-scale  pan-cancer interrogation of lncRNA dependencies using CasRx[J]. Nature  Methods, 2024: 1-13. |
+| **CRSPR i：** : Liu S J, Horlbeck M A, Cho S  W, et al. CRISPRi-based genome-scale identification of functional long  noncoding RNA loci in human cells[J]. Science, 2017, 355(6320): eaah7111. |
+| **CRISPR splice:** : Liu Y, Cao Z, Wang Y, et al. Genome-wide screening for  functional long noncoding RNAs in human cells by Cas9 targeting of splice  sites[J]. Nature Biotechnology, 2018, 36(12): 1203-1210. |
+| **CRISPR_delete:** : Zhu S, Li W, Liu J, et al. Genome-scale deletion screening of  human long non-coding RNAs using a paired-guide RNA CRISPR–Cas9 library[J].  Nature Biotechnology, 2016, 34(12): 1279-1286. |
+| **CRISPR casRx:** : Montero J J, Trozzo R, Sugden M, et al. Genome-scale  pan-cancer interrogation of lncRNA dependencies using CasRx[J]. Nature  Methods, 2024: 1-13. |
 
-- **CRISPR i  :**  Extracting information from the table involves filtering different cell lines according to the columns. The criteria for retention are that the `lncRNA gene hit type`columns value must be `lncRNA hit`  [^1] and the `screen score` columns value must greater than 7 [^1]and the `ave_Rep1_Rep2|average phenotype of strongest 3 sgRNAs)`column value must be less than 0(A value less than 0 indicates that interfering with this gene will inhibit cell growth or proliferation.Conversely,a value greater than 0 indicates the opposite).
+- **CRISPR i  :**  Extracting information from the table involves filtering different cell lines according to the columns. The criteria for retention are that the `lncRNA gene hit type`columns value must be `lncRNA hit`  [^1]  and the `screen score` columns value must greater than 7 [^1]and the `ave_Rep1_Rep2|average phenotype of strongest 3 sgRNAs)`column value must be less than 0(A value less than 0 indicates that interfering with this gene will inhibit cell growth or proliferation.Conversely,a value greater than 0 indicates the opposite).
    > According to the results provided in Figure 1E of reference[^1],for the      MDA-MB-231 and MCF7 cell lines,the `gamma_T0vT20`column is selected.For the iPSC cell line and other cell lines,the `gamma_T0vT12`column is selected.
 
   ![image-20241217142938151](./assets/image-20241217142938151.png)
@@ -356,6 +356,6 @@ For the database schema, please refer to the file   `/store/dbess_schema.sql`  .
 
 [^2 ]: Liu Y, Cao Z, Wang Y, et al. Genome-wide screening for  functional long noncoding RNAs in human cells by Cas9 targeting of splice  sites[J]. Nature Biotechnology, 2018, 36(12): 1203-1210. 
 
- [^3 ]: Zhu S, Li W, Liu J, et al. Genome-scale deletion screening of  human long non-coding RNAs using a paired-guide RNA CRISPR–Cas9 library[J].  Nature Biotechnology, 2016, 34(12): 1279-1286. 
- 
+[^3 ]: Zhu S, Li W, Liu J, et al. Genome-scale deletion screening of  human long non-coding RNAs using a paired-guide RNA CRISPR–Cas9 library[J].  Nature Biotechnology, 2016, 34(12): 1279-1286. 
+
 [^4 ]: Montero J J, Trozzo R, Sugden M, et al. Genome-scale  pan-cancer interrogation of lncRNA dependencies using CasRx[J]. Nature  Methods, 2024: 1-13. 
