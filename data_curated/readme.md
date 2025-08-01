@@ -31,9 +31,9 @@ Different studies use various methods to measure the impact of lncRNAs on cell v
 | citation                                                     |
 | ------------------------------------------------------------ |
 | **CRSPR i**[^1]|
-| **CRISPR splice:**[^2] |
-| **CRISPR_delete:**[^3] |
-| **CRISPR casRx:**[^4]|
+| **CRISPR splice**[^2] |
+| **CRISPR_delete**[^3] |
+| **CRISPR casRx**[^4]|
 
 - **CRISPR i  :**  Extracting information from the table involves filtering different cell lines according to the columns. The criteria for retention are that the `lncRNA gene hit type`columns value must be `lncRNA hit` [^1] and the `screen score` columns value must greater than 7 [^1]and the `ave_Rep1_Rep2|average phenotype of strongest 3 sgRNAs)`column value must be less than 0 (i.e., a value less than 0 indicates that knocking out or interfering with this gene will inhibit cell growth, while a value greater than 0 indicates the opposite).
    > According to the results provided in Fig 1E of reference[^1], for the MDA-MB-231 and MCF7 cell lines, the `gamma_T0vT20` column is selected. For the iPSC cell line and other cell lines, the `gamma_T0vT12`column is selected.
