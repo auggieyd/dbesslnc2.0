@@ -236,7 +236,7 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,GENCODEV47 and NCBI gene data
    - Organize the mapping relationship between variants and lncRNAs.
      Generate：`/clinvar_map/db/crispr_map/crispr_mapping.csv`
 
-## 4. Sorting out the essential lncRNAs obtained through literature mining
+## Sorting out the essential lncRNAs obtained through literature mining
 
 1. A total of 173  human essential lncRNAs and 34 mouse essential lncRNAs and their annotations  were manually collected from dbesslnc.
    - `/dbesslnc/dbesslnc.txt`:Human essential lncRNA ID file.
@@ -259,7 +259,7 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,GENCODEV47 and NCBI gene data
    - Retrieve the mapping table of essential mouse lncRNAs NONCODE gene IDs and transcript IDs from the dbesslnc database (file: `dbesslnc_mouse_trans.txt`).
    - Annotate transcript information for essential mouse lncRNAs using `/dbesslnc/getExonMouse.py`.  Generate: `mouse_trans.csv`.
 
-## 5. Data management and storage into the database.
+## Data management and storage into the database.
 
 Using MySQL 8.0.40 for storing and managing databases.
 
