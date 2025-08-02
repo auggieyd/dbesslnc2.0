@@ -13,14 +13,14 @@
       <div class="download-content" style="height:40%">
         <p>
           <img src="../../public/assets/img/downicon.png" class="icon" />
-          <a :href="'/data/esslnc.xlsx'" download="">
+          <a :href="'/v2/data/esslnc.xlsx'" download="">
             All essential lncRNA.xlsx
           </a>
           : This file contains all data.
         </p>
          <p>
           <img src="../../public/assets/img/downicon.png" class="icon" />
-          <a :href="'/data/exp_crispr_records.xlsx'" download="">
+          <a :href="'/v2/data/exp_crispr_records.xlsx'" download="">
             CRISPR Experimental Record.xlsx
           </a>
           : This file contains all CRISPR Experimental Record.
@@ -28,7 +28,7 @@
 
         <p>
           <img src="../../public/assets/img/downicon.png" class="icon" />
-          <a :href="'/data/disease_related.xlsx'" download="">
+          <a :href="'/v2/data/disease_related.xlsx'" download="">
             Disease Related.xlsx
           </a>
           : This file contains all disease related  data.

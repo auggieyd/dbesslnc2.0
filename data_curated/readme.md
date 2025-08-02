@@ -15,7 +15,7 @@
   - Screen scores of lncRNAs by splicing-targeting screen in multiple cell lines [Supplementary Table 6](https://static-content.springer.com/esm/art%3A10.1038%2Fnbt.4283/MediaObjects/41587_2018_BFnbt4283_MOESM23_ESM.xlsx)
   - The source of the coding gene symbols used to exclude and obtain the final lncRNA results.[Supplementary Table 3,positive ctrl sheet](https://static-content.springer.com/esm/art%3A10.1038%2Fnbt.4283/MediaObjects/41587_2018_BFnbt4283_MOESM20_ESM.xlsx)
 
-  - The reference genome annotation used in the study: enomic information(hg38) [GENCODEV20]()
+  - The reference genome annotation used in the study: enomic information(hg38) [GENCODEV20](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_20/gencode.v20.long_noncoding_RNAs.gtf.gz)
 - CRISPR CasRx
   - Genomic annotation information and screen score information files used in the experiment. [Supplementary Table](https://static-content.springer.com/esm/art%3A10.1038%2Fs41592-024-02190-0/MediaObjects/41592_2024_2190_MOESM4_ESM.zip)
 - LncRNA 
@@ -23,6 +23,8 @@
   - LncBook V2.0[ lncRNA_LncBookv2.0_GRCh38.gtf.gz](https://ngdc.cncb.ac.cn/lncbook/files/lncRNA_LncBookv2.0_GRCh38.gtf.gz); [ lncRNA_LncBookv2.0.fa.gz](https://ngdc.cncb.ac.cn/lncbook/files/lncRNA_LncBookv2.0.fa.gz)
   - GENCODE V47[gencode.v47.long_noncoding_RNAs.gtf](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_47/gencode.v47.long_noncoding_RNAs.gtf.gz)
   - HGNC[non-coding_RNA.txt]( https://storage.googleapis.com/public-download-files/hgnc/tsv/tsv/locus_groups/non-coding_RNA.txt)
+  - NCBI gene [GCF_000001405.40_GRCh38.p14_genomic.gtf](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.gtf.gz)
+  - NCBI gene summary [gene summary](https://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_summary.gz)
 
 ### 2. Essential long non-coding RNA gene screening and filtering
 
@@ -53,7 +55,7 @@ Different studies use various methods to measure the impact of lncRNAs on cell v
 
   ![image-20241217144213740](./assets/image-20241217144213740.png)
 
-- **CRISPR CasRx :** In the "Supplementary_table12.csv" file, the relevant analysis information for this study is stored. We extract the table information based on the `dropFDR` column value being less than 0.25 and the `library` column being "ALBAROSSA_library" for a specific cell line. Here, only one cell line is displayed. The parameters are set according to the standards provided in the literature [^4].
+- **CRISPR CasRx :** In the "Supplementary_table12.csv" file, the relevant analysis information for this study is stored. We extract the table information based on the `xxx.dropFDR` column(Exclude the columns containing "wo") value being less than 0.25, the `Type` column being "lncRNA_gRNA"and the `library` column being "ALBAROSSA_library" for a specific cell line. Here, only one cell line is displayed. The parameters are set according to the standards provided in the literature [^4].
 
 ![image-20241217145322449](./assets/image-20241217145322449.png)
 
@@ -84,16 +86,8 @@ Due to differences in eras and annotation discrepancies, we need to further upda
    
    > In the CRISPR-splice matching process,only LINC00869 matched to two genes:ENSG00000226067.3;ENSG00000277147.1.We used the sgRNA sequence lin2176_s_39054: CCTCTGTCCCTTCTATTCCC provided in the literature for BLAST similarity search and matched it to ENSG00000226067.
    
-   >  After executing the aforementioned code, adjust the code to generate   crispr_xxxx_seq.bed  . If it's the hg19 version, further operations are required to convert to hg38.
-   >
-   > ```python
-   > id_field = extract_attribute(attributes, 'exon_id') 
-   > #-->
-   > id_field = extract_attribute(attributes, 'transcript_id')
-   > ```
-   >  Generate   crispr_splice_seq.bed   and   crispr_delete_seq.bed,crispri_seq.bed   (after liftover conversion to hg38).
-   
-   > **Noted that** : The supplementary data of the (CRISPR casRx) literature provides the reference coordinates for the hg38 genome.After organizing the coordinate positions in Supplementary_table2.tsv and Supplementary_table3.tsv,a bed format file was generated.(/match/crispr_casRx.bed).
+
+   > **Noted that** : The supplementary data of the (CRISPR casRx) literature provides the reference coordinates for the hg38 genome.After organizing the coordinate positions in Supplementary_table2.tsv and Supplementary_table3.tsv,2 bed format file was generated.`/match/crispr_casRx.bed,crispr_casrx.bed(Standard six-column format)`.
 
 #### Genome Coordinate convert
 
@@ -132,44 +126,36 @@ bedtools intersect -a crispr_delete38.bed -b crispr_splice38.bed -wo -s -r -f 1 
 # For example: RP11-540O11.1-RP11-540O11.1, TMEM9B-AS1-LH02375, etc.
 ```
 
- Details see code: `/match/coor_match.ipynb:step3`. Conduct manual checks on the exons reported in `tocheck.txt` that have 100% overlap.
+ Details see code: `/match/coor_match.ipynb:step3`. 
 
-<img src="./assets/image-20241225105948611.png" alt="image-20241225105948611" style="zoom:80%;" />
 
 2. Generate a merge.txt file. The complete merge process can be seen in the code:`/match/coor_match.ipynb:step4`.Only the **NEAT1** group has three genes that can be merged; manually modify and combine them into one group.
 
    ![image-20241217233557071](./assets/image-20241217233557071.png)
 
+   Conduct manual checks on the exons reported in `tocheck.txt` that have 100% overlap.
+   <img src="./assets/image-20241225105948611.png" alt="image-20241225105948611" style="zoom:80%;" />
+
 #### Map the coordinate ranges to th latest public database to obtain annotations
 
-Obtain gene IDs from the NONCODE V6 , LncBook V2.0,and GENCODEV47 databases to enhance data usability.
+Obtain gene IDs from the NONCODE V6 , LncBook V2.0,GENCODEV47 and NCBI gene databases to enhance data usability.
 
-1. Convert GTF files into custom BED files for ease of subsequent filtering.(`/match/map_annotations.ipynb:Step1.1`)
 
-2. Based on the complete matching of the coordinate ranges at the lowest exon level,if the exons of the lncRNA we have collected are completely equal to or covered by the exons of the lncRNA in the reference database,and are on the same strand,they can be mapped to the corresponding reference lncRNA.If a gene matches multiple genes,select the one with the largest overlapping range.
+1. Based on the complete matching of the coordinate ranges at the lowest exon level,if the exons of the lncRNA we have collected are completely equal to or covered by the exons of the lncRNA in the reference database,and are on the same strand,they can be mapped to the corresponding reference lncRNA.If a gene matches multiple genes,select the one with the largest overlapping range.
    Details see code:(`/match/map_annotations.ipynb:Step2`)
 
-3. Generate database annotations **mapping files**. See the detailed selection code at`/match/map_annotations.ipynb:step2`
+2. Generate database annotations **mapping files**. See the detailed selection code at`/match/map_annotations.ipynb:step2`
 
-   **mapping files**:`lncbook_map.tsv,noncode_map.tsv,gencode_map.tsv`,`res_map.tsv`
+   **mapping files**:`lncbook_map.tsv,noncode_map.tsv,gencode_map.tsv`,`res_xxx_map.tsv`
 
-#### Map the  Ontology Annotations 
+#### Map the gene summary
 
-1. Through the non-coding_RNA.txt file provided by HGNC,you can obtain the mapping from gene_name(symbol)to NCBI gene id(entrez_id).
+1. Use NCBI gene id, that is, entrez id, to match the corresponding gene summary information.
 
-2. Use the `GeneSummary` R package to obtain Gene Ontology annotations via NCBI gene ID. After integrating all lncRNA entries,export all matched NCBI gene ids. (`/match/ncbi_gene_id.txt`)
-
-   - Install `GeneSummary` R package in R 4.3.3
-
-   ```R
-   if (!require("BiocManager", quietly = TRUE))
-       install.packages("BiocManager")
-   
-   BiocManager::install("GeneSummary")
+2. After integrating all lncRNA entries,export all matched NCBI gene ids. (`/match/ncbi2summary.py`)
    ```
-
-   - Execute the script file.`/match/map_go.R`
-   
+   python ncbi2summary.py
+   ```
 3. The code for importing the aforementioned data into the database can be found at:`/store/dbess.ipynb:step3.2`
 
 #### To obtain sequence 
@@ -186,9 +172,6 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,and GENCODEV47 databases to e
 3. Based on public lncRNA databases such as NONCODE that store exon-level sequences, splice the sequences from previous step and generate a FASTA file(`lncRNA2.fasta`)
    Details see code:`/match/gen_fa.ipynb:step3`
 
-   > Before this step,you need to modify the content of`coor_match.ipynb`step1,specifically for the Gencode GTF file.
-   > `id_field = extract_attribute(attributes, 'exon_id') -->id_field = extract_attribute(attributes, 'transcript_id')`
-   > See the code.`/match/gen_fa.ipynb`
 
 
 
