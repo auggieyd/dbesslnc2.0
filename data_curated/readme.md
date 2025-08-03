@@ -161,8 +161,7 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,GENCODEV47 and NCBI gene data
 
 #### To obtain sequence 
 
-1. Handling BED file format for easy processing, Process the`crispr_splice_seq.bed`,`crispr_delete_seq.bed`,`crispri_seq.bed`files(after liftover conversion to hg38) generated in the`/match/coor_match.ipynb:step1` and `crispri38.bed`,`crispr_casRx.bed`,to create custom bed files(seq_xxx.bed) that can be processed by subsequent code.
-   Detatils see code:`/gene_fa.ipynb:step1`
+1. Execute the code of `/gene_fa.ipynb:step1` to generate custom bed files for subsequent data processing.
 
 2. Using the REST API provided by Ensembl to obtain the sequence of a gene region.`/match/get_seq.py`
 
@@ -170,7 +169,7 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,GENCODEV47 and NCBI gene data
    python get_seq.py
    ```
 
-3. Based on public lncRNA databases such as NONCODE that store exon-level sequences, splice the sequences from previous step and generate a FASTA file(`lncRNA2.fasta`)
+3.  Intercept the obtained gene sequence and generate a FASTA file (`lncRNA2.fasta`)
    Details see code:`/match/gen_fa.ipynb:step3`
 
 
