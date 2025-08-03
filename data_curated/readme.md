@@ -112,6 +112,7 @@ Run LiftOver e.g.
  Those that fail to convert require further manual inspection and processing.（Delete the entries in the converted BED file that contain these gene IDs.）
 
 ![unmap_img](./assets/image-20241229193029673.png)
+Details see code: `./match/coor_match.ipynb`
 
 #### Merge lncRNA entries
 
