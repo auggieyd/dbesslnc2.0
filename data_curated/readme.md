@@ -87,7 +87,7 @@ Due to differences in eras and annotation discrepancies, we need to further upda
    > In the CRISPR-splice matching process,only LINC00869 matched to two genes:ENSG00000226067.3;ENSG00000277147.1.We used the sgRNA sequence lin2176_s_39054: CCTCTGTCCCTTCTATTCCC provided in the literature for BLAST similarity search and matched it to ENSG00000226067.
    
 
-   > **Noted that** : The supplementary data of the (CRISPR casRx) literature provides the reference coordinates for the hg38 genome.After organizing the coordinate positions in Supplementary_table2.tsv and Supplementary_table3.tsv,2 bed format file was generated.`/match/crispr_casRx.bed,crispr_casrx.bed(Standard six-column format)`.
+   > **Noted that** : The supplementary data of the (CRISPR casRx) literature provides the reference coordinates for the hg38 genome.After organizing the coordinate positions in Supplementary_table2.tsv and Supplementary_table3.tsv,2 bed format file was generated.`/match/crispr_casrx_all.bed,crispr_casrx.bed(Standard six-column format)`.
 
 #### Genome Coordinate convert
 
