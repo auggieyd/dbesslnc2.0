@@ -147,7 +147,7 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,GENCODEV47 and NCBI gene data
 
 2. Generate database annotations **mapping files**. See the detailed selection code at`/match/map_annotations.ipynb:step2`
 
-   **mapping files**:`lncbook_map.tsv,noncode_map.tsv,gencode_map.tsv`,`res_xxx_map.tsv`
+   **mapping files**:`lncbook_map.tsv,noncode_map.tsv,gencode_map.tsv, ncbi_map.tsv`,`res_xxx_map.tsv`
 
 #### Map the gene summary
 
