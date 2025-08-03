@@ -161,7 +161,7 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,GENCODEV47 and NCBI gene data
 
 #### To obtain sequence 
 
-1. Execute the code of `/gene_fa.ipynb:step1` to generate custom bed files for subsequent data processing.
+1. Execute the code of `/match/gene_fa.ipynb:step1` to generate custom bed files for subsequent data processing.
 
 2. Using the REST API provided by Ensembl to obtain the sequence of a gene region.`/match/get_seq.py`
 
