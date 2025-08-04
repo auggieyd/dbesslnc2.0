@@ -81,13 +81,14 @@ Due to differences in eras and annotation discrepancies, we need to further upda
    - crispri19.bed: 
    - crispr_delete19.bed
    - crispr_splice38.bed
+   - crispr_casrx38.bed
 
    Details see code: `/match/coor_match.ipynb:step1` 
    
    > In the CRISPR-splice matching process,only LINC00869 matched to two genes:ENSG00000226067.3;ENSG00000277147.1.We used the sgRNA sequence lin2176_s_39054: CCTCTGTCCCTTCTATTCCC provided in the literature for BLAST similarity search and matched it to ENSG00000226067.
    
 
-   > **Noted that** : The supplementary data of the (CRISPR casRx) literature provides the reference coordinates for the hg38 genome.After organizing the coordinate positions in Supplementary_table2.tsv and Supplementary_table3.tsv,2 bed format file was generated.`/match/crispr_casrx_all.bed,crispr_casrx.bed(Standard six-column format)`.
+   > **Noted that** : The supplementary data(Supplementary table 2.tsv, Supplementary table 4.csv) of the CRISPR casRx literature provides the reference coordinates for the hg38 genome. Execute the code `python process_casrx.py` to generate two bed files : `crispr_casrx_all.bed,crispr_casrx38.bed(Standard six-column format)`.
 
 #### Genome Coordinate convert
 
@@ -223,18 +224,7 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,GENCODEV47 and NCBI gene data
    - Merge`/clinvar_map/db/statistic/lncRNAs`, `/clinvar_map/db/conversion/lnbook_conversion_results.csv` and`/clinvar_map/db/conversion/noncode_conversion_results.csv`. (Script: `/clinvar_map/db/conversion/merge_NCBI_symbol.py`)
 4. Filter out putative essential lncRNAs that have CRISPR experimental evidence(`/store/crispr.txt`). If a putative essential lncRNA has exactly the same coordinates as another essential lncRNA with experimental evidence, the putative essential lncRNA is deleted. Delete mappings associated with these putative essential.(Script:`/clinvar_map/crispr_overlap/filter_out.sh`) Generate:(`/clinvar_map/db/crispr_overlap/final_lncRNA_nocrispr.bed`) 
 5. Count variants associated with lethal phenotypes map to putative essential that don't have CRISPR experimental evidence. Count the mappings between variants associated with lethal phenotypes and putative essential lncRNAs. (Script:`/clinvar_map/criepr_overlap/statistic.py`) Generate:`/clinvar_map/db/crispr_overlap/variants_nocrispr.csv` and `/clinvar_map/db/crispr_overlap/lncRNA_variant_mapping_nocrispr.csv`
-
-#### Map variants to  essential lncRNAs verified by CRISPR experiments.
-
-1. Convert the txt file of essential lncRNAs verified by CRISPR experiments(`/store/crispr.txt `generated in`/store/dbess.ipynb:Step2.2 Export data for variants mapping`) to bed file. Map variants to lncRNAs using `bedtools`.(Scripts:`/clinvar_map/crispr_map/map.sh`)
-
-2. Result statistics (Script: `/clinvar_map/db/crispr_map/statistic.py`)
-   - Count experimentally verified essential lncRNAs that overlap with variants associated with lethal phenotypes.
-     Generate： `/clinvar_map/db/crispr_map/crispr_lncRNA.csv`
-   - Count variants associated with lethal phenotypes overlapped with experimentally verified essential lncRNAs.
-     Generate：`/clinvar_map/db/crispr_map/crispr_variants.csv`
-   - Organize the mapping relationship between variants and lncRNAs.
-     Generate：`/clinvar_map/db/crispr_map/crispr_mapping.csv`
+            
 
 ## Sorting out the essential lncRNAs obtained through literature mining
 
