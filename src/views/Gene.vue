@@ -30,7 +30,10 @@
                 <span v-if="dataList.Organism === 'Human'">{{ chr ? chr + ": " + start + "-" + end + "," + strand + "(hg38)" : "N.A."}} </span>
                 <span v-else>{{ chr ? chr + ": " + start + "-" + end + "," + strand + "(mm10)" : "N.A."}}</span>
               </el-form-item>
-              <el-form-item label="Lncbook Gene ID:">
+              <el-form-item label="Sequence:">
+                 <el-button size = 'small' @click="toUrl_Sequence(dataList)" style="padding: 0px 10px;min-height: 28px;">Sequence <i class="el-icon-link el-icon --right"/></el-button>
+              </el-form-item>
+              <el-form-item v-if="dataList.Organism === 'Human'" label="Lncbook Gene ID:">
                 <span @click="toUrl_Lncbook(dataList.Lncbook_id)" class="hand">{{ dataList.Lncbook_id }}</span>
               </el-form-item> 
               <el-form-item label="NONCODE Gene ID:">
@@ -46,29 +49,31 @@
               <el-form-item label="Alias:">
                 <span>{{ dataList.Alias}}</span>
               </el-form-item>
+              
               <el-form-item label="Validity:" style="width:70%">
-                <el-tag v-if="dataList.vitro === 1" size="small" type="info" effect="plain" style="margin-right: 8px;" >CRISPR</el-tag>
-                <el-tag v-if="dataList.vivo === 1 ||dataList.cancer_related > 0" size="small" type="info" effect="light" style="margin-right: 8px;">Literature</el-tag>
-                <el-tag v-if="dataList.disease_related === 1" size="small" type="info" effect="dark" style="margin-right: 8px;">Predicted</el-tag>
+                <el-tag v-if="dataList.vitro === 1" size="small" type="info" effect="plain" style="padding: 0px 10px ;margin-right: 8px;" >CRISPR</el-tag>
+                <el-tag v-if="dataList.vivo === 1 ||dataList.cancer_related > 0" size = 'medium' type="info" effect="light" style="padding: 0px 10px ;margin-right: 8px;">Literature</el-tag>
+                <el-tag v-if="dataList.disease_related === 1" size="small" type="info" effect="dark" style="padding: 0px 10px ;margin-right: 8px;">ClinVar</el-tag>
               </el-form-item>
-              <el-form-item label="Literature Reason:" style="width:70%">
-                <span>{{ dataList.reason }}</span>
+              <el-form-item label="Reason summary:" style="width:70%">
+                <span>{{ dataList.reason_summary }}</span>
               </el-form-item>
 
-              <el-form-item label="Gene Ontology Annotations:" style="width:70%">
-                <span >{{ dataList.Go_annotation }}</span>
-              </el-form-item>
               <!-- <el-form-item label="Sequence:">
                 <span>{{ dataList.Sequence }}</span>
               </el-form-item> -->
-              <el-form-item label="CRISPR Experimental Records:"></el-form-item>
-              <el-table :data="expData" border style="width: 80%;">
+              <el-form-item v-if="dataList.vitro === 1" label="CRISPR Experimental Records:"></el-form-item>
+              <el-table v-if="dataList.vitro === 1" :data="expData" border style="width: 80%;">
                 <el-table-column label = "Target" prop="target_id" width="150"></el-table-column>
                 <el-table-column label = "CRISPR Type" prop="exp_type" width="150"></el-table-column>
                 <el-table-column label = "Exp Score" prop="exp_score" width="150"></el-table-column>
                 <el-table-column label = "Role" prop="role" width="150"></el-table-column>
                 <el-table-column label = "Cell Line" prop="cell_line" width="150"></el-table-column>
-                <el-table-column label = "PubMed ID" prop="PMID" ></el-table-column>
+                <el-table-column label = "PubMed ID" prop="PMID" >
+                  <template #default="props">
+                    <span class="hand" @click="toUrl_PM(props.row.PMID)">{{ props.row.PMID }}</span>
+                  </template>
+                </el-table-column>
               </el-table>
             </el-form>
           </div>
@@ -202,7 +207,7 @@ export default{
         axios.post("api/property/gene",{
             UID:this.UID
         }).then(respond =>{
-            // console.log(respond.data,"detail")
+            console.log(respond.data,"detail")
             this.dataList=respond.data[0];
             const data = respond.data;
             // console.log(data)
@@ -236,7 +241,6 @@ export default{
 
         })
       },
-//    这是传的什么参数
       toVisual(data){
         // console.log(JSON.stringify(data))
         sessionStorage.setItem('dataGene', JSON.stringify(data));
@@ -256,6 +260,25 @@ export default{
       },
       toUrl_Lncbook(data){
          window.location.href = "https://ngdc.cncb.ac.cn/lncbook/gene?geneid="+data
+      },
+      toUrl_Sequence(data){
+        // console.log(data)
+        let genome = 'hg38';
+  
+        if (data.Organism === 'Human') {
+          genome = 'hg38';
+        } else if (data.Organism === 'Mouse') {
+          genome = 'mm10';
+        }
+        let url = `https://api.genome.ucsc.edu/getData/sequence?genome=${genome};chrom=${this.chr};start=${this.start};end=${this.end}`;
+        if(data.strand === '-'){
+          url += ';revComp=1';
+        }
+        window.open(url, "_blank");
+      },
+      toUrl_PM(data){
+        // console.log(data)
+        window.location.href = "https://www.ncbi.nlm.nih.gov/pubmed/?term="+data+"/"
       }
     }
 
@@ -270,5 +293,16 @@ export default{
 }
 .el-form-item__label{
   font-weight: bold;
+}
+.el-tag{
+    --el-tag-font-size: 15px;
+}
+.el-button:hover{
+  color: #1ee3cf;
+  cursor: pointer;
+}
+.el-button:focus{
+  color: #1ee3cf;
+  cursor: pointer;
 }
 </style>

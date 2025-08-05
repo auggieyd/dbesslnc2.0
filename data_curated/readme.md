@@ -90,6 +90,8 @@ Due to differences in eras and annotation discrepancies, we need to further upda
 
    > **Noted that** : The supplementary data(Supplementary table 2.tsv, Supplementary table 4.csv) of the CRISPR casRx literature provides the reference coordinates for the hg38 genome. Execute the code `python process_casrx.py` to generate two bed files : `crispr_casrx_all.bed,crispr_casrx38.bed(Standard six-column format)`.
 
+
+
 #### Genome Coordinate convert
 
 Using the LiftOver tool to convert the hg19 version to hg38.
@@ -113,30 +115,10 @@ Run LiftOver e.g.
  Those that fail to convert require further manual inspection and processing.（Delete the entries in the converted BED file that contain these gene IDs.）
 
 ![unmap_img](./assets/image-20241229193029673.png)
-Details see code: `./match/coor_match.ipynb`
+Details see code: `./match/coor_match.ipynb: step2`
 
-#### Merge lncRNA entries
-
-1. The merging criterion is based on the lowest exon-level coordinate range to combine lncRNA entries from four different literature sources; if two genes contain at least one transcript in common and on the same strand, they are considered the same gene.
-
-```
-# for example
-bedtools intersect -a crispr_delete38.bed -b crispr_splice38.bed -wo -s -r -f 1 > temp.bed
-# For genes with individual exons that are 100% overlapping in the results processed by bedtools, manual checks are
-# conducted. Sequence region annotations updates caused by updates to public databases, 
-# such as (GENCODE), are also merged into the same entry.
-# For example: RP11-540O11.1-RP11-540O11.1, TMEM9B-AS1-LH02375, etc.
-```
-
- Details see code: `/match/coor_match.ipynb:step3`. 
-
-
-2. Generate a merge.txt file. The complete merge process can be seen in the code:`/match/coor_match.ipynb:step4`.Only the **NEAT1** group has three genes that can be merged; manually modify and combine them into one group.
-
-   ![image-20241217233557071](./assets/image-20241217233557071.png)
-
-   Conduct manual checks on the exons reported in `tocheck.txt` that have 100% overlap.
-   <img src="./assets/image-20241225105948611.png" alt="image-20241225105948611" style="zoom:80%;" />
+#### Merge bed files
+Merge these files together to generate the `crispr_all.bed` file. Detail see code `/match/coor_match.ipynb:step3 `
 
 #### Map the coordinate ranges to th latest public database to obtain annotations
 
@@ -148,7 +130,7 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,GENCODEV47 and NCBI gene data
 
 2. Generate database annotations **mapping files**. See the detailed selection code at`/match/map_annotations.ipynb:step2`
 
-   **mapping files**:`lncbook_map.tsv,noncode_map.tsv,gencode_map.tsv, ncbi_map.tsv`,`res_xxx_map.tsv`
+   **mapping files**:`lncbook_map.tsv,noncode_map.tsv,gencode_map.tsv, ncbi_map.tsv`
 
 #### Map the gene summary
 
@@ -230,7 +212,7 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,GENCODEV47 and NCBI gene data
 
 1. A total of 173  human essential lncRNAs and 34 mouse essential lncRNAs and their annotations  were manually collected from dbesslnc.
    - `/dbesslnc/dbesslnc.txt`:Human essential lncRNA ID file.
-     `/dbesslnc/dbesslnc_reason.txt`: detailed introduction of human essential lncRNA.
+     `/dbesslnc/dbesslnc_reason.tsv`: detailed introduction of human essential lncRNA.
    - `/dbesslnc/dbesslnc_mouse.csv`: Annotation file of essential lncRNAs in mice(manually assigned UIDs,such as ELM000001 and Coordinate range.).
      `/dbesslnc/dbesslnc_mouse_trans.txt`: Mouse essential lncRNA transcript file.
    - `/dbesslnc/dbesslnc_mouse_expression.csv`:Mouse expression data file.

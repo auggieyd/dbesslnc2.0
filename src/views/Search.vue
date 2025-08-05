@@ -97,23 +97,7 @@
             
             <el-table-column label="Organism" prop="Organism"  >
             </el-table-column>
-            <!-- <el-table-column label="Validity" prop="evidence_type"  >
-              <template v-slot="scope">
-                <div  v-if="scope.row.evidence_type === 0">
-                  <el-tag size="small" type="info" effect="plain">CRISPR</el-tag>
-                </div>
-                <div  v-if="scope.row.evidence_type === 1">
-                  <el-tag size="small" type="info" effect="light">Literature</el-tag>
-                </div>
-                <div  v-if="scope.row.evidence_type === 2">
-                  <el-tag size="small" type="info" effect="plain">CRISPR</el-tag>
-                  <el-tag size="small" type="info" effect="light">Literature</el-tag>
-                </div>
-                <div  v-if="scope.row.evidence_type === 3||scope.row.disease_related">
-                  <el-tag size="small" type="info" effect="dark">Predicted</el-tag>
-                </div>
-              </template>
-            </el-table-column>   -->
+
 
             <el-table-column label="PubMedID" prop="PMID"  >
               <template #default="scope">
