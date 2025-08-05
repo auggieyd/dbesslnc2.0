@@ -31,9 +31,8 @@ CREATE TABLE `esslnc`  (
   `num_id` int NOT NULL AUTO_INCREMENT,
   `PMID` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
   `NCBI_id` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
-  `reason` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
+  `reason_summary` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
   `Organism` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  `Go_annotation` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
   `Alias` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
   `description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
   `chr` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
@@ -45,7 +44,7 @@ CREATE TABLE `esslnc`  (
   `vivo` int NULL DEFAULT 0,
   `vitro` int NULL DEFAULT 0,
   PRIMARY KEY (`num_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6379 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 0 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for exp_crispr
