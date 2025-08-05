@@ -13,8 +13,13 @@ def process_new_matches(input_file, output_file):
                         'chr2', 'start2', 'end2', 'name', 'score2', 'strand2',
                         'gene_id', 'transcript_id', 'feature', 'gene_name', 'gene_type', 'GeneID', 'overlap_length']
 
-        df = pd.read_csv(input_file, sep='\t', header=None, names=column_names)
-        print(f"Number of rows in new match data: {len(df)}")
+        df = pd.read_csv(input_file, sep='\t', header=None, names=column_names, low_memory=False, dtype=str)
+        df['overlap_length'] = pd.to_numeric(df['overlap_length'], errors='coerce')
+        df['start1'] = pd.to_numeric(df['start1'], errors='coerce') 
+        df['end1'] = pd.to_numeric(df['end1'], errors='coerce')
+        df['start2'] = pd.to_numeric(df['start2'], errors='coerce')
+        df['end2'] = pd.to_numeric(df['end2'], errors='coerce')
+        # print(f"Number of rows in new match data: {len(df)}")
         
         if len(df) == 0:
             print("No new match data")
@@ -28,12 +33,12 @@ def process_new_matches(input_file, output_file):
     df['target'] = df['ID'].str.rsplit('-', n=1).str[0]
     df['target_trans'] = df['ID'].str.rsplit('-', n=1).str[1]
     
-    print(f"Number of new targets: {df['target'].nunique()}")
+    # print(f"Number of new targets: {df['target'].nunique()}")
     
     # Prefer genes not starting with LOC 
     # Prefer genes not starting with LOC (only in specific conflict cases)
     def prefer_non_loc_genes(df):
-        print("Checking gene_id conflicts, only handling LOC/non-LOC mixed conflicts...")
+        # print("Checking gene_id conflicts, only handling LOC/non-LOC mixed conflicts...")
 
         filtered_records = []
         conflict_summary = []
@@ -75,13 +80,13 @@ def process_new_matches(input_file, output_file):
                     # print(f"Target {target} has gene ID conflict but not LOC/non-LOC mixed, will select by exon length: {list(unique_gene_ids)}")
 
         if conflict_summary:
-            print(f"Handled {len(conflict_summary)} LOC/non-LOC mixed conflicts")
+            # print(f"Handled {len(conflict_summary)} LOC/non-LOC mixed conflicts")
 
             # Save LOC conflict resolution report
             conflict_df = pd.DataFrame(conflict_summary)
             file_exists = os.path.isfile('loc_gene_conflict_resolution.csv')
             conflict_df.to_csv('loc_gene_conflict_resolution.csv', mode='a', header=not file_exists, index=False)
-            print("✓ LOC conflict resolution report saved: loc_gene_conflict_resolution.csv")
+            # print("✓ LOC conflict resolution report saved: loc_gene_conflict_resolution.csv")
         else:
             print("No LOC/non-LOC mixed conflicts found")
 
@@ -97,7 +102,6 @@ def process_new_matches(input_file, output_file):
     
     # Select the optimal gene based on cumulative exon length and return complete records
     def select_best_gene_by_exon_length(df):
-        print("Calculating best gene mapping for each target (based on deduplicated exon cumulative length)...")
         
         # Create coordinate field for deduplication
         df['coord_key'] = (df['chr2'].astype(str) + '_' + 
@@ -111,7 +115,6 @@ def process_new_matches(input_file, output_file):
         for (target, geneid, gene_id), group in df.groupby(['target', 'GeneID', 'gene_id']):
             # Only calculate cumulative length from exon records
             exon_records = group[group['feature'] == 'exon']
-            
             if len(exon_records) > 0:
                 # Deduplicate by coordinates (only for exon records)
                 unique_exon_coords = exon_records.drop_duplicates(subset=['coord_key'])
@@ -121,27 +124,38 @@ def process_new_matches(input_file, output_file):
                 # If no exon records, use all records to calculate length
                 unique_coords = group.drop_duplicates(subset=['coord_key'])
                 total_length = unique_coords['overlap_length'].sum()
+
+            gene_start = int(group['start2'].min())
+            gene_end = int(group['end2'].max())
+            gene_region_length = gene_end - gene_start
+
+            coverage_ratio = total_length / gene_region_length if gene_region_length > 0 else 0
             
             length_summary_list.append({
                 'target': target,
                 'GeneID': geneid,
                 'gene_id': gene_id,
-                'total_exon_length': total_length
+                'total_exon_length': total_length,
+                'coverage_ratio': coverage_ratio,
             })
         
         length_summary = pd.DataFrame(length_summary_list)
-        print(f"Number of target-gene combinations: {len(length_summary)}")
+        # print(f"Number of target-gene combinations: {len(length_summary)}")
         
         # Step 2: Select the combination with the largest cumulative length for each target
         selected_combinations = []
-        
+        print(f"{len(length_summary.groupby('target'))} primary groups found")
         for target, group in length_summary.groupby('target'):
             # Select the combination with the largest cumulative length
-            best_match = group.nlargest(1, 'total_exon_length').iloc[0]
+            best_match = group.sort_values(['total_exon_length', 'coverage_ratio'], 
+                                     ascending=[False, False]).iloc[0]
             selected_combinations.append({
                 'target': best_match['target'],
                 'selected_GeneID': best_match['GeneID'],
-                'selected_gene_id': best_match['gene_id']
+                'selected_gene_id': best_match['gene_id'],
+                'total_exon_length': best_match['total_exon_length'],
+                'coverage_ratio': best_match['coverage_ratio']
+                
             })
         
         selected_df = pd.DataFrame(selected_combinations)
