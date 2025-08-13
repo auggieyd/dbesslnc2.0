@@ -70,7 +70,7 @@
             the Contact part provides information on how to contact authors of the database.
           </p>
           <p>
-            Currently, <b>2658</b> essential lncRNAs are deposited in the
+            Currently, <b>2716</b> essential lncRNA gene records are deposited in the 
             dbEssLnc2.0 database,and new data are constently added by manual screening.
           </p>
           <p>

@@ -226,10 +226,11 @@ export default{
           });
         })
         this.profile = temp_value;
+        console.log(this.profile,"this.profile")
         if(this.profile.length == 0){
           this.isShow=true;
         }
-        else if( this.profile.length != 0 && this.profile[0].Organism == "Human"){
+        else if( this.profile.length != 0 && this.profile[0].Organism == "human"){
           
           this.isShow1=true;
           this.isShow=false;

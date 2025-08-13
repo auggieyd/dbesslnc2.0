@@ -125,13 +125,6 @@
                 width="120">
               </el-table-column>
 
-              <!-- <el-table-column label="Validity" prop="evidence_type" width = "200">
-                <template v-slot="scope">
-                  <el-tag v-if="scope.row.evidence_type === 1" type="info" effect="light">
-                    Literature
-                  </el-tag>
-                </template>
-              </el-table-column>  -->
               <el-table-column
                 label="Essential role"
                 prop="Role"
@@ -203,32 +196,19 @@
               prop="gene_name"
               width="150">
               </el-table-column>
-              <el-table-column
-              label="NCBI Gene ID"
-              prop="NCBI_id"
-              width="130">
+              <el-table-column prop="NCBI_id" label="NCBI Gene ID" width="130">
+                <template #default="scope">
+                <a :href="urlNCBI+scope.row.NCBI_id" target="_black">
+                  {{scope.row.NCBI_id}}
+                </a>
+                </template>
               </el-table-column>
               <el-table-column
               label="Organism"
               prop="Organism"
               width="120">
               </el-table-column>
-              <!-- <el-table-column
-              label="Validity"
-              prop="evidence_type"
-              width="200">
-              <template v-slot="scope">
-                <el-tag size = "small" v-if="scope.row.evidence_type != 1" type="info" effect="plain">
-                  CRISPR
-                </el-tag>
-                <el-tag size = "small" v-if="scope.row.cancer_related > 0" type="info" effect="light">
-                  Literature
-                </el-tag>
-                <el-tag size = "small" v-if="scope.row.disease_related === 1" type="info" effect="dark">
-                  Predicted
-                </el-tag>
-              </template>
-              </el-table-column> -->
+
               <el-table-column
               label="Essential role"
               prop = "role"
@@ -262,11 +242,13 @@
                   <i v-show="scope.row.disease_related === 0" class="my-icon-close"></i> 
                 </template>
               </el-table-column> 
-              <el-table-column
-              label="PubMedID"
-              prop="PMID"
-              width="150">
-              </el-table-column>
+              <el-table-column prop="PubMedID" label="PubMedID" width="150">
+                  <template #default="scope">
+                    <a :href="url+scope.row.PMID" target="_black">
+                      {{scope.row.PMID}}
+                    </a>
+                  </template>
+              </el-table-column> 
             </el-table>
             <el-pagination
               class="pagination"

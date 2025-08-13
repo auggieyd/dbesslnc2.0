@@ -50,19 +50,19 @@ var sqlMap = {
 
       //fuzzy search 
       searchHuman:
-      'select * from `esslnc` where Organism ="Human" AND concat(UID,gene_name,Alias,Noncode_id,Lncbook_id,reason) like "%"?"%"',
+      'select * from `esslnc` where Organism ="Human" AND concat(UID,gene_name,Alias,Noncode_id,Lncbook_id,reason_summary) like "%"?"%"',
       searchMouse:
-      'select * from `esslnc` where Organism ="Mouse" AND concat(UID,gene_name,Alias,Noncode_id,Lncbook_id,reason) like "%"?"%"',
+      'select * from `esslnc` where Organism ="Mouse" AND concat(UID,gene_name,Alias,Noncode_id,Lncbook_id,reason_summary) like "%"?"%"',
       searchVital:
-      'select * from `esslnc` where  concat(UID,gene_name,Alias,Lncbook_id,Noncode_id,reason) like "%"?"%"',
+      'select * from `esslnc` where  concat(UID,gene_name,Alias,Lncbook_id,Noncode_id,reason_summary) like "%"?"%"',
       searchTumor:
-      'select * from `esslnc` where  concat(UID,gene_name,Alias,Lncbook_id,Noncode_id,reason) like "%"?"%"',
+      'select * from `esslnc` where  concat(UID,gene_name,Alias,Lncbook_id,Noncode_id,reason_summary) like "%"?"%"',
       searchCancer:
-      'select * from `esslnc` where concat(UID,gene_name,Alias,Lncbook_id,Noncode_id,reason) like "%"?"%"',
+      'select * from `esslnc` where concat(UID,gene_name,Alias,Lncbook_id,Noncode_id,reason_summary) like "%"?"%"',
       searchCell:
-      'select * from `esslnc` where vitro = 1 AND concat(UID,gene_name,Alias,Lncbook_id,Noncode_id,reason) like "%"?"%"',
+      'select * from `esslnc` where vitro = 1 AND concat(UID,gene_name,Alias,Lncbook_id,Noncode_id,reason_summary) like "%"?"%"',
       searchDisease:
-      'select * from `esslnc` where disease_related = 1 AND concat(UID,gene_name,Alias,Lncbook_id,Noncode_id,Reason) like "%"?"%"',
+      'select * from `esslnc` where disease_related = 1 AND concat(UID,gene_name,Alias,Lncbook_id,Noncode_id,reason_summary) like "%"?"%"',
       
       // For fuzzy search input suggestions
       fuzzyHuman:

@@ -31,7 +31,7 @@ tac ./LncBook/LncBookv2.0_lncRNA_transcripts_temp.csv > ./LncBook/LncBookv2.0_ln
 rm ./LncBook/LncBookv2.0_lncRNA_transcripts_temp.csv
 
 # NONCODE's gtf file contains exon_number directly, just extract it
-tac ./NONCODE/NONCODEv6_human_hg38_lncRNA.gtf | awk -F '\t' '
+tac ./NONCODE/fixed_NONCODEv6_human_hg38_lncRNA.gtf | awk -F '\t' '
 $3 == "exon" {
     match($9, /transcript_id "[^"]+"/);
     transcript_id = (RSTART > 0 ? substr($9, RSTART+15, RLENGTH-16) : "");

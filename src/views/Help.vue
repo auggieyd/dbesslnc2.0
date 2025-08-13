@@ -17,7 +17,7 @@
             of the diseases or tumors.Here,we developed a database named dbEssLnc2.0 
             (<b><a href="https://esslnc.pufengdu.org/v2/">https://esslnc.pufengdu.org/v2/</a></b>),which manually 
             collects and collates essential lncRNAs information from existing databases and published 
-            literature. Currently, the dbEssLnc2.0 database contains <b>2658</b> essential lncRNAs , 
+            literature. Currently, the dbEssLnc2.0 database contains <b>2716</b> essential lncRNA gene records, 
             and the data will be continuously added and updated.
           </p>
           <img width="400" alt="browse help" src="../../public/assets/img/help/work.svg" />
@@ -127,11 +127,11 @@
     <div class="perspective">
       <h3>Statistics</h3>
       <div class="setborder">
-        <p>Currently,this dbEssLnc2.0 database include <b>2658</b> essential lncRNAs.</p>
-        <p>Sorted by organsim, there are <b>2624</b> essential lncRNAs belonging to human and <b>34</b> essential lncRNAs belonging to mouse.</p>
-        <p>Sorted by reason, there are <b>41</b> essential lncRNAs belonging to general
-          , <b>88</b> essential lncRNAs belonging to tumor suppressor 
-          and <b>117</b> essential lncRNAs belonging to oncogene, <b>1161</b> essential lncRNAs belonging to cell viability and <b>1317</b> essential lncRNAs belonging to disease-related.</p>
+        <p>Currently,this dbEssLnc2.0 database include <b>2716</b> essential lncRNAs.</p>
+        <p>Sorted by organsim, there are <b>2682</b> essential lncRNA genes belonging to human and <b>34</b> essential lncRNAs belonging to mouse.</p>
+        <p>Sorted by reason, there are <b>42</b> essential lncRNAs belonging to general
+          , <b>68</b> essential lncRNAs belonging to tumor suppressor 
+          and <b>97</b> essential lncRNAs belonging to oncogene, <b>1190</b> essential lncRNAs belonging to cell viability and <b>1319</b> essential lncRNAs belonging to disease-related.</p>
 
         <div id ="first"></div>
         <div id ="second"></div>
@@ -192,7 +192,7 @@ export default {
       },
       series: [
         {
-        data: [{value:2624,name:'Human'},{value:34,name:'Mouse'}],
+        data: [{value:2682,name:'Human'},{value:34,name:'Mouse'}],
         type: 'bar',
         itemStyle:{
           normal:{
@@ -233,7 +233,7 @@ export default {
     },
     series: [
       {
-        data: [41,88,117,1161,1317],
+        data: [42,68,97,1190,1319],
         type: 'bar',
         itemStyle:{
           normal:{

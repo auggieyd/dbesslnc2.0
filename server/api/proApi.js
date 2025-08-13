@@ -271,7 +271,7 @@ router.post("/searchHuman",(req,res)=> {
   var proName = req.body;
   connection.query(sql,[proName.inputContent],(err,result)=>{
     if(err) {
-      console.log("search final table where Organism ='human' error:",err.msg)
+      console.log("search esslnc table where Organism ='human' error:",err.msg)
     }
     if(result){
       jsonWrite(res,result);

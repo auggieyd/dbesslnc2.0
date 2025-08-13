@@ -2,36 +2,19 @@ import pandas as pd
 import re
 import os
 
-def process_ncbi_mappings_and_summaries():
+def process_ncbi_mappings_and_summaries(file_path, summary_file):
     """Read NCBI mapping files, extract gene IDs, and match gene summary information"""
     
     # Collect gene IDs
     all_gene_ids = set()
     
-    for file_path in ['./test/map/ncbi_map.tsv', './test/map/res_ncbi_map.tsv']:
-        if os.path.exists(file_path):
-            df = pd.read_csv(file_path, sep='\t', header=None)
-            if len(df.columns) >= 4:
-                all_gene_ids.update(df.iloc[:, 3].dropna().unique())
-    
+    df = pd.read_csv(file_path, sep='\t', header=None)
+    if len(df.columns) >= 4:
+        all_gene_ids.update(df.iloc[:, 3].dropna().unique())
     # Read gene summary file
     gene_summary_df = None
-    for summary_file in ['gene_summary', 'gene_summary.txt', 'gene_summary.tsv']:
-        if os.path.exists(summary_file):
-            for sep in ['\t', ',']:
-                try:
-                    df = pd.read_csv(summary_file, sep=sep)
-                    if 'GeneID' in df.columns and 'Summary' in df.columns:
-                        gene_summary_df = df
-                        break
-                except:
-                    continue
-            if gene_summary_df is not None:
-                break
-    
-    if gene_summary_df is None:
-        print("Error: Cannot find gene_summary file")
-        return
+    gene_summary_df = pd.read_csv(summary_file, sep='\t')
+
     
     # Clean Summary column
     def clean_summary(summary):
