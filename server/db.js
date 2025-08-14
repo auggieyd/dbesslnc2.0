@@ -4,8 +4,8 @@ MYSQL_CONFIG = {
     host     : 'localhost',
     user     : 'root',
     password : 'root', // Modify your own password
-    database : 'ess_test',
-    port: 3307
+    database : 'dbess2',
+    port: 3306
   }
   module.exports = {
     MYSQL_CONFIG 
