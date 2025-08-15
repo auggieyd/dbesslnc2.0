@@ -78,9 +78,9 @@ Due to differences in eras and annotation discrepancies, we need to further upda
    
 2.  Extract the annotation information corresponding to the reference genome.For instance,in the crispr delete study,lncRNAs from gencode v19 were utilized.We downloaded the original reference gtf file and extracted the annotation information generate bed files.
 
-   - crispri19.bed: 
-   - crispr_delete19.bed
-   - crispr_splice38.bed
+   - crispri_temp.bed: 
+   - crispr_delete_temp.bed
+   - crispr_splice_temp_.bed
    - crispr_casrx38.bed
 
    Details see code: `/match/coor_match.ipynb:step1` 
@@ -122,10 +122,10 @@ Merge these files together to generate the `crispr_all.bed` file. Detail see cod
 
 #### Map the coordinate ranges to th latest public database to obtain annotations
 
-Obtain gene IDs from the NONCODE V6 , LncBook V2.0,GENCODEV47 and NCBI gene databases to enhance data usability.
+Obtain gene IDs from the NONCODE V6 , LncBook V2.0, GENCODEV47 and NCBI gene databases to enhance data usability.
 
 
-1. Based on the complete matching of the coordinate ranges at the lowest exon level,if the exons of the lncRNA we have collected are completely equal to or covered by the exons of the lncRNA in the reference database,and are on the same strand,they can be mapped to the corresponding reference lncRNA.If a gene matches multiple genes,select the one with the largest overlapping range.
+1. We used BED files converted from GTF annotations, which contain gene-, transcript-, and exon-level ranges, to perform coordinate matching with bedtools. The matching rule required that the queried coordinate range be exactly identical to, or entirely contained within, the corresponding reference coordinate range on the same strand. When a gene in our dataset corresponded to multiple genes in the reference database, we calculated the cumulative length of overlapping exonic regions for each candidate match and selected the one with the highest overlap ratio, defined as (A∩B)/(A∪B).
    Details see code:(`/match/map_annotations.ipynb:Step2`)
 
 2. Generate database annotations **mapping files**. See the detailed selection code at`/match/map_annotations.ipynb:step2`
@@ -154,8 +154,6 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,GENCODEV47 and NCBI gene data
 
 3.  Intercept the obtained gene sequence and generate a FASTA file (`lncRNA2.fasta`)
    Details see code:`/match/gen_fa.ipynb:step3`
-
-
 
 
 ## Putative Essential lncRNA Based on Variant assocate with lethal phenotypes Data from the ClinVar Database
@@ -187,13 +185,7 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,GENCODEV47 and NCBI gene data
 5. Obtain the variant length from `ClinVarVCVRelease_2025-06.xml`. (Script: `/clinvar_map/variants/left-shift/get_length_xml.py`)
 
 6. Retain variants with a length of ≤100bp and containing lethal phenotypes and calculate the left-shift coordinates for the variants. (Script: `/clinvar_map/variants/left-shift/after_process.py`)
-#### Merge reference lncRNAs
 
-1. Merge lncRNAs from NONCODEv6 and LncBookv2.0
-
-   Use `bedtools` to identify lncRNAs that have the same coordinate. (Script: `/clinvar_map/lncRNA_reference/merge_noncode_lncbook.sh`)
-
-2. Merge lncRNAs from the two databases, retaining only one record for lncRNAs with same coordinate. (Script: `/clinvar_map/lncRNA_reference/merge.py`)
 
 #### Map variants to reference lncRNAs set
 
@@ -225,7 +217,7 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0,GENCODEV47 and NCBI gene data
 
 ![image-20241225135903101](./assets/image-20241225135903101.png)
 
-4. For the lncRNAs derived from mice of the dbesslnc strain,we have also conducted additional annotation.
+4. For the lncRNAs derived from mice of the dbesslnc V1.0,we have also conducted additional annotation.
    - Download the reference file for mouse lncRNAs: [NONCODEv6_mm10.lncAndGene.bed.gz](http://www.noncode.org/datadownload/NONCODEv6_mm10.lncAndGene.bed.gz)
    - Extract transcript coordinates and exon information from the reference BED file of mouse lncRNAs using `/dbesslnc/get_exon_mouse.sh`.
    - Retrieve the mapping table of essential mouse lncRNAs NONCODE gene IDs and transcript IDs from the dbesslnc database (file: `dbesslnc_mouse_trans.txt`).
