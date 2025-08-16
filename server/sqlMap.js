@@ -26,16 +26,16 @@ var sqlMap = {
 
       //reason is vital
       select_reason_vital:
-      "select * from `esslnc` where vivo = 1 limit ?,?",
+      "select * from `esslnc` where vivo = 1 order by UID ASC limit ?,?",
       //reason is tumor
       select_reason_tumor:
-      "select * from `esslnc` where cancer_related = 1 limit ?,?",
+      "select * from `esslnc` where cancer_related = 1 order by UID ASC limit ?,?",
       //reason is cancer
       select_reason_cancer:
-      "select * from `esslnc` where cancer_related = 2 limit ?,?",
+      "select * from `esslnc` where cancer_related = 2 order by UID ASC limit ?,?",
       // cell growth
       select_cell_growth:
-      "SELECT * FROM esslnc where vitro = 1 limit ?,?",
+      "SELECT * FROM esslnc where vitro = 1 order by UID ASC limit ?,?",
       cell_count:
       "SELECT COUNT(*) AS total FROM esslnc where vitro = 1",
       disease_count:

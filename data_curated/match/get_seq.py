@@ -38,8 +38,9 @@ with open('./test/output/crispr_gene.fa', 'a') as f:
         r = requests.get(server+ext, headers={"Content-Type": "text/x-fasta"})
         
         if not r.ok:
-            r.raise_for_status()
-            sys.exit()
+            with open('./test/output/crispr_gene_error.log', 'a') as log_f:
+                log_f.write(f"Error for {row['key']}:{row['chr']}:{row['start']}..{row['end']}:{strand} - {r.status_code}: {r.text}\n")
+            continue
         
         sequence_lines = r.text.split('\n')
         header = sequence_lines[0].replace('>chromosome:GRCh38:', '')

@@ -230,7 +230,7 @@ export default{
         if(this.profile.length == 0){
           this.isShow=true;
         }
-        else if( this.profile.length != 0 && this.profile[0].Organism == "human"){
+        else if( this.profile.length != 0 && this.profile[0].Organism == "Human"){
           
           this.isShow1=true;
           this.isShow=false;
