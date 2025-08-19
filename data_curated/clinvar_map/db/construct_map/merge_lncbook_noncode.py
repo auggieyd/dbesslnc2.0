@@ -38,4 +38,4 @@ noncode_variants = pd.read_csv('../statistic/noncode_variants.csv')
 
 variants = pd.concat([lncbook_variants, noncode_variants], ignore_index=True)
 unique_variants = variants.drop_duplicates()
-unique_variants.to_csv("unique_varinats.csv", index=False)
+unique_variants.to_csv("unique_variants.csv", index=False)

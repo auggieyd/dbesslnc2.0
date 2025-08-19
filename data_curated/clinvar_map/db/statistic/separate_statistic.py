@@ -17,7 +17,7 @@ df['chromStart'] = df['chromStart'].fillna(0) + 1
 
 df = df[['ChromosomeName', 'GenomicStartLoc', 'GenomicEndLoc', 'GenomicStrand', 'ID', 'chromStart',
          'chromEnd', 'Type', 'ClinicalSignificance', 'VariationID', 'ReferenceAlleleVCF', 'AlternateAlleleVCF',
-         'CompletePhenotypeList']]
+         'LethalPhenotypeList']]
 
 new_column_names = ['chr', 'start', 'end', 'strand', 'lncRNA_id',
                     'variant_start', 'variant_end', 'variant_type', 'clinical_significance', 'variation_id',

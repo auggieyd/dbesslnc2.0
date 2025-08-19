@@ -68,7 +68,7 @@
                   <span>{{props.row.Seqlength}}</span>
                 </el-form-item>
                 <el-form-item label="Sequence:" >
-                  <span class="newlist" v-html="props.row.showData" @click="kzClick($event,props.row)">
+                  <span class="newlist_blast" v-html="props.row.showData" @click="kzClick($event,props.row)">
                   </span>
                 </el-form-item>
               </el-form>
@@ -573,6 +573,20 @@ span {
 .newlist {
   position: relative;
   margin: 0 auto;
+  width: 80%;
+  min-height: 30px;
+  line-height: 20px;
+  /* border: 1px solid ; */
+  word-break: break-all;
+  hyphens: auto;
+  text-align: left;
+  padding: 5px 10px;
+  background:#f2f4f6;
+  font-family:monospace;
+}
+.newlist_blast {
+  
+  margin: 10px auto;
   width: 80%;
   min-height: 30px;
   line-height: 20px;

@@ -130,7 +130,15 @@
               <el-table-column label = "start site" prop="variant_start" width="100"></el-table-column>
               <el-table-column label = "end site" prop="variant_end" width="100"></el-table-column>
               <el-table-column label = "Variant Type" prop="variant_type" ></el-table-column>
-              <el-table-column label = "Clinical significance" prop="clinical_significance" ></el-table-column>
+              <el-table-column label="Phenotype" prop="phenotype" width="180">
+                <template #default="scope">
+                  <span>
+                    {{ scope.row.phenotype && scope.row.phenotype.length > 20
+                      ? scope.row.phenotype.slice(0, 20) + '...'
+                      : scope.row.phenotype }}
+                  </span>
+                </template>
+              </el-table-column>
               <el-table-column label = "Source" width="100" >ClinVar</el-table-column>
               <!-- expand -->
               <el-table-column type="expand" label="Details" width="100">
