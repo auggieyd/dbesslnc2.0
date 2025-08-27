@@ -44,12 +44,14 @@ def process_and_save_results(results, output_file, group_by=None, sep="|"):
             lncbook_id = entry.get("geneid", "N/A")
             noncode_id = entry.get("noncode", "N/A")
             symbol = entry.get("symbol", "N/A")
+            ensembl_id = entry.get("gencode", "N/A")
             ncbi_id = entry.get("entrez", "N/A")
             rows.append(
                 {
                     "lncbook_id": lncbook_id,
                     "noncode_id": noncode_id,
                     "symbol": symbol,
+                    "ensembl_id": ensembl_id,
                     "ncbi_id": ncbi_id,
                 }
             )

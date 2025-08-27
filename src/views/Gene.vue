@@ -46,8 +46,8 @@
                 
               </el-form-item>
 
-              <el-form-item label="Alias:">
-                <span>{{ dataList.Alias}}</span>
+              <el-form-item label="Ensembl gene ID:">
+                <span @click="toUrl_ensembl(dataList.ensembl_id)" class="hand">{{ dataList.ensembl_id }}</span>
               </el-form-item>
               
               <el-form-item label="Validity:" style="width:70%">
@@ -287,6 +287,9 @@ export default{
       toUrl_PM(data){
         // console.log(data)
         window.location.href = "https://www.ncbi.nlm.nih.gov/pubmed/?term="+data+"/"
+      },
+      toUrl_ensembl(data){
+        window.location.href = "https://www.ensembl.org/id/"+data
       }
     }
 

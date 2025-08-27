@@ -189,15 +189,15 @@ Obtain gene IDs from the NONCODE V6 , LncBook V2.0, GENCODEV47 and NCBI gene dat
 
 #### Map variants to reference lncRNAs set
 
-1. Map variants to reference lncRNA set using `bedtools`. (Script: `/clinvar_map/map/map.sh`)
-2. Map result statistics (Script: `/clinvar_map/db/statistic/statistic.py`)
-   - Count putative essential lncRNAs that overlap with variants associated with lethal phenotypes.(`/clinvar_map/db/statictis/lncRNA.csv`)
-3. Annotate additional annotations for lncRNAs
-   - Extact `Noncode ID` and `Lncbook ID` for ID conversion.(Script:`/clinvar_map/db/conversion/get_id_for_conversion.sh`)
-   - Use the LncBook [**ID Conversion Tool** ](https://ngdc.cncb.ac.cn/lncbook/tools/conversion)to query the `NCBI_ID`, `gene_name` and `ensembl_id`  for lncRNAs. (Script: `/clinvar_map/db/conversion/id_conversion.py`) Generate:`/clinvar_map/db/conversion/lnbook_conversion_results.csv`and`/clinvar_map/db/conversion/noncode_conversion_results.csv`
-   - Merge`/clinvar_map/db/statistic/lncRNAs`, `/clinvar_map/db/conversion/lnbook_conversion_results.csv` and`/clinvar_map/db/conversion/noncode_conversion_results.csv`. (Script: `/clinvar_map/db/conversion/merge_NCBI_symbol.py`)
-
-4. Count variants associated with lethal phenotypes map to putative essential that don't have CRISPR experimental evidence. Count the mappings between variants associated with lethal phenotypes and putative essential lncRNAs. (Script:`/clinvar_map/criepr_overlap/statistic.py`) Generate:`/clinvar_map/db/crispr_overlap/variants_nocrispr.csv` and `/clinvar_map/db/crispr_overlap/lncRNA_variant_mapping_nocrispr.csv`
+1. lncRNA gene annotations were extracted from **NONCODEv6_hg38.lncAndGene.bed** and **lncRNA_LncBookv2.0_GRCh38.gtf** for downstream mapping.（Script：`/clinvar_map/lncRNA_reference/preprocess.sh`)
+2. Mapped the filtered variants onto the reference lncRNA genes from the two respective databases using `bedtools`. (Script: `/clinvar_map/map/separate_map.sh`)
+3. The mapping results for the reference lncRNA genes in each of the two databases were counted separately.(Script: `/clinvar_map/db/statistic/separate_statistic.py`)
+   - Count potential essential lncRNA genes and the lethal phenotype–associated variants that overlap with them.(`/clinvar_map/db/statictis/lncbook_lncRNA.csv&noncode_lncRNA.csv`；`/clinvar_map/db/statictis/lncbook_variants.csv&noncode_variants.csv`)
+   - Generat mapping files that linking lncRNA genes to their overlapping variants.(`/clinvar_map/db/statictis/lncbook_mapping.csv&noncode_mapping.csv`)
+4. Annotated additional annotations for lncRNAs
+   - Use the LncBook [**ID Conversion Tool** ](https://ngdc.cncb.ac.cn/lncbook/tools/conversion)to query the `lncbook_id`, `noncode_id`,`ncbi_id` and `gene_name` for lncRNA genes. (Script: `/clinvar_map/db/conversion/id_conversion.py`) Generate:`/clinvar_map/db/conversion/lnbook_conversion_results.csv`and`/clinvar_map/db/conversion/noncode_conversion_results.csv`
+   - Additional annotations were appended to the lncRNA file and the mapping file. (Script: `/clinvar_map/db/conversion/merge_outer_chain_info.py`)
+5. Merged and deduplicated the mapping results for the reference lncRNA genes from both databases.（Script:`/clinvar_map/db/construct_map/merge_lncbook_noncode.py`）Generate：`/clinvar_map/db/construct_map/unique_lncRNA.csv`;                                 `/clinvar_map/db/construct_map/unique_mapping.csv`;`/clinvar_map/db/construct_map/unique_variants.csv`;
             
 
 ## Sorting out the essential lncRNAs obtained through literature mining

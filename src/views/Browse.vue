@@ -32,7 +32,7 @@
             </template>
             <el-menu-item index="2-1" >
               <!-- <a href="#vital">essential lncRNA</a> -->
-              <a href="javascript:void(0)" @click="goAnchor('#crispr-type')">cell viability</a>
+              <a href="javascript:void(0)" @click="goAnchor('#crispr-type')">Cell viability</a>
             </el-menu-item>
           </el-submenu>   
           <!-- Cancer related -->
@@ -58,7 +58,7 @@
             </template>
             <el-menu-item index="5-1" >
               <!-- <a href="#vital">essential lncRNA</a> -->
-              <a href="javascript:void(0)" @click="goAnchor('#disease-related')">Pathogenic</a>
+              <a href="javascript:void(0)" @click="goAnchor('#disease-related')">Disease associated</a>
             </el-menu-item>
           </el-submenu>
           <!-- Organism -->
@@ -128,7 +128,7 @@
               <el-table-column
                 label="Essential role"
                 prop="Role"
-                width="150">
+                width="180">
                 General
               </el-table-column>
               <el-table-column label="vivo" prop="vivo" >
@@ -212,7 +212,7 @@
               <el-table-column
               label="Essential role"
               prop = "role"
-              width="150">
+              width="180">
               Cell viability
               </el-table-column>
               <el-table-column label="vivo" prop="vivo" >
@@ -314,7 +314,7 @@
             <el-table-column
               label="Essential role"
               prop="Role"
-              width="150">
+              width="180">
               Tumor suppressor
             </el-table-column>
             <el-table-column label="vivo" prop="vivo" >
@@ -409,7 +409,7 @@
             <el-table-column
               label="Essential role"
               prop="Role"
-              width="150">
+              width="180">
               Oncogene
             </el-table-column>
             <el-table-column label="vivo" prop="vivo" >
@@ -509,8 +509,8 @@
             </el-table-column>  -->
             <el-table-column
               label="Essential role"
-              width="150">
-              Pathogenic
+              width="180">
+              Disease-associated
             </el-table-column>
             <el-table-column label="vivo" prop="vivo" >
                 <template #default="scope">

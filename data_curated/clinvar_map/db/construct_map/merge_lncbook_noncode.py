@@ -20,7 +20,7 @@ def join_sources(s, sep=";"):
 
 unique_lncRNA = (
     lncRNA
-    .groupby(['lncbook_id','noncode_id','symbol','ncbi_id','lethal_count','chr','start','end','strand'], dropna=False, as_index=False)  # one row per unique combo of other columns
+    .groupby(['lncbook_id','noncode_id','symbol','ensembl_id','ncbi_id','lethal_count','chr','start','end','strand'], dropna=False, as_index=False)  # one row per unique combo of other columns
     .agg(source=('source', join_sources))     # merge sources with ';', remove duplicates (order-preserving)
 )
 

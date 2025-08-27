@@ -12,13 +12,13 @@ noncode_mapping = pd.read_csv('../statistic/noncode_mapping.csv')
 lncbook_outer_chain.replace({'symbol': {'-': pd.NA, 'N/A': pd.NA}, 'ncbi_id': {'-': pd.NA, 'N/A': pd.NA}, 'ensembl_id': {'-': pd.NA, 'N/A': pd.NA}}, inplace=True)
 noncode_outer_chain.replace({'symbol': {'-': pd.NA, 'N/A': pd.NA}, 'ncbi_id': {'-': pd.NA, 'N/A': pd.NA}, 'ensembl_id': {'-': pd.NA, 'N/A': pd.NA}}, inplace=True)
 
-# Merge symbol and ncbi_id based on lncbook
+# Merge symbol ,ensembl_id ncbi_id based on lncbook
 lncbook_merged_lncRNA = pd.merge(lncbook_outer_chain, lncbook_lncRNA, left_on='lncbook_id', right_on='lncRNA_id', how='right')
 lncbook_merged_mapping = pd.merge(lncbook_outer_chain[['lncbook_id', 'noncode_id']], lncbook_mapping, left_on='lncbook_id', right_on='lncRNA_id', how='right')
 lncbook_merged_lncRNA['lncbook_id'] = lncbook_merged_lncRNA['lncRNA_id']
 lncbook_merged_mapping['lncbook_id'] = lncbook_merged_mapping['lncRNA_id']
 
-# Merge symbol and ncbi_id based on noncode
+# Merge symbol ,ensembl_id, ncbi_id based on noncode
 noncode_merged_lncRNA = pd.merge(noncode_outer_chain, noncode_lncRNA, left_on='noncode_id', right_on='lncRNA_id', how='right')
 noncode_merged_mapping = pd.merge(noncode_outer_chain[['lncbook_id', 'noncode_id']], noncode_mapping, left_on='noncode_id', right_on='lncRNA_id', how='right')
 noncode_merged_lncRNA['noncode_id'] = noncode_merged_lncRNA['lncRNA_id']
