@@ -14,7 +14,7 @@ Compared to the previous version, dbEssLnc2.0 features the following key enhance
 
 For a detailed understanding of how the data in dbEssLnc2.0 was collected, curated, and processed from primary sources, please refer to the dedicated documentation:
 
-- **Data Curated Process:** [`data_curated/readme.md`](https://www.google.com/search?q=data_curated/readme.md)
+- **Data Curated Process:** [Data Curated Process](data_curated/readme.md)
 
 This document provides necessary background and methodology for the bioinformatics and manual curation steps performed to ensure data quality and integrity.
 
