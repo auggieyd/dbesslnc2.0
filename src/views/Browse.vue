@@ -844,8 +844,6 @@ export default{
         'NICH460': '#5F9EA0' // Cadet Blue
       }
 
-      // vitalShow:1
-      // fullscreenLoading: false
     }
   },
   mounted () {
@@ -860,7 +858,6 @@ export default{
 //show vital table data 
       axios.post("api/property/vital").then(respond =>{
       _this.vital = respond.data;
-      // console.log(_this.vital);
       _this.count-- ;
       _this.LoadingClose();
       });
@@ -869,7 +866,6 @@ export default{
       _this.tumor = respond.data;
       _this.count-- ;
       _this.LoadingClose();
-      //console.log("tumor")
 
       });
 //show cancer table data
@@ -877,7 +873,6 @@ export default{
       _this.cancer = respond.data;
       _this.count-- ;
       _this.LoadingClose();
-      //console.log("cancer")
 // show humman table data
       });
       axios.post("api/property/selectHuman",{
@@ -904,14 +899,11 @@ export default{
         page:_this.currentPageCell,
         pageSize:_this.pageSizeCell
       }).then(respond =>{
-        console.log(respond.data.items,"tets");
         _this.cellGrowth = respond.data.items;
         _this.cellTotal = respond.data.total;
-      // console.log(_this.cellGrowth);
 
         _this.count-- ;
         _this.LoadingClose();
-      //console.log("cancer")
       })
 // show disease table data
       axios.post("api/property/diseaseRelated",{
@@ -920,10 +912,8 @@ export default{
       }).then(respond =>{
       _this.disease = respond.data.items;
       _this.diseaseTotal = respond.data.total;
-      // console.log(_this.cancer);
       _this.count-- ;
       _this.LoadingClose();
-      //console.log("cancer")
       })
 
   },
@@ -945,7 +935,6 @@ export default{
         page:this.currentPageDisease,
         pageSize:this.pageSizeCell
       }).then(respond =>{
-        console.log(respond.data);
         this.disease = respond.data.items;
         this.diseaseTotal = respond.data.total;
       });
@@ -972,9 +961,7 @@ export default{
     },
 
     toUrl(data){
-      // data.page = "Browse"
       sessionStorage.setItem('dataBrowse', JSON.stringify(data));
-      // console.log(JSON.stringify(data));
       this.$router.push({
         name:'Gene',
         params:data,
@@ -992,7 +979,6 @@ export default{
       this.fetchCellData();
     },
     handleDiseaseChange(newPage) {
-      console.log(newPage);
       this.currentPageDisease = newPage;
       this.fetchDiseaseData();
     },
@@ -1002,9 +988,7 @@ export default{
         page:newPage,
         pageSize:20
       }).then(respond =>{
-        // console.log(respond.data);
         this.ren = respond.data.items;
-        // console.log(this.ren);
         this.humanTotal = respond.data.total;
       });
     },

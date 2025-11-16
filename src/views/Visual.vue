@@ -13,7 +13,7 @@
         <div class="files">
           <h3 class="top">LncRNA Information</h3>
           <div class="content" style="height:40%">
-            <el-form label-position="left"  inline >
+            <el-form label-position="left"  inline class="demo-table-expand" >
               <el-form-item label="Gene:">
                 <span>{{ dataList.UID}}</span>
               </el-form-item>
@@ -188,7 +188,6 @@ export default{
     mounted(){
 
       let sessionData = JSON.parse(sessionStorage.getItem("dataGene"));
-      // console.log(sessionData,"sessionData")
       
       if(location.href.indexOf('#reloaded')==-1){
       location.href=location.href+"#reloaded";
@@ -196,10 +195,7 @@ export default{
       }
      
       this.FromPage = this.$route.query.page;
-      //console.log("visual页面的，标记从哪里来",this.FromPage)
       this.dataList=sessionData;
-      //console.log(this.dataList)
-      // this.showData=this.dataList.FASTA.slice(0,1000);
       this.showData = `${this.dataList.FASTA.slice(0,200)}
                     <img
                     src="/v2/assets/img/open.png"
@@ -217,16 +213,13 @@ export default{
         UID:this.UID,
         Organism:this.Organism
       }).then(respond =>{
-        // console.log(respond.data);
         const temp_value =respond.data;
-        // console.log(respond.data,"profile")
         temp_value.map(row => {
           this.item_data_human.forEach(item => {
             row[item] = parseFloat(row[item]).toExponential(6);
           });
         })
         this.profile = temp_value;
-        console.log(this.profile,"this.profile")
         if(this.profile.length == 0){
           this.isShow=true;
         }
@@ -273,11 +266,7 @@ export default{
 
       },
       drawLine1(){
-        console.log("调用dramLine1");
-                // 解决数据初始渲染不出来的问题
-        // setTimeout(()=>{
-        //     this.initChart()
-        // },1000)
+
         var chartDom = document.getElementById('figure1');
         var myChart1 = echarts.init(chartDom, null, { renderer: 'svg' });
         var _this = this;
@@ -287,23 +276,7 @@ export default{
             text: 'Expression profile',
             left: 'center'
           },
-    //        toolbox: {
-    //     show: true, // 显示工具箱
-    //     feature: {
-    //         saveAsImage: { // 保存为图片功能
-    //             show: true, // 显示保存图片按钮
-    //             title: '保存为图片' ,// 按钮标题
-    //             type: 'svg',
-    //             // name: '自定义文件名'
-    //         },
-    //         // 如果需要其他功能，可以在这里添加，例如：
-    //         // dataView: {show: true, readOnly: false, title: '数据视图'},
-    //         // restore: {show: true, title: '还原'},
-    //         // dataZoom: {show: true, title: {zoom: '区域缩放', back: '区域缩放还原'}}
-    //     },
-    //     right: 20, // 工具箱距离右侧的距离
-    //     top: 20    // 工具箱距离顶部的距离
-    // },
+  
           tooltip:{
             trigger:'axis',
             axisPointer:{
@@ -332,11 +305,10 @@ export default{
         };
         option.series[0].data=[];
         option.title.text="Expression profile of "+ this.dataList.transcript_id+" in "+this.profile[0].Organism+" tissues";
-        // console.log(_this.item_data_human,"item_data_human")
         _this.item_data_human.forEach(item=>{
           const value = parseFloat(_this.profile[0][item]);
           const formattedValue = value.toExponential(6);
-          // console.log(formattedValue,"formattedValue")
+
           option.series[0].data.push(formattedValue);
         })
         myChart1.setOption(option);
@@ -344,7 +316,6 @@ export default{
         
       },
       drawLine2(){
-        // console.log("调用dramLine2");
         
         var chartDom = document.getElementById('figure2');
         var myChart2 = echarts.init(chartDom);

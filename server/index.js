@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/v2/api/property", proApi);
 
 // Serve static files in production
-app.use(express.static(path.join(__dirname, "../dist")));
+app.use(express.static(path.join(__dirname, "dist")));
 
 // Listen on port
 app.listen(8081,'127.0.0.1', () => {

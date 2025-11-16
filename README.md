@@ -1,126 +1,145 @@
 # dbEssLnc2.0: exploring disease-associated essential long non-coding RNAs in human cell lines
- In dbEsslnc2.0, Compared to the previous version, we have added 6,107 essential lncRNAs, including 1,161 experimentally validated long non-coding RNAs from CRISPR-based genomic screens and 5,059 disease-related putative essential lncRNAs associated with pathogenic variants. Furthermore, the database incorporated additional information, including novel essentiality classifications, gene annotations, and variant data. dbEssLnc2.0 can be accessible freely at https://esslnc.pufengdu.org/v2/.
-## 1.Intruduction
+**dbEssLnc2.0** is a major update to the previously published dbEssLnc database. We are dedicated to building a comprehensive, high-quality repository of essential long non-coding RNA (lncRNA) genes in humans, particularly focusing on their roles in cancer and genetic diseases. dbEssLnc2.0 can be accessible freely at https://esslnc.pufengdu.org/v2/.
 
-We store some essential lncRNAs information in a MySQL database. We used the node.js script engine and javaScript from the
-Express framework to implement the backend system. The frontend was implement using JavaScript with the Vue framework. We 
-developed this object on **the Windows 11 platform** using the code editor Visual Studio Code(https://code.visualstudio.com/).
+## 🎯 Core Updates and Value Proposition
 
+Compared to the previous version, dbEssLnc2.0 features the following key enhancements:
 
-## 2.Development
+1. **Data Volume Increase (Approx. 20-fold)**: Added **2716** new essential lncRNA records, increasing the total collection size by approximately **20 times**.
+2. **Experimental Validation Data**: Includes **1,190** experimentally validated essential lncRNAs derived from CRISPR-based genomic screens.
+3. **Disease Association**: Added **1,319** putative essential lncRNAs associated with pathogenic variants, significantly enhancing the database's value for computational biology and bioinformatics studies.
+4. **New Information**: Integrated novel essentiality classifications, gene annotations, and detailed variant data.
 
-### 2.1 Installing dependency packages
-If you want to run this code in your development environment,you should first install **Node.js**(https://nodejs.org/en/download/) and **MySQL** (https://www.mysql.com/downloads/) on your machine. The **node** version used for this project is v14.17.1, the **npm** version is v7.18.1 and the mysql version is Ver 8.0.42.The versions used had better be consistent, otherwise unexpected errors will occur.
-After your Node.js environment is ready, find out the location of your unpacked dbesslnc source code, and execute the command `npm install` separately to install all the dependencies of the project.
-If the download speed of individual dependencies is too slow, users can also download **cnpm** and 
-use `cnpm i` download.
-```powershell
-node -v
-npm -v
-npm install -g cnpm --registry=https://registry.npm.taobao.org
-cnpm -v
-npm install /cnpm i
-```
-![Alt text](https://github.com/yyZhang14/dbEssLnc/blob/main/public/md/node.png)
-### 2.2 Add SQL file to the database
+## 📝 Data Collection and Processing Process
 
-After downloading mysql services,Users can download MYSQL Workbench software to import SQL files **dbesslnc** into the database. Note that the encoding format of the database is UTF8. There are 7 tables in the database dbesslnc.
-```
-esslnc table: all essential gene information.
-exp_crispr table: all Cell viability lncRNA information.
-variants table: all variants information.
-lncrna_variant_mapping table: variants map to lncRNAs.
-trans table: all gene transcript information.
-expression table: all mouse lncRNA expression profile information.
-exp_profile table: all human lncRNA expression profile information.
-```
+For a detailed understanding of how the data in dbEssLnc2.0 was collected, curated, and processed from primary sources, please refer to the dedicated documentation:
+
+- **Data Curated Process:** [`data_curated/readme.md`](https://www.google.com/search?q=data_curated/readme.md)
+
+This document provides necessary background and methodology for the bioinformatics and manual curation steps performed to ensure data quality and integrity.
 
 
-### 2.3 Install Blast
-Visit Blast.ncbi(https://blast.ncbi.nlm.nih.gov/Blast.cgi) to download the Blast installer.
-```
-# create fasta sequence database
-makeblastdb -in lncRNA2.fasta -dbtype nucl
-# a test to use blast tool
-blastn -query tar.fasta -db blast/lncrna/lncRNA2.fasta -out a.txt -evalue 1e-5 -outfmt 6
-```
+## 🛠️ Deployment Guide: One-Click Launch
+To simplify deployment and mirroring tasks, we highly recommend using Docker Compose for a one-click deployment solution. This method configures the Node.js backend, MySQL database, and the necessary BLAST tools simultaneously.
 
-### 2.4 Start frontend
+### 1. Prerequisites
 
-Go to the root directory of the project, and execute the command `npm run serve`. 
-![Alt text](https://github.com/yyZhang14/dbEssLnc/blob/main/public/md/fonter.PNG)
+- Install **Docker** and **Docker Compose**.
+- Place the `dbesslnc2.sql` file in the project's root directory or a path accessible by the Dockerfile.
+- Download the dbesslnc-deployment package
 
-### 2.5 Start backend
+### 2. Deployment Steps
 
-Go to the root directory of the project,and enter **server** directory . 
+Execute the following commands in the `dbesslnc-deployment` root directory to launch the entire system:
 
-```
-# Install dependency packages
-npm install
-# Start backend
-node index.js 
-```
+```yaml
+# 1. Build images and start all services (Backend, MySQL, BLAST configuration)
+cd dbesslnc-deployment
+docker-compose up --build -d
 
-Finally, Type `http://localhost:3000` in the browser, will see the website.
+# 2. Check container status
+docker-compose ps
 
-## 3.Production
-If you want to deploy the project to your own server when there are no problems in the development environment, you would need to excute `npm run build` in the root directory to get the **dist** folder firstly. And then configure the running environment on the server.
-
-> Note. Adjust the structure of the`dist`folder to the following:
-
-```
-dist
-├── server
-│   ├── assets
-│   ├── data
-│   └── md
-└── index.html
+# 3. Access the website
+# Enter http://localhost:8081 or your configured server IP/domain in the browser
 ```
 
 
 
+## ⚙️ Manual Deployment Guide (Legacy/Advanced)
+
+### 1. Server Environment
+
+1. **Install Node.js and npm:** Ensure Node.js (v14+,https://nodejs.org/en/download/) and npm are installed. *(Example for Ubuntu20 systems):.
+
+2. **Install MySQL server**: Ensure MySQL(V8.0,https://www.mysql.com/downloads/) is running.
+
+3. **Install and Configure BLAST+ Tools:** BLAST+ is essential for the database's search functionality. We use version 2.12.0.
+
+   ```shell
+   # Download and extract BLAST+ (change directory as needed)
+   cd /blast/
+   wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.12.0/ncbi-blast-2.12.0+-x64-linux.tar.gz
+   tar -zxvf ncbi-blast-2.12.0+-x64-linux.tar.gz
+   mv ncbi-blast-2.12.0+ blast+
+   rm ncbi-blast-2.12.0+-x64-linux.tar.gz
+   
+   # Add BLAST binaries to the system PATH (modify based on your shell profile)
+   echo 'export PATH="/usr/local/blast+/bin:$PATH"' >> ~/.bashrc
+   source ~/.bashrc
+   
+   # Verify installation
+   blastn -version
+   
+   # Build the lncRNA Database Index 
+   # NOTE: This assumes lncRNA2.fasta is located in the project's 'blast/lncrna/' directory.
+   cd /path/to/your/project/root
+   makeblastdb -in blast/lncrna/lncRNA2.fasta -dbtype nucl
+   
+   ```
+
+   
+
+### 1. Frontend (Vue + Element Plus)
+
+1.  Install dependencies:
+
+   ```
+   cd dbEssLnc2.0
+   npm install
+   ```
+
+2. Execute production build:
+
+   ```
+   npm run build
+   cd dist
+   mv -f md assets data v2/ 
+   ```
+
+### 2. Backend (Node.js + Express)
+
+1. Navigate to the backend directory and install dependencies:
+
+   ```
+   cd server
+   npm install
+   ```
+
+2. Start the backend service using PM2 or another process manager:
+
+   ```
+   # Recommended to use PM2 for process management
+   npm install -g pm2
+   pm2 start index.js --name dbEssLnc2.0-backend
+   ```
+
+### 3. Database (MySQL)
+
+1. Create the database:
+
+   ```
+   mysql -u [user] -p 
+   CREATE DATABASE dbess2;
+   ```
+
+2. Import the SQL file:
+
+   ```
+   source /path-to/dbesslnc2.sql;
+   ```
+3. Modify the backend configuration file to connect to the correct MySQL instance.
+
+### 4. Access the Website
+
+After successfully starting the backend service (Step 2) and configuring the web server (Nginx/Apache) to serve the frontend build (Step 1), open your web browser.
+
+```
+# Access the website using your server's configured domain name or IP address:
+# Example: http://localhost:8081 or http://your_domain_name
+```
 
 
-### Steps for production
-1. Install Node.js and MySQL on the server.
-2. Install BLAST on the server.
-```
-# Download blast source
-wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.12.0+-x64-linux.tar.gz
-# Unzip folder
-tar -zxvf ncbi-blast-2.12.0+-x64-linux.tar.gz
-mv ncbi-blast-2.12.0+ blast+
-# View the current path and configure environment variables
-pwd
-export PATH=/home/user024/blast+/bin:$PATH
-source ~/.bashrc
-# Make the configuration take effect
-blastn -version
-```
-3. Create a database and add data to the database by loading SQL file.
 
-```
-# some commands for import sql file
-create database dbess2；
-use dbess2；
-source sqlpath(eg. /home/auggieyd/dbesslnc2.sql)；
-show databases;
-show tables;
-```
-4. Create a new directory (e.g. dbEssLnc) on the server.
-5. Use Xftp software or other tools to upload the **dist** folder, **server** folder and **blast** folder to **dbEssLnc** directory.
-6. Execute the command `npm install` to install all the dependencies in the **server** directory.
-7. Install and configure Nginx. Please pay special attention to path and configuration of the **nginx.conf** file(Nginx.conf is given above).
-![Alt text](https://github.com/yyZhang14/dbEssLnc/blob/main/public/md/nginx.PNG)
-test nginx use following command.
-```
-nginx -t
-service nginx restart
-```
-8. You can install PM2 to manager your node process.
-9. Type and execute the command `pm2 start index.js` in the server folder to start the project.Open your browser, type in the domain name, and you will see the website.
-![Alt text](https://github.com/yyZhang14/dbEssLnc/blob/main/public/md/pm2.PNG)
-![Alt text](https://github.com/auggieyd/dbEssLnc2.0/blob/master/public/md/bro2.PNG)
-### 
 ## Citation
 Zhang YY, Zhang WY, Xin XH, Du PF. dbEssLnc: A manually curated database of human and mouse essential lncRNA genes. Comput Struct Biotechnol J. 2022 May 23;20:2657-2663. doi: 10.1016/j.csbj.2022.05.043. PMID: 35685362; PMCID: PMC9162909.

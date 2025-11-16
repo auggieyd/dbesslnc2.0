@@ -13,11 +13,8 @@
 
         </el-col>
         <el-col :span="10"  class="duiqi" >
-          <i style="font-size: 20px;  color: #606060; margin: 40px 0 20px 0;" class="el-icon-info" >
+          <i style="font-size: 20px;  color: #606060; margin: 50px 0 10px 0;" class="el-icon-info" >
             Introduction of dbEssLnc2.0</i>
-          <!-- <p class="nav1">
-            To visit dbEssLnc V1.0,<a href="https://esslnc.pufengdu.org/v1/" style="color: #551A8B;" target="_blank"> click here</a>
-          </p> -->
           <p>
             <b>dbEssLnc2.0</b> is the abbreviation of <b>Ess</b>ential <b>Lnc</b>RNA
             database, version 2.0. 
@@ -76,18 +73,22 @@
           <p>
             Last update on: Jan.2th.2025.
           </p>
+          <i style="font-size: 20px;  color: #606060; margin: 10px 0 10px 0;" class="el-icon-info" >
+            Citiation</i>
+          <p>1. Zhang Y Y, Zhang W Y, Xin X H, Du P F. dbEssLnc: A manually curated database of human and mouse essential lncRNA genes[J]. Computational and Structural Biotechnology Journal, 2022, 20: 2657-2663.
+</p>
         </el-col>
         <el-col :span="10">
           <img
             alt="essential lncRNA"
             src="../../public/assets/img/home.svg"
-            style="width: 100%; margin-top: 90px;"
+            style="width: 100%; margin-top: 50px;"
             
           />
           <div>
             <span style="font-size: 14px; float:right;" class="duiqi">
               <b></b>
-              <p><b>The work flow of data curation process:</b><br/> 
+              <p style="margin: 30px;"><b>The work flow of data curation process:</b><br/> 
                   Work flow is divided to 4 steps. Step1: Using key words to collect essential 
                   lncRNA data in PubMed. Step2: Manually extract the CRISPR experimental results for each lncRNA across different cell lines and map the variant sites in the ClinVar database to lncRNAs.
                    Step3: Map genomic coordinates from hg19 to hg38 and map lncRNAs to other databases to retrieve additional details.

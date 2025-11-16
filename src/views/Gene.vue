@@ -187,50 +187,48 @@ export default{
     mounted(){
         window.scrollTo(0, 0);
         this.tempPage = this.$route.query.page
-        // console.log("标记Gene页面上个页面从哪里来",this.$route.params)
         if(this.tempPage == "Browse"){          
           this.dataList = JSON.parse(sessionStorage.getItem("dataBrowse"));
-          // console.log(this.dataList,"browse")
+
         }
         if(this.tempPage == "Search"){          
           this.dataList = JSON.parse(sessionStorage.getItem("dataSearch"));
-          // console.log(this.dataList,"search")
+
         }
         if(this.tempPage == "Blast"){          
           this.dataList.UID = JSON.parse(sessionStorage.getItem("dataBlast")).UID;
-          // console.log(this.dataList,"blast")
+
         }
-        // console.log(this.dataList,'test');
+
         this.UID = this.dataList.UID;
-        // this.DNAid = this.dataList.NONCODEId;
+
         
 
 
         axios.post("api/property/transcript",{    
             UID:this.UID
         }).then(respond =>{
-            // console.log(respond.data);
+
             this.itemData=respond.data;
         });
         axios.post("api/property/gene",{
             UID:this.UID
         }).then(respond =>{
-            console.log(respond.data,"detail")
             this.dataList=respond.data[0];
             const data = respond.data;
-            // console.log(data)
+
             this.chr = this.dataList.chr;
             const strand = this.dataList.strand;
             this.strand = strand == '+' ? "forward" : "reverse";
             this.start = Math.min(...data.map(item => item.start));
             this.end = Math.max(...data.map(item => item.end));
-            // console.log(this.start,this.end)
+
         });
 
         axios.post("api/property/experiment",{
             UID:this.UID
         }).then(respond =>{
-            // console.log(respond.data);
+
             this.expData=respond.data;
         });
 
@@ -238,7 +236,6 @@ export default{
         axios.post("api/property/diseaseMap",{
             UID:this.UID
         }).then(respond =>{
-            // console.log(respond.data);
             this.diseaseData=respond.data.disease;
         });
     },
@@ -250,7 +247,6 @@ export default{
         })
       },
       toVisual(data){
-        // console.log(JSON.stringify(data))
         sessionStorage.setItem('dataGene', JSON.stringify(data));
         this.$router.push({
           name:'Visual',
@@ -270,7 +266,6 @@ export default{
          window.location.href = "https://ngdc.cncb.ac.cn/lncbook/gene?geneid="+data
       },
       toUrl_Sequence(data){
-        // console.log(data)
         let genome = 'hg38';
   
         if (data.Organism === 'Human') {
@@ -285,7 +280,6 @@ export default{
         window.open(url, "_blank");
       },
       toUrl_PM(data){
-        // console.log(data)
         window.location.href = "https://www.ncbi.nlm.nih.gov/pubmed/?term="+data+"/"
       },
       toUrl_ensembl(data){

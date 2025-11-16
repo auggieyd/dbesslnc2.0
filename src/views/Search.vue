@@ -228,22 +228,22 @@ export default {
         return "warning-row";
       }
     },
-    //展示模糊查询的输入建议
+    
     querySearch(queryString, cb) {
       var properties = this.propertyresults;
-      // console.log(properties)
+    
       var results = queryString
         ? properties.filter(this.createFilter(queryString))
         : properties;
-        // console.log(results)
+        
       cb(results);
     },
-    // !==-1 表示可以匹配包含的，而不是首字母
+    
     createFilter(queryString) {
       return property => {
-        // console.log(property);
+        
         return (
-          // 这里必须是property.value 才有效?
+       
           property.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
         );
       };
@@ -262,24 +262,20 @@ export default {
       })
     },
     Search(){
-      // console.log("Search 函数调用成功！");
-      var inputContent = this.inputContent;//输入框中的内容
-      var searchOpt = this.searchOpt;//选择框中的内容
+      
+      var inputContent = this.inputContent;
+      var searchOpt = this.searchOpt;
       var _this = this;
-      //有多少种情况
-      //选择option1 Human;  default option is human
+      
       if(searchOpt == "option1"){
-        //输入框为空
+        
         if(inputContent == ""){
           _this.tempPath = "selectHuman";
           _this.currentPage = 1;
           _this.fetchData("selectHuman");
-          // axios.post("api/property/selectHuman").then(function(respond){
-          //   _this.lncrnaTable=respond.data;
-          //   _this.id = 1;
-          // })
+          
         }
-        //输入框不为空
+        
         else{
           axios.post("api/property/searchHuman",{inputContent}).then(function(respond){
           _this.lncrnaTable=respond.data;
@@ -287,19 +283,16 @@ export default {
           })
         }
       }
-      //选择option2 Mouse
+      //option2 Mouse
       else if(searchOpt == "option2"){
-        //输入框为空
+        
         if(inputContent == ""){
           _this.tempPath = "selectMouse";
           _this.currentPage = 1;
           _this.fetchData("selectMouse");
-          // axios.post("api/property/selectMouse").then(function(respond){
-          //   _this.lncrnaTable=respond.data;
-          //   _this.id = 1;
-          // })
+         
         }
-        //输入框不为空
+        
         else{
           axios.post("api/property/searchMouse",{inputContent}).then(function(respond){
           _this.lncrnaTable=respond.data;
@@ -307,19 +300,16 @@ export default {
           })
         }
       }
-      //选择 option3 reason is vital
+      // option3 reason is vital
       else if(searchOpt == "option3"){
-        //输入框为空
+        
         if(inputContent == ""){
           _this.tempPath = "select_reason_vital";
           _this.currentPage = 1;
           _this.fetchData("select_reason_vital");
-          // axios.post("api/property/select_reason_vital").then(function(respond){
-          //   _this.lncrnaTable=respond.data;
-          //   _this.id = 1;
-          // })
+          
         }
-        //输入框不为空
+      
         else{
           axios.post("api/property/searchVital",{inputContent}).then(function(respond){
           _this.lncrnaTable=respond.data;
@@ -329,22 +319,18 @@ export default {
       }
       // option4 is cell viability
       else if(searchOpt == "option4"){
-        //输入框为空
+        
         if(inputContent == ""){
           _this.tempPath = "cellGrowth";
           _this.currentPage = 1;
           _this.fetchData("cellGrowth");
-          // axios.post("api/property/select_cell").then(function(respond){
-          //   _this.lncrnaTable=respond.data;
-          //   _this.id = 1;
-          // })
+         
         }
-        //输入框不为空
+        
         else{
           axios.post("api/property/searchCell",{inputContent}).then(function(respond){
           _this.lncrnaTable=respond.data;
-          console.log(_this.lncrnaTable);
-          
+
           _this.id = 1;
           })
         }
@@ -352,7 +338,7 @@ export default {
 
       // option 7 reason is disease
       else if(searchOpt == "option7"){
-        //输入框为空
+        //
         if(inputContent == ""){
           _this.tempPath = "select_disease_related";
           _this.currentPage = 1;
@@ -386,7 +372,7 @@ export default {
         else{
           axios.post("api/property/searchTumor",{inputContent}).then(function(respond){
           _this.lncrnaTable=respond.data;
-          console.log(_this.lncrnaTable,"tumor");
+
           _this.id = 1;
           })
         }
@@ -439,7 +425,7 @@ export default {
 
     },
     handleChange(newPage,path) {
-      // console.log(newPage);
+
       this.currentPage = newPage;
       this.fetchData(this.tempPath);
     }
@@ -475,7 +461,7 @@ export default {
           "value":vital.data[i]["gene_name"]
           })
         }
-        // console.log(tumor.data);
+
           for (let i = 0;i< tumor.data.length;i++){
           _this.fuzzyTumor.push({
           "value":tumor.data[i]["gene_name"]
@@ -500,9 +486,9 @@ export default {
       );
   },
   watch: {
-    //监听选择框的选项，根据选项进行输入建议的列表输出
+
     searchOpt(val){
-      //console.log("searchOpt 函数调用成功！")
+
       var searchOpt = val;
       var _this = this;
 
@@ -515,7 +501,7 @@ export default {
       } else if (searchOpt == "option3" ) {
        
         _this.propertyresults =  _this.fuzzyVital;
-        console.log(_this.propertyresults,"vital");
+
       } 
       else if (searchOpt == "option4") {
         _this.propertyresults =  _this.fuzzyCell;

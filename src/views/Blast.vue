@@ -175,7 +175,6 @@ CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAA
   },
   methods: {
     kzClick(event,row){      
-      // console.log(event.target.className, event.target.nodeName)
 
         if(event.target.className === 'open' && event.target.nodeName === 'IMG'){
                 row.showData = `${row.Sequence}
@@ -198,16 +197,12 @@ CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAA
 
     },
     handleExpandChange(row, expanded) {
-      // console.log(expanded)
       if (expanded.length ) {
         row.loading = true; 
         axios.post("api/property/fuzzySeq", {
           alignId: row.sseqid
         }).then(res => {
-          // console.log(res.data)
-          //  { UID, transcript_id, position, Seqlength, Sequence }
           const detail = Array.isArray(res.data) ? res.data[0] : res.data
-          // console.log(detail)
           row.UID = detail.UID
           row.transcript_id = detail.transcript_id
           let chr = detail.chr
@@ -263,16 +258,12 @@ CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAA
       }).then(respond =>{
         
         _this.resData=respond.data.message.data
-        // console.log(_this.resData)
         _this.length=respond.data.message.data.length
-        // console.log(_this.length)
         if(_this.length == 1){
           window.alert("Blast query is Empty or FASTA sequence format error!")
           loadingInstance.close() 
         }
         else{
-         
-          // 最后一行是空的，所以length-1
           let stuID = []
           for(let i = 0;i < _this.length-1;i++){            
             if(_this.resData != ""){
@@ -281,8 +272,6 @@ CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAA
           }
           _this.RNAID = "'"+stuID.join("','")+"'"
         }
-        //console.log(_this.length)
-        // console.log( _this.RNAID,"RNAID")
         for(let j = 0; j < _this.length-1 ; j++){        
             let sseqid = _this.resData[j].split('\t')[1].split('|')[0]
             let pident = _this.resData[j].split('\t')[2]
