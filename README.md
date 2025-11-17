@@ -26,7 +26,7 @@ To simplify deployment and mirroring tasks, we highly recommend using Docker Com
 
 - Install **Docker** and **Docker Compose**.
 - Place the `dbesslnc2.sql` file in the project's root directory or a path accessible by the Dockerfile.
-- Download the dbesslnc-deployment package
+- Download the [dbesslnc-deployment package](https://github.com/auggieyd/dbesslnc2.0/releases/tag/v1.0.0)
 
 ### 2. Deployment Steps
 
