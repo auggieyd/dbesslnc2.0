@@ -159,8 +159,27 @@
 
 <script>
 import axios from "axios";
-import echarts from "echarts";
+
+// 引入 ECharts 核心模块和图表/组件
+import * as echarts from 'echarts';
+
+
+import {
+  ElRow,
+  ElForm,
+  ElFormItem,
+  ElTable,
+  ElTableColumn
+} from 'element-plus';
 export default{
+  name: 'VisualPage',
+  components: {
+    ElRow,
+    ElForm,
+    ElFormItem,
+    ElTable,
+    ElTableColumn
+  },
     data(){
       return{
         dataList:{},
@@ -387,68 +406,9 @@ export default{
 }
 </script>
 
-<style>
-.title {
-  text-align: center;
-  font-size: 1.5em;
-  line-height: 40px;
-  height: 80px;
-  background: #e6f0ef; /* Old browsers */
-  background: -moz-linear-gradient(
-    -45deg,
-    #e6f0ef 45%,
-    #b4ede7 100%
-  ); /* FF3.6-15 */
-  background: -webkit-linear-gradient(
-    -45deg,
-    #e6f0ef 45%,
-    #b4ede7 100%
-  ); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(
-    135deg,
-    #e6f0ef 45%,
-    #b4ede7 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6f0ef', endColorstr='#b4ede7',GradientType=1 );
+<style scoped>
 
-}
-.files {
-  width: 70%;
-  margin: 0 auto;
-} 
-.content {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  padding: 20px;
-  border: 1px solid rgb(115, 200, 200);
-  border-radius: 10px;
-  font-family:"Avenir", Helvetica, Arial, sans-serif;
-  
-}
-span {
-  display:inline-block;
-  /* width:100%;  */
-  word-wrap:break-word; 
-  word-break: break-all; 
-  white-space:normal ; 
-  font-family:"Avenir", Helvetica, Arial, sans-serif;
-  font-size:15px;
-} 
-.newlist {
-  position: relative;
-  margin: 0 auto;
-  width: 70%;
-  min-height: 30px;
-  line-height: 20px;
-  /* border: 1px solid ; */
-  word-break: break-all;
-  hyphens: auto;
-  text-align: left;
-  padding: 5px 10px;
-  background:#f2f4f6;
-  font-family:monospace;
-}
+
 #figure1{
   width: 100%; 
   height:500px;
@@ -465,33 +425,11 @@ span {
   margin:0 auto;
 
 }
-.img_style{
 
-  height: 45px; 
-  width: auto; 
-  vertical-align: middle; 
-  position: absolute;
-  left: 0;
-}
-.top{
-    border-radius: 10px;
-    background: rgb(115, 200, 200);
-    padding: 10px;
-    height: 40px;
-    line-height: 40px;
-    color: #e6f0ef;
-    text-align:left
-}
+
 .open_style{
   height:18px;
   width:18px;
-}
-.hand:hover{
-  color:#1ee3cf;
-  cursor:pointer
-}
-.el-form-item{
-  font-size:16px;
 }
 button{
   font-size:15px;
@@ -502,5 +440,9 @@ button{
   border:none;
   border-radius: 10px;
 }
-
+:deep(.el-form-item__label) {
+  /* font-size: 15px; */
+  font-weight: bold;
+  color: #99A9BF;
+}
 </style>

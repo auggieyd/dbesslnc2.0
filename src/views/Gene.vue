@@ -164,7 +164,17 @@
 
 <script>
 import axios from "axios";
+import { ElTag,ElTable, ElTableColumn, ElRow, ElForm, ElFormItem, ElButton} from 'element-plus'
 export default{
+  components: {
+    ElTag,
+    ElTable,
+    ElTableColumn,
+    ElRow,
+    ElForm,
+    ElFormItem,
+    ElButton
+  },
     data(){
         return{
             dataList:{},
@@ -291,13 +301,15 @@ export default{
 
 </script>
 
-<style >
+<style scoped>
 .hand:hover{
   color:#1ee3cf;
   cursor:pointer
 }
-.el-form-item__label{
+:deep(.el-form-item__label) {
+  /* font-size: 15px; */
   font-weight: bold;
+  color: #99A9BF;
 }
 .el-tag{
     --el-tag-font-size: 15px;
@@ -310,4 +322,5 @@ export default{
   color: #1ee3cf;
   cursor: pointer;
 }
+
 </style>

@@ -2,68 +2,58 @@
 // import Vue from 'vue'
 // import VueRouter from 'vue-router'
 import {createRouter,createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import Browse from '../views/Browse.vue'
-import Search from '../views/Search.vue'
-import Blast from '../views/Blast.vue'
-import Download from '../views/Download.vue'
-import Help from '../views/Help.vue'
-import Visual from '../views/Visual.vue'
-import Gene from '../views/Gene.vue'
-//1.通过Vue.use（插件），安装插件
-// Vue.use(VueRouter)
+
 
 const routerHistory = createWebHistory('/v2')
  
-
 //2.创建VueRouter对象
 const routes = [
     {
-        path:"/:pathMatch(.*)*",
-        redirect:"/home"
+        path: "/:pathMatch(.*)*",
+        redirect: "/home"
     },
     {
-        path:"/home",
-        component: Home,
-        name:'Home'
+        path: "/home",
+        name: 'Home',
+        // 使用动态导入来实现懒加载
+        component: () => import('../views/Home.vue') 
     },
     {
-        path:"/browse",
-        component: Browse,
-        name:'Browse'
+        path: "/browse",
+        name: 'Browse',
+        component: () => import('../views/Browse.vue')
     },
     {
-        path:"/search",
-        component: Search,
-        name:'Search'
+        path: "/search",
+        name: 'Search',
+        component: () => import('../views/Search.vue')
     },
     {
-        path:"/blast",
-        component: Blast,
-        name:'Blast'
+        path: "/blast",
+        name: 'Blast',
+        component: () => import('../views/Blast.vue')
     },
     {
-        path:"/download",
-        component: Download,
-        name:'Download'
+        path: "/download",
+        name: 'Download',
+        component: () => import('../views/Download.vue')
     },
     {
-        path:"/help",
-        component: Help,
-        name:'Help'
+        path: "/help",
+        name: 'Help',
+        component: () => import('../views/Help.vue')
     },
     {
-        path:"/visual",
-        component: Visual,
-        name:'Visual'  
+        path: "/visual",
+        name: 'Visual',
+        component: () => import('../views/Visual.vue')
     },
     {
-        path:"/gene",
-        component: Gene,
-        name:'Gene'  
+        path: "/gene",
+        name: 'Gene',
+        component: () => import('../views/Gene.vue')
     }
-
-]
+];
 const router =new createRouter({
     //配置路由和组件之间的应用关系
     history: routerHistory,

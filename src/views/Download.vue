@@ -54,7 +54,12 @@
 </template>
 
 <script>
+import axios from "axios";
+import { ElRow } from "element-plus";
 export default {
+  components: {
+    ElRow,
+  },
   data() {
     return {
 

@@ -8,7 +8,7 @@
           />
           Search from Database
           </el-row>
-          <!-- vue 3弃用了native  这么写不对@keyup.enter.native="Search" -->
+          
           <el-autocomplete 
             placeholder="Search By Gene Name/Gene UID/Alias/NONCODE GENE ID/LncBook Gene ID/Detailed Reason Description,eg.Meg3/2900016C05Rik/NONMMUG009962.3/lethality" 
             v-model="inputContent" 
@@ -36,7 +36,10 @@
           <el-row v-if="id==0" style="padding: 5px;" class="content">
             <div class="wrapper">
               <el-col :span="12"  class="explain">
-                <img src="../../public/assets/img/sta.png" alt="" style="height: auto; width:100%;">
+                <picture>
+                  <source :srcset="require('@/assets/img/sta.webp')" type="image/webp">
+                  <img :src="require('@/assets/img/sta.png')" alt="Search statistics and help" style="height: auto; width: 100%;">
+                </picture>
               </el-col>
               <el-col :span="12" class="explain">
                 <p>
@@ -46,7 +49,10 @@
                 a fuzzy search can be performed by "%".More detailed fuzzy query rules are given in 'Search help'
                 in the tutorial section of the 'Help' page.
                 </p>
-                <img alt="search example" style="height:auto; width: 100%;" src="../../public/assets/img/sea2.png" />
+                <picture>
+                  <source :srcset="require('@/assets/img/sea2.webp')" type="image/webp">
+                  <img :src="require('@/assets/img/sea2.png')" alt="Search statistics and help" style="height: auto; width: 100%;">
+                </picture>
               </el-col>
             </div>
 
@@ -150,9 +156,22 @@
 
 <script>
 import axios from "axios";
+import { ElRow, ElCol, ElAutocomplete, ElSelect, ElOptionGroup, ElOption, ElButton, ElTable, ElTableColumn, ElPagination } from 'element-plus'
 export default {
   emits: ['close'],
   // inject:['reload'],
+  components: {
+    ElRow,
+    ElCol,
+    ElAutocomplete,
+    ElSelect,
+    ElOptionGroup,
+    ElOption,
+    ElButton,
+    ElTable,
+    ElTableColumn,
+    ElPagination
+  },
   data(){
     return {
       currentPage: 1,
@@ -522,30 +541,30 @@ export default {
 }
 </script>
 
-<style >
+<style>
 /* 没有用scoped 如果使用斑马线设置无效 */
 .header {
   width: 100%;
   padding-bottom: 60px;
-  background: #e6f0ef; /* Old browsers */
+  background: #e6f0ef; 
   background: -moz-linear-gradient(
     -45deg,
     #e6f0ef 45%,
     #b4ede7 100%
-  ); /* FF3.6-15 */
+  );
   background: -webkit-linear-gradient(
     -45deg,
     #e6f0ef 45%,
     #b4ede7 100%
-  ); /* Chrome10-25,Safari5.1-6 */
+  ); 
   background: linear-gradient(
     135deg,
     #e6f0ef 45%,
     #b4ede7 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  ); 
 }
 .title{
-  /* 将图片和文字一起居中 */
+ 
   justify-content: center;
   align-items: center;
   line-height: 80px;
@@ -584,11 +603,7 @@ export default {
   margin: 0 auto;
 }
 
-.el-table {
-  font-size: 15px;
-  color: #232324;
-  white-space: pre-line;
-}
+
 
 .el-table .warning-row {
   background: #ccf1f1;
@@ -612,34 +627,7 @@ export default {
   font-family: Arial, "Microsoft YaHei", "微软雅黑", serif;
 }
 
-.demo-table-expand {
-    font-size: 0;
-}
-.demo-table-expand label {
-  width: auto;
-  color: #99a9bf;
-}
-.demo-table-expand {
-  margin-right: 0;
-  margin-bottom: 0;
-  width: 100%;
-}
-.el-form-item {
-  float: left; 
-  clear: both;
-  margin-right: 0; 
-  margin-bottom: 0;
-  width: 100%;
-} 
 
-span {
-  display:inline-block;
-  /* width:100%;  */
-  word-wrap:break-word; 
-  word-break: break-all; 
-  white-space:normal ; 
-  font-family:monospace;
-} 
 .el-input__prefix, .el-input__suffix{
   text-align: right;
 }
@@ -657,18 +645,7 @@ span {
   margin-top: 10px;
   text-align: center;
 }
-.el-pagination.is-background .el-pager li:hover{
-  color: #389a99 !important;
-}
-.el-pagination.is-background .el-pager li:not(.disabled):hover{
-  color: #389a99 !important;
-}
-.el-pagination.is-background .el-pager li:not(.disabled).active:hover{
-  background-color: #389a99 !important;
-}
-.el-pagination.is-background .el-pager li:not(.disabled).active{
-  background-color: #389a99 !important;  
-}
+
 .my-icon-check {
   display: inline-block;
   width: 20px;

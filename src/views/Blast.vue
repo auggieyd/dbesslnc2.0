@@ -117,9 +117,35 @@
 
 <script>
 import axios from "axios";
-import { ElLoading } from 'element-plus'
+import {
+  ElRow,
+  ElInput,
+  ElSelect,
+  ElOption,
+  ElButton,
+  ElTable,
+  ElTableColumn,
+  ElForm,
+  ElFormItem,
+  ElPagination,
+  ElLoading // 导入 Loading 服务，用于 v-loading 和服务调用
+} from 'element-plus';
+
 
 export default {
+  components: {
+    ElRow,
+    ElInput,
+    ElSelect,
+    ElOption,
+    ElButton,
+    ElTable,
+    ElTableColumn,
+    ElForm,
+    ElFormItem,
+    ElPagination,
+    ElLoading
+  },
   data() {
     return {
       example: `>TCONS_00106247
@@ -315,7 +341,7 @@ CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAA
       sessionStorage.setItem('dataBlast', JSON.stringify(data));
       this.$router.push({
         name:'Gene',
-        params:data,
+        // params:data,
         query:{page:"Blast"}
       })
     },
@@ -375,30 +401,6 @@ CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAA
   //color: #232324;
 }
 
-.title {
-  text-align: center;
-  font-size: 1.5em;
-  line-height: 80px;
-  height: 80px;
-  background: #e6f0ef; /* Old browsers */
-  background: -moz-linear-gradient(
-    -45deg,
-    #e6f0ef 45%,
-    #b4ede7 100%
-  ); /* FF3.6-15 */
-  background: -webkit-linear-gradient(
-    -45deg,
-    #e6f0ef 45%,
-    #b4ede7 100%
-  ); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(
-    135deg,
-    #e6f0ef 45%,
-    #b4ede7 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6f0ef', endColorstr='#b4ede7',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-}
-
 .el-form-item {
   border-top: 1px solid #ebeef5; // 表格线条颜色
   margin-bottom: 0;
@@ -406,7 +408,7 @@ CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAA
 
 
 
-// /deep/ 相当于 >>>
+
 :deep(.el-input__inner:hover) {
   // background-color: rgb(115, 200, 200) !important;
   border-color: rgb(115, 200, 200) !important;
@@ -546,7 +548,6 @@ CTCTAGAGGCTTGCGTCCCGGGAGCCCGGCCTCGTGCGCCGCGCTTTGAGCAGCAGACTGCTCGACAAACACTGCGCCAA
 }
 span {
   display:inline-block;
-  // 在span标签中，可设置输出的内容截断 
   word-wrap:break-word; 
   word-break: break-all; 
   white-space:normal ; 
@@ -597,7 +598,7 @@ span {
   font-size:15px;
 
 }
-/deep/ .el-button span {
+:deep(.el-button span) {
   font-weight:700;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   font-size:15px;

@@ -112,8 +112,8 @@
   </div>
 </template>
 
-<script>
-
+<script setup>
+import { ElRow, ElCol,ElBacktop } from 'element-plus';
 </script>
 
 

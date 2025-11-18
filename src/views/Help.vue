@@ -157,7 +157,17 @@
 
 <script>
 import echarts from "echarts"
+import {
+  ElRow,
+  ElCollapse,
+  ElCollapseItem
+} from 'element-plus';
 export default {
+  components: {
+    ElRow,
+    ElCollapse,
+    ElCollapseItem
+  },
   data() {
     return {
       activeName: ["1"]

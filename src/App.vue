@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-    <!-- <router-view v-if="isReload"/> -->
+
     <app-header></app-header>
     <router-view :key="$route.fullPath" v-if="isRouterAlive"></router-view>
     <app-footer></app-footer>
-    <!-- 滑动页面，可以有返回最顶端按钮 -->
-    <!-- 返回顶部按钮 -->
+
     <el-backtop>
       <div
         :style="{
@@ -27,12 +26,13 @@
 <script>
 import header from "./components/Header.vue";
 import footer from "./components/Footer.vue";
-
+import { ElBacktop } from 'element-plus';
 export default {
   name: "App",
   components: {
     appHeader: header,
-    appFooter: footer
+    appFooter: footer,
+    ElBacktop
   },
   provide () {
     return {
@@ -55,22 +55,7 @@ export default {
       })
     }
   }
-  // watch:{
-  //   $route(to,from){
-  //     if(to.path === '/visual'){
-  //       console.log("visual进去")
-  //       // setTimeout(() => {
-  //       //   window.location.reload(true);
-  //       // }, 5000);
-        
-  //     }
 
-
-      
-  //     console.log(from.path, 'fromApp');
-  //     console.log(to.path, 'toApp');
-  //   }
-  // }
 };
 </script>
 

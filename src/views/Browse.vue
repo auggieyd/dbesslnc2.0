@@ -719,9 +719,23 @@
 
 <script>
 import axios from "axios";
-import { ElLoading } from 'element-plus'
+import { ElLoading, ElContainer, ElAside, ElMain, ElMenu, ElSubmenu, ElMenuItem,
+  ElTable, ElTableColumn, ElPagination, ElRow, ElBacktop } from 'element-plus'
 
 export default{
+  components: {
+    ElRow,
+    ElContainer,
+    ElAside,
+    ElMenu,
+    ElSubmenu,
+    ElMenuItem,
+    ElMain,
+    ElTable,
+    ElTableColumn,
+    ElPagination,
+    ElBacktop
+  },
   data () {
     return {
       url:"https://www.ncbi.nlm.nih.gov/pubmed/?term=",
@@ -964,7 +978,6 @@ export default{
       sessionStorage.setItem('dataBrowse', JSON.stringify(data));
       this.$router.push({
         name:'Gene',
-        params:data,
         query:{page:"Browse"}
       })
     },
@@ -997,31 +1010,6 @@ export default{
 </script>
 
 <style scoped>
-.title {
-  /* text-align: center; */
-  font-size: 1.5em;
-  line-height: 80px;
-  justify-content: center;
-  align-items: center;
-  height: 80px;
-  background: #e6f0ef; /* Old browsers */
-  background: -moz-linear-gradient(
-    -45deg,
-    #e6f0ef 45%,
-    #b4ede7 100%
-  ); /* FF3.6-15 */
-  background: -webkit-linear-gradient(
-    -45deg,
-    #e6f0ef 45%,
-    #b4ede7 100%
-  ); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(
-    135deg,
-    #e6f0ef 45%,
-    #b4ede7 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6f0ef', endColorstr='#b4ede7',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-}
 .el-table {
   font-size: 15px;
   color: #232324;
