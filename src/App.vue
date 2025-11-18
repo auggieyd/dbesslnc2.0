@@ -26,13 +26,13 @@
 <script>
 import header from "./components/Header.vue";
 import footer from "./components/Footer.vue";
-import { ElBacktop } from 'element-plus';
+
 export default {
   name: "App",
   components: {
     appHeader: header,
     appFooter: footer,
-    ElBacktop
+
   },
   provide () {
     return {
