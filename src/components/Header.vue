@@ -76,11 +76,7 @@ export default {
           url: "/help",
           name: "Help"
         }
-        // {
-        //   id: 7,
-        //   url: "/visual",
-        //   name:"Visual"
-        // }
+
       ],
       checkName: this.$route.name
     };
@@ -88,9 +84,9 @@ export default {
   methods: {
     setname(val) {
       this.checkName = val;
-      // this.$router.go(0);
+
     },
-    // 响应式设计导航栏
+
     dropdownMenu() {
       let x = document.getElementById("dropdownClick");
       if (x.className === "topnav") {
@@ -106,13 +102,12 @@ export default {
     }
   },
   watch: {
-    /* 监听路由，并显示导航栏的选中效果 */
+  
     $route: {
       handler() {
         let linkName = this.$route.name;
-        //console.log(linkName);
         this.checkName = linkName;
-       // console.log(this.checkName);
+
       }
     }
   }
@@ -120,28 +115,18 @@ export default {
 </script>
 
 <style>
-/* body {
-  margin: 0;
-  line-height: 1;
-} */
-/* .webtitle {
-  background: url("../assets/title.png") no-repeat bottom right;
-} */
+
 nav {
   display: block;
   width: 100%;
   margin: 0;
   height: 70px;
   background-color: rgb(250, 250, 250);
-  /* background: url(../assets/img/title.png) no-repeat bottom right;  */
-  /* background-position: center center; */
+
   background-size: 180px 70px;
 }
 
-/* .decorate {
-  height: 10px;
-  background-color: rgb(115, 200, 200);
-} */
+
 
 ul.topnav {
   margin: 0;
@@ -160,13 +145,7 @@ ul.topnav li.title {
   line-height: 70px;
   height: 70px;
 }
-/* 为什么list的高度是40+height的设定值呢？ */
-/* ul.topnav li.list {
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  font-size: 1.1em;
-} */
+
 
 ul.topnav li a {
   display: block;
@@ -214,17 +193,13 @@ ul.topnav .is-active a {
     display: block;
   }
 
-  /* 下拉图标大小不变 */
   ul.topnav.responsive li:not(:nth-child(9)) a {
     text-align: left;
     height: 0 !important;
     line-height: 0 !important;
     font-size: 1em !important;
   }
-  /* ul.topnav.responsive li:nth-child(2) {
-    border-top: 1px solid;
-    border-top-color: gray;
-  } */
+
   ul.topnav.responsive li.dropdownIcon {
     position: absolute;
     top: 0;

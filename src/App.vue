@@ -26,13 +26,13 @@
 <script>
 import header from "./components/Header.vue";
 import footer from "./components/Footer.vue";
-
+import { ElBacktop } from "element-plus";
 export default {
   name: "App",
   components: {
     appHeader: header,
     appFooter: footer,
-
+    ElBacktop
   },
   provide () {
     return {
@@ -47,10 +47,9 @@ export default {
   methods: {
     reload () {
       this.isRouterAlive = false
-      // this.isReload = false
       this.$nextTick(function () {
         this.isRouterAlive = true
-        // this.isReload = true
+
         
       })
     }

@@ -230,8 +230,8 @@ export default {
       type: 'category',
       data: ['general', 'tumor suppressor ', 'oncogene','cell viability','disease-related'],
       axisLabel: {
-            // rotate: 30, // 旋转30度
-            interval: 0, // 显示所有标签
+            
+            interval: 0, 
    
         }
     },

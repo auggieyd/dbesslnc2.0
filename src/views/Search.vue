@@ -32,7 +32,6 @@
           </el-autocomplete>
         </div>
         <div class="content" >
-          <!-- 未进行查询 没有数据显示 -->
           <el-row v-if="id==0" style="padding: 5px;" class="content">
             <div class="wrapper">
               <el-col :span="12"  class="explain">
@@ -58,7 +57,7 @@
 
 
           </el-row>
-              <!-- 展示表格  -->
+          
           <div class="tabletitle" v-if="id==1">
             <el-row>
               <el-col :span="4" :offset="10">

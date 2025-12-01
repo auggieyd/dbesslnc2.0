@@ -1,12 +1,9 @@
-//配置路由相关的信息
-// import Vue from 'vue'
-// import VueRouter from 'vue-router'
+
 import {createRouter,createWebHistory } from 'vue-router'
 
 
 const routerHistory = createWebHistory('/v2')
- 
-//2.创建VueRouter对象
+
 const routes = [
     {
         path: "/:pathMatch(.*)*",
@@ -15,7 +12,6 @@ const routes = [
     {
         path: "/home",
         name: 'Home',
-        // 使用动态导入来实现懒加载
         component: () => import('../views/Home.vue') 
     },
     {
@@ -55,10 +51,10 @@ const routes = [
     }
 ];
 const router =new createRouter({
-    //配置路由和组件之间的应用关系
+
     history: routerHistory,
     routes
 
 })
-//3.将router对象传入到Vue实例中
+
 export default router

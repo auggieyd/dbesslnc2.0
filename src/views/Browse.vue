@@ -8,7 +8,7 @@
       Browse all
     </el-row>
     <el-container ref="dynamicHeight" style="border: 1px solid #eee">
-      <!-- 侧边导航栏 -->
+      
       <el-aside 
         width="18vw"
         style="background-color: rgb(238, 241, 246); text-align:left;">
@@ -81,7 +81,7 @@
         </el-menu>
 
       </el-aside>
-      <!-- 显示表格 -->
+
       <el-container >
         <el-main>
 
@@ -133,7 +133,7 @@
               </el-table-column>
               <el-table-column label="vivo" prop="vivo" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.vivo === 1" class="my-icon-check"></i>
 
                   <i v-show="scope.row.vivo !== 1" class="my-icon-close"></i>                
@@ -141,14 +141,14 @@
               </el-table-column>
               <el-table-column label="vitro" prop="role" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.vitro === 1" class="my-icon-check"></i>
                   <i v-show="scope.row.vitro !== 1" class="my-icon-close"></i>    
                 </template>
               </el-table-column>
               <el-table-column label="Cancer-related" prop="cancer_related" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.cancer_related > 0" class="my-icon-check"></i>
                   <i v-show="scope.row.cancer_related === 0" class="my-icon-close"></i> 
                 </template>
@@ -217,21 +217,21 @@
               </el-table-column>
               <el-table-column label="vivo" prop="vivo" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.vivo === 1" class="my-icon-check"></i>
                   <i v-show="scope.row.vivo !== 1" class="my-icon-close"></i>                
                 </template>
               </el-table-column>
               <el-table-column label="vitro" prop="role" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.vitro === 1" class="my-icon-check"></i>
                   <i v-show="scope.row.vitro !== 1" class="my-icon-close"></i>    
                 </template>
               </el-table-column>
               <el-table-column label="Cancer-related" prop="cancer_related" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.cancer_related > 0" class="my-icon-check"></i>
                   <i v-show="scope.row.cancer_related === 0" class="my-icon-close"></i> 
                 </template>
@@ -296,20 +296,6 @@
               prop="Organism"
               width="120">
             </el-table-column>
-            <!-- <el-table-column label="Validity" prop="evidence_type" width = "200">
-              <template v-slot="scope">
-                <el-tag size = "small" v-if="scope.row.evidence_type === 0" type="info" effect="plain">
-                  CRISPR
-                </el-tag>
-                <el-tag v-if="scope.row.evidence_type === 1" type="info" effect="light">
-                  Literature
-                </el-tag>
-                <div v-if="scope.row.evidence_type === 2">
-                  <el-tag type="info" effect="plain">CRISPR</el-tag>
-                  <el-tag type="info" effect="light">Literature</el-tag>
-                </div>
-              </template>
-            </el-table-column>  -->
 
             <el-table-column
               label="Essential role"
@@ -319,21 +305,21 @@
             </el-table-column>
             <el-table-column label="vivo" prop="vivo" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.vivo === 1" class="my-icon-check"></i>
                   <i v-show="scope.row.vivo !== 1" class="my-icon-close"></i>                
                 </template>
               </el-table-column>
               <el-table-column label="vitro" prop="role" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.vitro === 1" class="my-icon-check"></i>
                   <i v-show="scope.row.vitro !== 1" class="my-icon-close"></i>    
                 </template>
               </el-table-column>
               <el-table-column label="Cancer-related" prop="cancer_related" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.cancer_related > 0" class="my-icon-check"></i>
                   <i v-show="scope.row.cancer_related === 0" class="my-icon-close"></i> 
                 </template>
@@ -392,20 +378,7 @@
               prop="Organism"
               width="120">
             </el-table-column>
-            <!-- <el-table-column label="Validity" prop="evidence_type" width = "200">
-              <template v-slot="scope">
-                <el-tag v-if="scope.row.evidence_type === 0" type="info" effect="plain">
-                  CRISPR
-                </el-tag>
-                <el-tag v-if="scope.row.evidence_type === 1" type="info" effect="light">
-                  Literature
-                </el-tag>
-                <div v-if="scope.row.evidence_type === 2">
-                  <el-tag type="info" effect="plain">CRISPR</el-tag>
-                  <el-tag type="info" effect="light">Literature</el-tag>
-                </div>
-              </template>
-            </el-table-column>  -->
+            
             <el-table-column
               label="Essential role"
               prop="Role"
@@ -414,21 +387,21 @@
             </el-table-column>
             <el-table-column label="vivo" prop="vivo" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.vivo === 1" class="my-icon-check"></i>
                   <i v-show="scope.row.vivo !== 1" class="my-icon-close"></i>                
                 </template>
               </el-table-column>
               <el-table-column label="vitro" prop="role" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.vitro === 1" class="my-icon-check"></i>
                   <i v-show="scope.row.vitro !== 1" class="my-icon-close"></i>    
                 </template>
               </el-table-column>
               <el-table-column label="Cancer-related" prop="cancer_related" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.cancer_related > 0" class="my-icon-check"></i>
                   <i v-show="scope.row.cancer_related === 0" class="my-icon-close"></i> 
                 </template>
@@ -487,26 +460,7 @@
               width="120">
               Human
             </el-table-column>
-            <!-- <el-table-column label="Validity" prop="evidence_type">
-              <template v-slot="scope">
-                <div  v-if="scope.row.evidence_type === 0">
-                  <el-tag size="small" type="info" effect="plain">CRISPR</el-tag>
-                  <el-tag size="small" type="info" effect="dark">Predicted</el-tag>
-                </div>
-                <div  v-if="scope.row.evidence_type === 1">
-                  <el-tag size="small" type="info" effect="light">Literature</el-tag>
-                  <el-tag size="small" type="info" effect="dark">Predicted</el-tag>
-                </div>
-                <div  v-if="scope.row.evidence_type === 2">
-                  <el-tag size="small" type="info" effect="plain">CRISPR</el-tag>
-                  <el-tag size="small" type="info" effect="light">Literature</el-tag>
-                  <el-tag size="small" type="info" effect="dark">Predicted</el-tag>
-                </div>
-                <div  v-if="scope.row.evidence_type === 3">
-                  <el-tag size="small" type="info" effect="dark">Predicted</el-tag>
-                </div>
-              </template>
-            </el-table-column>  -->
+            
             <el-table-column
               label="Essential role"
               width="180">
@@ -514,21 +468,21 @@
             </el-table-column>
             <el-table-column label="vivo" prop="vivo" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.vivo === 1" class="my-icon-check"></i>
                   <i v-show="scope.row.vivo !== 1" class="my-icon-close"></i>                
                 </template>
               </el-table-column>
               <el-table-column label="vitro" prop="role" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.vitro === 1" class="my-icon-check"></i>
                   <i v-show="scope.row.vitro !== 1" class="my-icon-close"></i>    
                 </template>
               </el-table-column>
               <el-table-column label="Cancer-related" prop="cancer_related" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.cancer_related > 0" class="my-icon-check"></i>
                   <i v-show="scope.row.cancer_related === 0" class="my-icon-close"></i> 
                 </template>
@@ -595,21 +549,21 @@
             </el-table-column>
             <el-table-column label="vivo" prop="vivo" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.vivo === 1" class="my-icon-check"></i>
                   <i v-show="scope.row.vivo !== 1" class="my-icon-close"></i>                
                 </template>
               </el-table-column>
               <el-table-column label="vitro" prop="role" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.vitro === 1" class="my-icon-check"></i>
                   <i v-show="scope.row.vitro !== 1" class="my-icon-close"></i>    
                 </template>
               </el-table-column>
               <el-table-column label="Cancer-related" prop="cancer_related" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.cancer_related > 0" class="my-icon-check"></i>
                   <i v-show="scope.row.cancer_related === 0" class="my-icon-close"></i> 
                 </template>
@@ -677,21 +631,21 @@
             </el-table-column>
             <el-table-column label="vivo" prop="vivo" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.vivo === 1? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.vivo === 1" class="my-icon-check"></i>
                   <i v-show="scope.row.vivo !== 1" class="my-icon-close"></i>                
                 </template>
               </el-table-column>
               <el-table-column label="vitro" prop="role" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.role ? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.vitro === 1" class="my-icon-check"></i>
                   <i v-show="scope.row.vitro !== 1" class="my-icon-close"></i>    
                 </template>
               </el-table-column>
               <el-table-column label="Cancer-related" prop="cancer_related" >
                 <template #default="scope">
-                  <!-- <span >{{scope.row.cancer_related > 0 ? "√" : "×"}}</span> -->
+                   
                   <i v-show="scope.row.cancer_related > 0" class="my-icon-check"></i>
                   <i v-show="scope.row.cancer_related === 0" class="my-icon-close"></i> 
                 </template>

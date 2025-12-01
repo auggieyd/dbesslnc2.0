@@ -20,9 +20,7 @@
               <el-form-item label="Symbol:">
                 <span>{{ dataList.gene_name }}</span>
               </el-form-item>
-              <!-- <el-form-item label="NONCODE ID:">
-                <span>{{ dataList.Noncode_id }}</span> 
-              </el-form-item> -->
+
               <el-form-item label="Organism:" >
                 <span>{{ dataList.Organism }}</span>
               </el-form-item>
@@ -58,10 +56,6 @@
               <el-form-item label="Reason summary:" style="width:70%">
                 <span>{{ dataList.reason_summary }}</span>
               </el-form-item>
-
-              <!-- <el-form-item label="Sequence:">
-                <span>{{ dataList.Sequence }}</span>
-              </el-form-item> -->
               <el-form-item v-if="dataList.vitro === 1" label="CRISPR Experimental Records:"></el-form-item>
               <el-table v-if="dataList.vitro === 1" :data="expData" border style="width: 80%;">
                 <el-table-column label = "Target" prop="target_id" width="150"></el-table-column>
@@ -82,13 +76,6 @@
         <div class="files">
           <h3 class="top">Transcripts In Gene</h3>
           <div class="content" style="height:600px">
-            <!-- <div class="tabletitle" v-if="id==1">
-                <el-row>
-                    <el-col :span="4" :offset="10">
-                        Transcript ID 
-                    </el-col>
-                </el-row>
-            </div> -->
             <el-table
             :header-cell-style="{background:'#eef1f6',color:'#606266'}"
             height="600"

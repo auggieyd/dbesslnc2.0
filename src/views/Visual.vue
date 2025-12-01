@@ -74,7 +74,6 @@
                 <span>{{ dataList.exon_pos }}</span>
               </el-form-item>
               <el-form-item label="Sequence:" >
-                <!-- <el-button type="primary" size="small" @click="kzClick($event)">load Sequence</el-button> -->
                 <span  class="newlist" v-html="this.showData" @click="kzClick($event)" ></span> 
               </el-form-item>
             </el-form>
@@ -159,8 +158,6 @@
 
 <script>
 import axios from "axios";
-
-// 引入 ECharts 核心模块和图表/组件
 import * as echarts from 'echarts';
 
 
@@ -249,7 +246,6 @@ export default{
           this.$nextTick(()=>{
             this.drawLine1();
           })
-          // this.drawLine1();
         }
         else{
 
@@ -395,12 +391,6 @@ export default{
       toUrl_LncBook(data){
         window.location.href = "https://ngdc.cncb.ac.cn/lncbook/gene?geneid="+data
       },
-      // toImg(data){
-      //   this.ShowImg=!data;
-      // }
-
- 
-      
     }
  
 }
