@@ -83,7 +83,7 @@
         </i>
         <p>1. Zhang Y Y, Zhang W Y, Xin X H, Du P F. dbEssLnc: A manually curated database of human and mouse essential lncRNA genes[J]. Computational and Structural Biotechnology Journal, 2022, 20: 2657-2663.
         </p>
-        <p>2. Liu Y D, Gong X J, Du P F. dbEssLnc2.0: exploring disease-associated essential long noncoding RNAs in human cell lines[J]. Frontiers of Computer Science, (submitted).</p>
+        <p>2. Liu Y D, Gong X J, Shi W T, Du P F. dbEssLnc2.0: exploring disease-associated essential long noncoding RNAs in human cell lines[J]. Frontiers of Computer Science, (submitted).</p>
       </el-col>
 
       <el-col 
