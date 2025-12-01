@@ -20,7 +20,7 @@
             </template>
 
             <el-menu-item index="1-1" >
-              <!-- <a href="#vital">essential lncRNA</a> -->
+              
               <a href="javascript:void(0)" @click="goAnchor('#vital')">General</a>
             </el-menu-item>
           </el-submenu>
@@ -31,7 +31,7 @@
               <i class="el-icon-s-grid"></i><b>In vitro</b>
             </template>
             <el-menu-item index="2-1" >
-              <!-- <a href="#vital">essential lncRNA</a> -->
+             
               <a href="javascript:void(0)" @click="goAnchor('#crispr-type')">Cell viability</a>
             </el-menu-item>
           </el-submenu>   
@@ -42,12 +42,12 @@
             </template>
 
             <el-menu-item index="3-1" >
-              <!-- <a href="#tumor">tumor suppressor genes</a> -->
+             
               <a href="javascript:void(0)" @click="goAnchor('#tumor')">Tumor suppressor</a>
             </el-menu-item>
 
             <el-menu-item index="3-2">
-              <!-- <a href="#cancer">essential lncRNA in cancer cell</a> -->
+            
               <a href="javascript:void(0)" @click="goAnchor('#cancer')">Oncogene</a>
             </el-menu-item>
           </el-submenu>   
@@ -57,7 +57,7 @@
               <i class="el-icon-s-grid"></i><b>Disease related</b>
             </template>
             <el-menu-item index="5-1" >
-              <!-- <a href="#vital">essential lncRNA</a> -->
+       
               <a href="javascript:void(0)" @click="goAnchor('#disease-related')">Disease associated</a>
             </el-menu-item>
           </el-submenu>
@@ -68,12 +68,12 @@
             </template>
 
             <el-menu-item index="4-1" >
-              <!-- <a href="#vital">essential lncRNA</a> -->
+            
               <a href="javascript:void(0)" @click="goAnchor('#ren')">Human</a>
             </el-menu-item>
 
             <el-menu-item index="4-2" >
-              <!-- <a href="#tumor">tumor suppressor genes</a> -->
+          
               <a href="javascript:void(0)" @click="goAnchor('#xiaoshu')">Mouse</a>
             </el-menu-item>
           </el-submenu>
@@ -87,7 +87,7 @@
 
         <!-- show vital -->
           <div>
-            <!-- <a name="vital"></a> -->
+           
             <h3 id="vital">General</h3>
             <el-table
             :data = "vital"
@@ -261,7 +261,7 @@
           </div> 
         <!-- show tumor -->
           <div>
-            <!-- <a name="tumor"></a> -->
+          
             <h3 id="tumor">Tumor suppressor</h3>
             <el-table
             :data = "tumor"

@@ -158,7 +158,7 @@ import axios from "axios";
 import { ElRow, ElCol, ElAutocomplete, ElSelect, ElOptionGroup, ElOption, ElButton, ElTable, ElTableColumn, ElPagination } from 'element-plus'
 export default {
   emits: ['close'],
-  // inject:['reload'],
+  
   components: {
     ElRow,
     ElCol,
@@ -177,9 +177,9 @@ export default {
       pageSize: 20,
       Total: 0,
       isShow:true,
-      lncrnaTable:"",//推到前端的数据
-      inputContent:"",//输入的数据
-      searchOpt:"option3",// 选择框中的数据
+      lncrnaTable:"",
+      inputContent:"",
+      searchOpt:"option3",
       options: [
         {
           label:"Query by Organism",
@@ -200,12 +200,12 @@ export default {
           ]
         }
       ],
-      id:0 ,//查询标记
+      id:0 ,
       url:"https://www.ncbi.nlm.nih.gov/pubmed/?term=",
       urlNCBI:"https://www.ncbi.nlm.nih.gov/gene/",
 
-      //用于模糊搜索的输入建议
-      properties:[],//空的
+
+      properties:[],
       propertyresults:[
         {value: "AIRN"}, {value: "Bvht"}, {value: "Chaserr"},
         {value: "Dlx6os1"}, {value: "Dnm3os"}, {value: "Dreh"}, {value: "Fendrr"}, {value: "Gas5"},
@@ -216,7 +216,7 @@ export default {
         {value: "PICSAR"}, {value: "SENCR"}, {value: "Trp53cor1"}, {value: "Tsix"}, {value: "Tslrn1"},
         {value: "Ttc39aos1"}, {value: "Tunar"}, {value: "Xist"},{value: "4933409F18Rik"}, {value: "9030622O22Rik"}, ],
 
-      // property:[],//查询的结果
+
       fuzzyHuman:[],
       fuzzyMouse:[],
       fuzzyVital:[],
@@ -229,8 +229,7 @@ export default {
     }
   },
   methods: {
-    // 表格显示具有斑马线
-    // eslint-disable-next-line no-unused-vars
+
     kzClick(){
         if(this.isShow){
           this.showData=this.dataList.fasta;
@@ -356,17 +355,14 @@ export default {
 
       // option 7 reason is disease
       else if(searchOpt == "option7"){
-        //
+        
         if(inputContent == ""){
           _this.tempPath = "select_disease_related";
           _this.currentPage = 1;
           _this.fetchData("diseaseRelated");
-          // axios.post("api/property/select_disease_related").then(function(respond){
-          //   _this.lncrnaTable=respond.data;
-          //   _this.id = 1;
-          // })
+
         }
-        //输入框不为空
+
         else{
           axios.post("api/property/searchDisease",{inputContent}).then(function(respond){
           _this.lncrnaTable=respond.data;
@@ -374,19 +370,16 @@ export default {
           })
         }
       }
-      //选择 option 6 reason is tumor
+
       else if(searchOpt == "option6"){
-        //输入框为空
+
         if(inputContent == ""){
           _this.tempPath = "select_reason_tumor";
           _this.currentPage = 1;
           _this.fetchData("select_reason_tumor");
-          // axios.post("api/property/select_reason_tumor").then(function(respond){
-          //   _this.lncrnaTable=respond.data;
-          //   _this.id = 1;
-          // })
+
         }
-        //输入框不为空
+
         else{
           axios.post("api/property/searchTumor",{inputContent}).then(function(respond){
           _this.lncrnaTable=respond.data;
@@ -398,18 +391,15 @@ export default {
       
       //option 5 reason is cancer
       else if(searchOpt == "option5"){
-        //输入框为空
+
         if(inputContent == ""){
           _this.tempPath = "select_reason_cancer";
           _this.currentPage = 1;
           _this.fetchData("select_reason_cancer");
           
-          // axios.post("api/property/select_reason_cancer").then(function(respond){
-          //   _this.lncrnaTable=respond.data;
-          //   _this.id = 1;
-          // })
+         
         }
-        //输入框不为空
+
         else{
           axios.post("api/property/searchCancer",{inputContent}).then(function(respond){
           _this.lncrnaTable=respond.data;
