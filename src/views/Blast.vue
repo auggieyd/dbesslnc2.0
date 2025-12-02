@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row class="title" style="color: #606060;">
-    <img style="margin-right: 20px; height: 55px; width: 55px;vertical-align: middle;" 
+    <img style="margin-right: 20px; height: 45px; width: auto; vertical-align: middle;" 
          src="../../public/assets/img/blast.png" />
       Blast
     </el-row>
