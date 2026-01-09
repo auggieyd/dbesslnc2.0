@@ -79,13 +79,13 @@
         </p>
         
         <i class="el-icon-info duiqi-title citiation-title">
-          <em>&nbsp;Citiation</em>
+          <em>&nbsp;Citation</em>
         </i>
-        <p>1. Zhang Y Y, Zhang W Y, Xin X H, Du P F. dbEssLnc: A manually curated database of human and mouse essential lncRNA genes[J]. Computational and Structural Biotechnology Journal, 2022, 20: 2657-2663.
-        </p>
-        <p>2. Liu Y D, Gong X J, Shi W T, Du P F. dbEssLnc2.0: exploring disease-associated essential long noncoding RNAs in human cell lines[J]. Frontiers of Computer Science, (submitted).</p>
+        <div class="cited">
+        <p>1. Zhang Y Y, Zhang W Y, Xin X H, Du P F. dbEssLnc: A manually curated database of human and mouse essential lncRNA genes[J]. Computational and Structural Biotechnology Journal, 2022, 20: 2657-2663,<a  href="https://doi.org/10.1016/j.csbj.2022.05.043" target="_blank" > DOI: 10.1016/j.csbj.2022.05.043.</a></p>
+        <p>2. Ying-Dong LIU, Xiu-Jun GONG, Wan-Ting SHI, Pu-Feng DU. dbEssLnc2.0: exploring disease-associated essential long non-coding RNAs in human cell lines. Front. Comput. Sci., 2026,<a  href="https://doi.org/10.1007/s11704-026-51345-z" target="_blank"  > DOI: 10.1007/s11704-026-51345-z</a></p>
+        </div>
       </el-col>
-
       <el-col 
         :xs="24" 
         :sm="24" 
@@ -176,6 +176,14 @@ import { ElRow, ElCol } from 'element-plus';
     margin: 20px 0 0 0; 
     text-align: left; 
 }
+.cited a:link,a:visited {
+  color: #800080; 
+}
+.cited a:hover {
+  color: #0000EE; 
+  text-decoration: underline; 
+}
+
 
 
 @media (max-width: 992px) {
