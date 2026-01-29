@@ -63,7 +63,7 @@ Different studies use various methods to measure the impact of lncRNAs on cell v
 
 ![image-20241218151707479](./assets/image-20241218151707479.png)
 
-Due to differences in eras and annotation discrepancies, we need to further update and supplement the annotations to construct a high-quality, usable dataset. 
+Finally, We curated 1,190 genes sourced from 18 independent screens involving 15 distinct cell lines. Due to differences in eras and annotation discrepancies, we need to further update and supplement the annotations to construct a high-quality, usable dataset. 
 
 ### 3. Annotations Updates and Complements
 
